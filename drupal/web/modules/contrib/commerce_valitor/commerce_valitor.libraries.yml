@@ -1,0 +1,16 @@
+form:
+  js:
+    js/commerce_valitor.form.js: { }
+  css:
+    theme:
+      css/commerce_valitor.form.css: { }
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once
+
+verification:
+  js:
+    js/commerce_valitor.verificator.js: { }
+  dependencies:
+    - core/jquery

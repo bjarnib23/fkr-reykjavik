@@ -1,0 +1,29 @@
+commerce_valitor.create_payment_method:
+  path: '/valitor/{commerce_payment_gateway}/verify'
+  defaults:
+    _controller: '\Drupal\commerce_valitor\Controller\ValitorPay::createVirtualCardWithVerification'
+  requirements:
+    _access: 'TRUE'
+  methods: ['POST']
+  options:
+    parameters:
+      commerce_payment_gateway:
+        type: entity:commerce_payment_gateway
+
+commerce_valitor.redirect_3ds:
+  path: '/valitor/3ds'
+  defaults:
+    _title: 'Redirecting to 3DS processor ...'
+    _controller: '\Drupal\commerce_valitor\Controller\ValitorPay::redirect3ds'
+  requirements:
+    _access: 'TRUE'
+  methods: ['GET']
+
+commerce_valitor.webhook:
+  path: '/valitor/webhook'
+  defaults:
+    _title: '3DS Card Verification'
+    _controller: '\Drupal\commerce_valitor\Controller\ValitorPay::webhook'
+  requirements:
+    _access: 'TRUE'
+  methods: ['POST', 'OPTIONS']

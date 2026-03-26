@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * @file
+ * Hooks and other functions for the commerce_valitor module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function commerce_valitor_theme($existing, $type, $theme, $path) {
+  return [
+    'valitor_card_verification' => [
+      'variables' => [
+        'message' => '',
+      ],
+    ],
+    'valitor_redirect3ds' => [
+      'variables' => [
+        'message' => '',
+      ],
+    ],
+    'html__valitor__3ds' => [
+      'template' => 'html--valitor--3ds',
+      'base hook' => 'html',
+    ],
+    'page__valitor__3ds' => [
+      'template' => 'page--valitor--3ds',
+      'base hook' => 'page',
+    ],
+  ];
+}

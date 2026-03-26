@@ -1,0 +1,4 @@
+services:
+  logger.channel.commerce_valitor:
+    parent: logger.channel_base
+    arguments: ['commerce_valitor']

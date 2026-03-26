@@ -1,0 +1,25 @@
+{
+  "name": "drupal/commerce_valitor",
+  "type": "drupal-module",
+  "description": "Provides Commerce integration for VALITOR Payments.",
+  "license": "GPL-2.0+",
+  "homepage": "http://drupal.org/project/commerce_valitor",
+  "authors": [
+    {
+      "name": "Pedro Cambra",
+      "homepage": "https://www.drupal.org/u/pcambra"
+    },
+    {
+      "name": "Manuel Egío",
+      "homepage": "https://www.drupal.org/u/facine"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/commerce_valitor",
+    "source": "https://cgit.drupalcode.org/commerce_valitor"
+  },
+  "require": {
+    "drupal/commerce": "~2.0"
+  },
+  "minimum-stability": "dev"
+}

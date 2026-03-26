@@ -1,0 +1,14 @@
+name: Commerce Valitor payment method
+description: Provides a payment method using VALITOR platform.
+package: Commerce - Payment
+core_version_requirement: ^9.2 || ^10 || ^11
+type: module
+configure: commerce_payment.configuration
+
+dependencies:
+  - commerce:commerce_payment
+
+# Information added by Drupal.org packaging script on 2024-02-06
+version: '2.0.0-alpha1'
+project: 'commerce_valitor'
+datestamp: 1707208837
