@@ -1,0 +1,19 @@
+# Drupal
+drupal/vendor/
+drupal/web/core/
+drupal/web/modules/contrib/
+drupal/web/themes/contrib/
+drupal/web/profiles/contrib/
+drupal/web/sites/default/files/
+drupal/web/sites/default/settings.php
+drupal/web/sites/default/settings.local.php
+
+# DDEV
+drupal/.ddev/
+
+# React
+react/node_modules/
+react/dist/
+
+# OS
+.DS_Store
