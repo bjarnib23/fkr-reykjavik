@@ -1,0 +1,6 @@
+fkr_booking.admin:
+  title: Bókanir
+  description: 'View and manage FKR bookings'
+  route_name: fkr_booking.admin_list
+  parent: system.admin
+  weight: -10

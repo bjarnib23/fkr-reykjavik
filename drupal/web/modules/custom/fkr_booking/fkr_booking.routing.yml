@@ -1,0 +1,15 @@
+fkr_booking.submit:
+  path: '/api/fkr/booking'
+  defaults:
+    _controller: '\Drupal\fkr_booking\Controller\BookingController::submit'
+  methods: [POST, OPTIONS]
+  requirements:
+    _access: 'TRUE'
+
+fkr_booking.admin_list:
+  path: '/admin/fkr/bookings'
+  defaults:
+    _controller: '\Drupal\fkr_booking\Controller\BookingController::adminList'
+    _title: 'Bookings'
+  requirements:
+    _permission: 'access administration pages'
