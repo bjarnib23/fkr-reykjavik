@@ -1,0 +1,23 @@
+uuid: a6018202-7ad1-45d8-969f-72708b305b21
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_price_hh
+    - node.type.fkr_price_item
+id: node.fkr_price_item.field_price_hh
+field_name: field_price_hh
+entity_type: node
+bundle: fkr_price_item
+label: 'Price HH'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

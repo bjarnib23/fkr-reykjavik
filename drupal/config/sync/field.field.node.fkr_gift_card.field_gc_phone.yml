@@ -1,0 +1,19 @@
+uuid: 905cb7c6-91bc-48a1-b5e8-5a3b26feb5e7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_gc_phone
+    - node.type.fkr_gift_card
+id: node.fkr_gift_card.field_gc_phone
+field_name: field_gc_phone
+entity_type: node
+bundle: fkr_gift_card
+label: Phone
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

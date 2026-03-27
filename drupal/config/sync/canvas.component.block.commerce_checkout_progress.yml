@@ -1,0 +1,22 @@
+uuid: 0283dbe0-672e-4cdc-b7cc-e3794180e64c
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_checkout
+active_version: 438f88b7c93da403
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: commerce_checkout_progress
+        label: 'Checkout progress'
+        label_display: '0'
+        provider: commerce_checkout
+    fallback_metadata:
+      slot_definitions: null
+label: 'Checkout progress'
+id: block.commerce_checkout_progress
+provider: commerce_checkout
+source: block
+source_local_id: commerce_checkout_progress

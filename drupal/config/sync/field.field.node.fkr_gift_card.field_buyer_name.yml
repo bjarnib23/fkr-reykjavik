@@ -1,0 +1,19 @@
+uuid: e973b5f8-e0da-4021-954d-b00307351707
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_buyer_name
+    - node.type.fkr_gift_card
+id: node.fkr_gift_card.field_buyer_name
+field_name: field_buyer_name
+entity_type: node
+bundle: fkr_gift_card
+label: 'Buyer Name'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

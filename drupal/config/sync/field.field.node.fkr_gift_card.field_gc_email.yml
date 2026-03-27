@@ -1,0 +1,19 @@
+uuid: b205ecd8-3b0b-47be-8df0-2ce67ddcedef
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_gc_email
+    - node.type.fkr_gift_card
+id: node.fkr_gift_card.field_gc_email
+field_name: field_gc_email
+entity_type: node
+bundle: fkr_gift_card
+label: Email
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

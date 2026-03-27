@@ -1,0 +1,73 @@
+uuid: 7f1b81f0-ba85-46d4-b349-04dd090921d2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.fkr_booking.field_dagsetning
+    - field.field.node.fkr_booking.field_email
+    - field.field.node.fkr_booking.field_hvad_viltu_panta
+    - field.field.node.fkr_booking.field_notes
+    - field.field.node.fkr_booking.field_phone
+    - field.field.node.fkr_booking.field_status
+    - node.type.fkr_booking
+  module:
+    - datetime
+    - options
+    - user
+id: node.fkr_booking.default
+targetEntityType: node
+bundle: fkr_booking
+mode: default
+content:
+  field_dagsetning:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_hvad_viltu_panta:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_notes:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_phone:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_status:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

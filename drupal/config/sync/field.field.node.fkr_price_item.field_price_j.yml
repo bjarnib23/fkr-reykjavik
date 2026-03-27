@@ -1,0 +1,23 @@
+uuid: 544305bc-4d4b-402e-bf69-b0a51216e4d7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_price_j
+    - node.type.fkr_price_item
+id: node.fkr_price_item.field_price_j
+field_name: field_price_j
+entity_type: node
+bundle: fkr_price_item
+label: 'Price J'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

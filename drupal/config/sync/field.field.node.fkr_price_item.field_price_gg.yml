@@ -1,0 +1,23 @@
+uuid: cf52a21b-45c9-4cc2-b37e-3b753b86a7ca
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_price_gg
+    - node.type.fkr_price_item
+id: node.fkr_price_item.field_price_gg
+field_name: field_price_gg
+entity_type: node
+bundle: fkr_price_item
+label: 'Price GG'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

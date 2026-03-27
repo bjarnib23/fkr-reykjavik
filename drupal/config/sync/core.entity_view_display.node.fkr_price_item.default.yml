@@ -1,0 +1,189 @@
+uuid: aed644fc-b6b3-4004-9bd9-febec5986e67
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.fkr_price_item.field_price_a
+    - field.field.node.fkr_price_item.field_price_aa
+    - field.field.node.fkr_price_item.field_price_b
+    - field.field.node.fkr_price_item.field_price_bb
+    - field.field.node.fkr_price_item.field_price_c
+    - field.field.node.fkr_price_item.field_price_d
+    - field.field.node.fkr_price_item.field_price_e
+    - field.field.node.fkr_price_item.field_price_f
+    - field.field.node.fkr_price_item.field_price_g
+    - field.field.node.fkr_price_item.field_price_gg
+    - field.field.node.fkr_price_item.field_price_h
+    - field.field.node.fkr_price_item.field_price_hh
+    - field.field.node.fkr_price_item.field_price_i
+    - field.field.node.fkr_price_item.field_price_j
+    - field.field.node.fkr_price_item.field_price_jj
+    - field.field.node.fkr_price_item.field_price_k
+    - field.field.node.fkr_price_item.field_weight
+    - node.type.fkr_price_item
+  module:
+    - user
+id: node.fkr_price_item.default
+targetEntityType: node
+bundle: fkr_price_item
+mode: default
+content:
+  field_price_a:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_price_aa:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_price_b:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_price_bb:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_price_c:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_price_d:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_price_e:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_price_f:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 108
+    region: content
+  field_price_g:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 109
+    region: content
+  field_price_gg:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 110
+    region: content
+  field_price_h:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 111
+    region: content
+  field_price_hh:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 112
+    region: content
+  field_price_i:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 113
+    region: content
+  field_price_j:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 114
+    region: content
+  field_price_jj:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 115
+    region: content
+  field_price_k:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 116
+    region: content
+  field_weight:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 117
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

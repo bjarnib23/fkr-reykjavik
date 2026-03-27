@@ -1,0 +1,19 @@
+uuid: 266635f5-8c02-492a-ad45-2c5e0955b289
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_gc_notes
+    - node.type.fkr_gift_card
+id: node.fkr_gift_card.field_gc_notes
+field_name: field_gc_notes
+entity_type: node
+bundle: fkr_gift_card
+label: Notes
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

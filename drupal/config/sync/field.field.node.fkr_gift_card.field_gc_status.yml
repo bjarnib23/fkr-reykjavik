@@ -1,0 +1,23 @@
+uuid: 880b8384-795c-4b86-bd7e-9a7f00f9e058
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_gc_status
+    - node.type.fkr_gift_card
+  module:
+    - options
+id: node.fkr_gift_card.field_gc_status
+field_name: field_gc_status
+entity_type: node
+bundle: fkr_gift_card
+label: Status
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: pending_pending|pending
+default_value_callback: ''
+settings: {  }
+field_type: list_string

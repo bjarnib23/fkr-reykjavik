@@ -1,0 +1,21 @@
+uuid: 8f1e14f9-20f9-44f1-99b4-4d1fb1ff370f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_amount
+    - node.type.fkr_gift_card
+  module:
+    - options
+id: node.fkr_gift_card.field_amount
+field_name: field_amount
+entity_type: node
+bundle: fkr_gift_card
+label: Amount
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

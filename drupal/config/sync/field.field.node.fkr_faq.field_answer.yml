@@ -1,0 +1,22 @@
+uuid: 729e9501-d069-4d80-97ff-8908c973b156
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_answer
+    - node.type.fkr_faq
+  module:
+    - text
+id: node.fkr_faq.field_answer
+field_name: field_answer
+entity_type: node
+bundle: fkr_faq
+label: Answer
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

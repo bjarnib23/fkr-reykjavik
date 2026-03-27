@@ -1,0 +1,10 @@
+uuid: a717a66a-a329-4c24-8ba6-9842443448d5
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: DaAAmHlWMVahC2MmhRKQN8Lun9hBPT6LR6PCjkCEikI
+id: analytics
+label: Analytics
+description: ''
+weight: 1

@@ -1,0 +1,12 @@
+uuid: 1b8e3f8b-1b28-4fc6-be5b-3669f982d7d9
+langcode: en
+status: true
+dependencies: {  }
+name: Hero
+configEntityTypeId: component
+weight: 0
+items:
+  - sdc.mercury.cta
+  - sdc.mercury.hero-billboard
+  - sdc.mercury.hero-blog
+  - sdc.mercury.hero-side-by-side

@@ -1,0 +1,21 @@
+uuid: a73eb112-5544-49bb-b53d-c6e516a30794
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_valitor
+id: valitor
+label: Valitor
+weight: null
+plugin: commerce_valitor_mock
+configuration:
+  display_label: 'Pay with credit card - valitor mock'
+  mode: test
+  payment_method_types:
+    - credit_card
+  collect_billing_information: true
+  api_key: test123
+  contract_number: ''
+  pos_id: ''
+conditions: {  }
+conditionOperator: AND

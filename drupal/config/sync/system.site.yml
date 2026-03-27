@@ -1,0 +1,15 @@
+_core:
+  default_config_hash: HlN7eAN2N4JIHsYv56V4E7sqC9bS609KwvGFjyD_mgk
+langcode: en
+uuid: ae232f78-7c5b-4fa9-b300-70500d3ed1a6
+name: 'FKR Reykjavík'
+mail: admin@fkr.is
+slogan: ''
+page:
+  403: /user/login
+  404: ''
+  front: /page/1
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: en
+mail_notification: null

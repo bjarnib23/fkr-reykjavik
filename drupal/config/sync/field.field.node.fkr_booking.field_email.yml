@@ -1,0 +1,19 @@
+uuid: 9d7f8afa-d4da-4e43-8dc5-a38e095585b2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_email
+    - node.type.fkr_booking
+id: node.fkr_booking.field_email
+field_name: field_email
+entity_type: node
+bundle: fkr_booking
+label: Email
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

@@ -1,0 +1,25 @@
+uuid: 917fc4d5-4091-42cb-bd03-c041e0760a3e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_faq_weight
+    - node.type.fkr_faq
+id: node.fkr_faq.field_faq_weight
+field_name: field_faq_weight
+entity_type: node
+bundle: fkr_faq
+label: Weight
+description: 'Lower numbers appear first.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

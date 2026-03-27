@@ -1,0 +1,80 @@
+uuid: 4ce134a4-efc8-44d4-9a76-e7239db97869
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.fkr_gift_card.field_amount
+    - field.field.node.fkr_gift_card.field_buyer_name
+    - field.field.node.fkr_gift_card.field_gc_email
+    - field.field.node.fkr_gift_card.field_gc_notes
+    - field.field.node.fkr_gift_card.field_gc_phone
+    - field.field.node.fkr_gift_card.field_gc_status
+    - field.field.node.fkr_gift_card.field_recipient_name
+    - node.type.fkr_gift_card
+  module:
+    - options
+    - user
+id: node.fkr_gift_card.default
+targetEntityType: node
+bundle: fkr_gift_card
+mode: default
+content:
+  field_amount:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_buyer_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_gc_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_gc_notes:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_gc_phone:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_gc_status:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_recipient_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

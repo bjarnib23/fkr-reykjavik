@@ -1,0 +1,36 @@
+uuid: f5199a9f-7c10-4964-8b15-7c9a17877428
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_amount
+field_name: field_amount
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: '25000_25_000| 25000'
+      label: '25.000 kr'
+    -
+      value: 50000_50_000_kr|50000
+      label: '50.000 kr'
+    -
+      value: 75000_75_000_kr|75000
+      label: '75.000 kr'
+    -
+      value: 100000_100_000_kr|100000
+      label: '100.000 kr'
+    -
+      value: 150000_150_000_kr|150000
+      label: '150.000 kr'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

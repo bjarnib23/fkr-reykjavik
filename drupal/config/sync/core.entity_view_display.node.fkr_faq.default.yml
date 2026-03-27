@@ -1,0 +1,38 @@
+uuid: fec31cd4-cd29-4a1d-a253-5da11fd607b8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.fkr_faq.field_answer
+    - field.field.node.fkr_faq.field_faq_weight
+    - node.type.fkr_faq
+  module:
+    - text
+    - user
+id: node.fkr_faq.default
+targetEntityType: node
+bundle: fkr_faq
+mode: default
+content:
+  field_answer:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_faq_weight:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

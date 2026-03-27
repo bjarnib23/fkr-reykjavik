@@ -1,0 +1,19 @@
+uuid: e567ad93-16f7-4b64-9c33-fc8c12259df9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_hvad_viltu_panta
+    - node.type.fkr_booking
+id: node.fkr_booking.field_hvad_viltu_panta
+field_name: field_hvad_viltu_panta
+entity_type: node
+bundle: fkr_booking
+label: 'Hvað viltu panta?'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

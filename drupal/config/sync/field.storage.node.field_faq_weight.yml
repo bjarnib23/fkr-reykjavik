@@ -1,0 +1,20 @@
+uuid: c01934fe-fea7-4f09-aef9-4c180b5202e1
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_faq_weight
+field_name: field_faq_weight
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

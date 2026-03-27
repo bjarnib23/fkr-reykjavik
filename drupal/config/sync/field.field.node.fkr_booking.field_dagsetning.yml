@@ -1,0 +1,21 @@
+uuid: 913229be-1dab-4621-838d-8da02bd93262
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_dagsetning
+    - node.type.fkr_booking
+  module:
+    - datetime
+id: node.fkr_booking.field_dagsetning
+field_name: field_dagsetning
+entity_type: node
+bundle: fkr_booking
+label: Dagsetning
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

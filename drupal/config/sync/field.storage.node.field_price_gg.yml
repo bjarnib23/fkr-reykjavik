@@ -1,0 +1,20 @@
+uuid: 6b599acd-5c70-4194-a39f-2fd1c4137b34
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_price_gg
+field_name: field_price_gg
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

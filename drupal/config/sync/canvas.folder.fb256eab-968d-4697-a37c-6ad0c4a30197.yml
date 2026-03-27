@@ -1,0 +1,10 @@
+uuid: fb256eab-968d-4697-a37c-6ad0c4a30197
+langcode: en
+status: true
+dependencies: {  }
+name: Other
+configEntityTypeId: component
+weight: 0
+items:
+  - sdc.commerce.commerce-status-badge
+  - sdc.navigation.title
