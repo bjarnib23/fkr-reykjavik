@@ -1,0 +1,23 @@
+uuid: 01748e79-3eda-412b-a36c-7c988fb6acfa
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_price_l
+    - node.type.fkr_price_item
+id: node.fkr_price_item.field_price_l
+field_name: field_price_l
+entity_type: node
+bundle: fkr_price_item
+label: 'Price L'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

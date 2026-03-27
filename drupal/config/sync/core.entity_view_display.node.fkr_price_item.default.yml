@@ -19,6 +19,8 @@ dependencies:
     - field.field.node.fkr_price_item.field_price_j
     - field.field.node.fkr_price_item.field_price_jj
     - field.field.node.fkr_price_item.field_price_k
+    - field.field.node.fkr_price_item.field_price_l
+    - field.field.node.fkr_price_item.field_price_r
     - field.field.node.fkr_price_item.field_weight
     - node.type.fkr_price_item
   module:
@@ -171,6 +173,24 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     weight: 116
+    region: content
+  field_price_l:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 118
+    region: content
+  field_price_r:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 119
     region: content
   field_weight:
     type: number_integer
