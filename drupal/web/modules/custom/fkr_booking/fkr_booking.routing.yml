@@ -13,3 +13,12 @@ fkr_booking.admin_list:
     _title: 'Bookings'
   requirements:
     _permission: 'access administration pages'
+
+fkr_booking.booking_details:
+  path: '/admin/fkr/bookings/{node}'
+  defaults:
+    _controller: '\Drupal\fkr_booking\Controller\BookingController::bookingDetails'
+    _title: Booking
+  requirements:
+    _permission: 'access administration pages'
+    node: \d+

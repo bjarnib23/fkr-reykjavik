@@ -6,6 +6,8 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Mail\MailManagerInterface;
+use Drupal\node\NodeInterface;
+use Drupal\Core\Render\Markup;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -144,7 +146,10 @@ class BookingController extends ControllerBase{
                 $node->get('field_dagsetning')->value,
                 $node->get('field_hvad_viltu_panta')->value,
                 $node->get('field_status')->value,
-                $node->toLink('Edit', 'edit-form')->toString(),
+                Markup::create(
+                    \Drupal\Core\Link::fromTextAndUrl('View', 
+                    \Drupal\Core\Url::fromRoute('fkr_booking.booking_details', ['node' => $node->id()]))->toString() . 
+                    ' | ' . $node->toLink('Edit', 'edit-form')->toString()),
             ];
         }
 
@@ -153,6 +158,26 @@ class BookingController extends ControllerBase{
             '#header' => ['Name', 'Email', 'Date', 'Item', 'Status', 'Operations'],
             '#rows' => $rows,
             '#empty' => 'No bookings yet.'
+        ];
+    }
+
+    /**
+     * Admin detail view of a single booking.
+     */
+    public function bookingDetails(NodeInterface $node): array {
+        $rows = [
+            ['Name', $node->getTitle()],
+            ['Email', $node->get('field_email')->value],
+            ['Date', $node->get('field_dagsetning')->value],
+            ['Item', $node->get('field_hvad_viltu_panta')->value],
+            ['Notes', $node->get('field_notes')->value],
+            ['Status', $node->get('field_status')->value],
+        ];
+
+        return [
+            '#type' => 'table',
+            '#header' => ['Field', 'Value'],
+            '#rows' => $rows,
         ];
     }
 }
