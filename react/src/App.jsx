@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
   import Navbar from './components/Navbar'
+  import Footer from './components/Footer'
                                                                     
   function App() {
     return (                                                        
@@ -13,6 +14,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
           <Route path="/gjafabref" element={<p>Gjafabréf</p>} />
           <Route path="/verdskra" element={<p>Verðskrá</p>} />
         </Routes>
+        <Footer/>
       </BrowserRouter>
     )
   }
