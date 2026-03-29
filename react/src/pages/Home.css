@@ -1,0 +1,23 @@
+  .hero {
+    background: #1e3a2a;                                            
+    color: #f5ede0;     
+    text-align: center;                                             
+    padding: 100px 48px;
+  }                     
+   
+  .hero h1 {
+    font-size: 96px;
+    letter-spacing: 8px;
+  }                                                                 
+   
+  .intro {                                                          
+    padding: 80px 48px;
+  }                    
+   
+  .intro a {
+    display: inline-block;
+    background: #1e3a2a;  
+    color: #f5ede0;                                                 
+    padding: 12px 28px;
+    margin-top: 16px;                                               
+  } 
