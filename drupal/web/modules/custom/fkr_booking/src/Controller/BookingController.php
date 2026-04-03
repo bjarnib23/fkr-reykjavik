@@ -70,6 +70,35 @@ class BookingController extends ControllerBase{
             }
         }
 
+        // Check that the slot is available.
+        $storage = $this->entityTypeManager->getStorage('node');
+
+        $availability = $storage->loadByProperties([
+            'type' => 'fkr_availability',
+            'field_available_time' => $data['date'],
+        ]);
+
+        if (empty($availability)) {
+            return new JsonResponse(
+                ['error' => 'This time slot is not available.'],
+                409,
+                $this->corsHeaders()
+            );
+        }
+
+        $existing_booking = $storage->loadByProperties([
+            'type' => 'fkr_booking',
+            'field_dagsetning' => $data['date'],
+        ]);
+
+        if (!empty($existing_booking)) {
+            return new JsonResponse(
+                ['error' => 'This time slot is already booked.'],
+                409,
+                $this->corsHeaders()
+            );
+        }
+
         // Create the booking node.
         $node = $this->entityTypeManager->getStorage('node')->create([
             'type' => 'fkr_booking',
@@ -131,34 +160,78 @@ class BookingController extends ControllerBase{
     }
 
     /**
-     * Admin list of all bookings.
+     * Admin list of all bookings, sorted by date.
      */
     public function adminList(): array {
-        $nodes = $this->entityTypeManager->getStorage('node')->loadByProperties([
-            'type' => 'fkr_booking',
-        ]);
+        $nids = $this->entityTypeManager->getStorage('node')->getQuery()
+            ->condition('type', 'fkr_booking')
+            ->sort('field_dagsetning', 'ASC')
+            ->accessCheck(FALSE)
+            ->execute();
+
+        $nodes = $this->entityTypeManager->getStorage('node')->loadMultiple($nids);
 
         $rows = [];
         foreach ($nodes as $node) {
+            $raw_date = $node->get('field_dagsetning')->value ?? '';
+            $formatted_date = $raw_date ? date('D d M Y \a\t H:i', strtotime($raw_date)) : '—';
+            $status = $node->get('field_status')->first()?->value ?? 'pending';
+
+            $select  = '<select class="booking-status-select" data-nid="' . $node->id() . '">';
+            foreach (['pending' => 'Pending', 'confirmed' => 'Confirmed', 'rejected' => 'Rejected'] as $val => $label) {
+                $selected = $status === $val ? ' selected' : '';
+                $select .= '<option value="' . $val . '"' . $selected . '>' . $label . '</option>';
+            }
+            $select .= '</select>';
+
             $rows[] = [
                 $node->getTitle(),
                 $node->get('field_email')->value,
-                $node->get('field_dagsetning')->value,
+                $formatted_date,
                 $node->get('field_hvad_viltu_panta')->value,
-                $node->get('field_status')->value,
+                Markup::create($select),
                 Markup::create(
-                    \Drupal\Core\Link::fromTextAndUrl('View', 
-                    \Drupal\Core\Url::fromRoute('fkr_booking.booking_details', ['node' => $node->id()]))->toString() . 
-                    ' | ' . $node->toLink('Edit', 'edit-form')->toString()),
+                    \Drupal\Core\Link::fromTextAndUrl('View',
+                    \Drupal\Core\Url::fromRoute('fkr_booking.booking_details', ['node' => $node->id()]))->toString() .
+                    ' | ' . $node->toLink('Edit', 'edit-form')->toString()
+                ),
             ];
         }
 
         return [
-            '#type' => 'table',
-            '#header' => ['Name', 'Email', 'Date', 'Item', 'Status', 'Operations'],
-            '#rows' => $rows,
-            '#empty' => 'No bookings yet.'
+            'add_button' => [
+                '#type' => 'link',
+                '#title' => '+ Add booking',
+                '#url' => \Drupal\Core\Url::fromRoute('node.add', ['node_type' => 'fkr_booking']),
+                '#attributes' => ['class' => ['button', 'button--primary']],
+            ],
+            'table' => [
+                '#type' => 'table',
+                '#header' => ['Name', 'Email', 'Date', 'Item', 'Status', 'View'],
+                '#rows' => $rows,
+                '#empty' => 'No bookings yet.',
+                '#attached' => [
+                    'library' => ['fkr_booking/admin_bookings'],
+                ],
+            ],
         ];
+    }
+
+    /**
+     * Updates the status of a booking via AJAX.
+     */
+    public function updateStatus(NodeInterface $node, Request $request): JsonResponse {
+        $data = json_decode($request->getContent(), TRUE);
+        $status = $data['status'] ?? NULL;
+
+        if (!in_array($status, ['pending', 'confirmed', 'rejected'])) {
+            return new JsonResponse(['error' => 'Invalid status'], 400);
+        }
+
+        $node->set('field_status', $status);
+        $node->save();
+
+        return new JsonResponse(['status' => $status]);
     }
 
     /**

@@ -1,0 +1,21 @@
+uuid: 6d91de2a-dfcf-4a0a-b6e1-38b81112ffd6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_available_time
+    - node.type.fkr_availability
+  module:
+    - datetime
+id: node.fkr_availability.field_available_time
+field_name: field_available_time
+entity_type: node
+bundle: fkr_availability
+label: 'Available time'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

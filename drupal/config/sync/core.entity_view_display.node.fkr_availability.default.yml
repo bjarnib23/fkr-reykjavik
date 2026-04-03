@@ -1,0 +1,30 @@
+uuid: 08e4cc50-3798-4ddb-a949-e302a2a5bbc1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.fkr_availability.field_available_time
+    - node.type.fkr_availability
+  module:
+    - datetime
+    - user
+id: node.fkr_availability.default
+targetEntityType: node
+bundle: fkr_availability
+mode: default
+content:
+  field_available_time:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

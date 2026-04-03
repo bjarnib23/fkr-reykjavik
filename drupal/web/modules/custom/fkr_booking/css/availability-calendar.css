@@ -1,0 +1,73 @@
+#availability-calendar {
+  margin: 20px 0;
+}
+
+.cal-nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.cal-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cal-table th,
+.cal-table td {
+  border: 1px solid #ddd;
+  padding: 8px 10px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.cal-table th {
+  background: #f5f5f5;
+  font-weight: 600;
+}
+
+.cal-time {
+  font-weight: 600;
+  background: #fafafa;
+  white-space: nowrap;
+}
+
+.cal-slot {
+  cursor: default;
+}
+
+.cal-clickable {
+  cursor: pointer;
+}
+
+.cal-closed {
+  background: #e0e0e0;
+  color: #888;
+}
+
+.cal-available {
+  background: #d4edda;
+  color: #155724;
+}
+
+.cal-booked {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.cal-clickable:hover {
+  opacity: 0.8;
+}
+
+.cal-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  align-items: center;
+}
+
+.cal-legend .cal-slot {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+}
