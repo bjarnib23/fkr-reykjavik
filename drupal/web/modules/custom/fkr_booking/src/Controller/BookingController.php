@@ -199,12 +199,20 @@ class BookingController extends ControllerBase{
         }
 
         return [
-            '#type' => 'table',
-            '#header' => ['Name', 'Email', 'Date', 'Item', 'Status', 'View'],
-            '#rows' => $rows,
-            '#empty' => 'No bookings yet.',
-            '#attached' => [
-                'library' => ['fkr_booking/admin_bookings'],
+            'add_button' => [
+                '#type' => 'link',
+                '#title' => '+ Add booking',
+                '#url' => \Drupal\Core\Url::fromRoute('node.add', ['node_type' => 'fkr_booking']),
+                '#attributes' => ['class' => ['button', 'button--primary']],
+            ],
+            'table' => [
+                '#type' => 'table',
+                '#header' => ['Name', 'Email', 'Date', 'Item', 'Status', 'View'],
+                '#rows' => $rows,
+                '#empty' => 'No bookings yet.',
+                '#attached' => [
+                    'library' => ['fkr_booking/admin_bookings'],
+                ],
             ],
         ];
     }

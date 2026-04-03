@@ -9,12 +9,10 @@ dependencies:
     - commerce_order
     - commerce_payment
     - commerce_product
-    - contextual
     - file
     - honeypot
     - klaro
     - media
-    - navigation
     - node
     - system
 _core:
@@ -28,8 +26,6 @@ permissions:
   - 'access checkout'
   - 'access coffee'
   - 'access content'
-  - 'access contextual links'
-  - 'access navigation'
   - 'bypass honeypot protection'
   - 'delete own files'
   - 'manage own commerce_payment_method'

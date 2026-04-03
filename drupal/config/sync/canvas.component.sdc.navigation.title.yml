@@ -1,6 +1,6 @@
-uuid: 83eab568-d2ef-4078-94d6-4f400c751db1
+uuid: ccde6568-5660-4573-b372-902d742cd1d9
 langcode: en
-status: false
+status: true
 dependencies:
   module:
     - navigation
