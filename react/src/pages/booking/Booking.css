@@ -1,0 +1,106 @@
+.booking-wrapper {                                                              
+    max-width: 600px;                                                             
+    margin: 60px auto;
+    padding: 0 24px;                                                              
+  }               
+
+  .booking-wrapper h1 {                                                           
+    text-align: center;
+    font-size: 36px;                                                              
+    letter-spacing: 4px;
+    margin-bottom: 24px;
+  }                                                                               
+   
+  .progress-bar {                                                                 
+    background: #ddd;
+    height: 4px;
+    border-radius: 2px;
+    margin-bottom: 8px;
+  }                                                                               
+   
+  .progress-fill {                                                                
+    background: #1e3a2a;
+    height: 4px;                                                                  
+    transition: width 0.3s;
+  }                                                                               
+                  
+  .step-label {                                                                   
+    font-size: 13px;
+    color: #666;                                                                  
+    margin-bottom: 32px;
+  }
+
+  .service-options {                                                                                        
+    display: flex;                                                                                          
+    flex-direction: column;
+    gap: 12px;                                                                                              
+    margin: 24px 0;
+  }                                                                                                         
+   
+  .service-card {                                                                                           
+    border: 1px solid #ccc;
+    padding: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+  }                                                                                                         
+   
+  .service-card:hover {                                                                                     
+    border-color: #1e3a2a;
+  }                                                                                                         
+                  
+  .service-card.selected {                                                                                  
+    border: 2px solid #1e3a2a;
+  }
+
+  .time-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;                                                                                              
+    margin: 16px 0;
+  }                                                                                                         
+                  
+  .time-btn {
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    background: white;                                                                                      
+    cursor: pointer;                                                                                        
+    border-radius: 8px;                                                                                     
+  }                                                                                                         
+                  
+  .time-btn.selected {                                                                                      
+    background: #1e3a2a;
+    color: white;                                                                                           
+    border-color: #1e3a2a;
+  }
+
+  .step-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;                                                                                       
+  }
+                                                                                                            
+  .step-buttons button:first-child {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 12px 24px;                                                                                     
+    cursor: pointer;
+  }                                                                                                         
+                  
+  .step-buttons button:last-child {
+    background: #1e3a2a;
+    color: white;                                                                                           
+    border: none;
+    padding: 12px 24px;                                                                                     
+    cursor: pointer;
+    flex: 1;                                                                                                
+  }                                                                                                         
+   
+  input, textarea {                                                                                         
+    width: 100%;  
+    padding: 12px;                                                                                          
+    border: 1px solid #ccc;
+    font-size: 15px;
+    font-family: inherit;                                                                                   
+    margin-bottom: 12px;                                                                                    
+    background: white;                                                                                      
+  }                   
