@@ -2,3 +2,14 @@ admin_overrides:
   css:
     theme:
       css/admin.css: {}
+
+availability_calendar:
+  js:
+    js/availability-calendar.js: {}
+  css:
+    theme:
+      css/availability-calendar.css: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once

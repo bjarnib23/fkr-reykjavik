@@ -70,6 +70,35 @@ class BookingController extends ControllerBase{
             }
         }
 
+        // Check that the slot is available.
+        $storage = $this->entityTypeManager->getStorage('node');
+
+        $availability = $storage->loadByProperties([
+            'type' => 'fkr_availability',
+            'field_available_time' => $data['date'],
+        ]);
+
+        if (empty($availability)) {
+            return new JsonResponse(
+                ['error' => 'This time slot is not available.'],
+                409,
+                $this->corsHeaders()
+            );
+        }
+
+        $existing_booking = $storage->loadByProperties([
+            'type' => 'fkr_booking',
+            'field_dagsetning' => $data['date'],
+        ]);
+
+        if (!empty($existing_booking)) {
+            return new JsonResponse(
+                ['error' => 'This time slot is already booked.'],
+                409,
+                $this->corsHeaders()
+            );
+        }
+
         // Create the booking node.
         $node = $this->entityTypeManager->getStorage('node')->create([
             'type' => 'fkr_booking',

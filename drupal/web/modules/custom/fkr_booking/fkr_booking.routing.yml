@@ -22,3 +22,27 @@ fkr_booking.booking_details:
   requirements:
     _permission: 'access administration pages'
     node: \d+
+
+fkr_booking.availability_api:
+  path: '/api/fkr/availability'
+  defaults:
+    _controller: '\Drupal\fkr_booking\Controller\AvailabilityController::getAvailability'
+  methods: [GET, OPTIONS]
+  requirements:
+    _access: 'TRUE'
+
+fkr_booking.availability_toggle:
+  path: '/api/fkr/availability/toggle'
+  defaults:
+    _controller: '\Drupal\fkr_booking\Controller\AvailabilityController::toggleSlot'
+  methods: [POST, OPTIONS]
+  requirements:
+    _permission: 'access administration pages'
+
+fkr_booking.availability_admin:
+  path: '/admin/fkr/availability'
+  defaults:
+    _controller: '\Drupal\fkr_booking\Controller\AvailabilityController::adminCalendar'
+    _title: 'Availability'
+  requirements: 
+    _permission: 'access administration pages'
