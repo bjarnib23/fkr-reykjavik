@@ -4,3 +4,10 @@ fkr_booking.admin:
   route_name: fkr_booking.admin_list
   parent: system.admin
   weight: -10
+
+fkr_booking.availability_admin_link:
+  title: Calendar
+  description: 'Manage availability calendar'
+  route_name: fkr_booking.availability_admin
+  parent: fkr_booking.admin
+  weight: 1

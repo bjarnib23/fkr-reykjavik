@@ -23,6 +23,15 @@ fkr_booking.booking_details:
     _permission: 'access administration pages'
     node: \d+
 
+fkr_booking.update_status:
+  path: '/admin/fkr/bookings/{node}/status'
+  defaults:
+    _controller: '\Drupal\fkr_booking\Controller\BookingController::updateStatus'
+  methods: [POST]
+  requirements:
+    _permission: 'access administration pages'
+    node: \d+
+
 fkr_booking.availability_api:
   path: '/api/fkr/availability'
   defaults:
