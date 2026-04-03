@@ -1,0 +1,23 @@
+fkr_content.pages:
+  path: '/api/fkr/pages'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::pages'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'
+
+fkr_content.faq:
+  path: '/api/fkr/faq'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::faq'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'
+
+fkr_content.pricelist:
+  path: '/api/fkr/pricelist'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::pricelist'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'

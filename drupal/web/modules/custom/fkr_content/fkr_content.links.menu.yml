@@ -1,0 +1,8 @@
+fkr_content.admin:
+  title: 'Síðuefni'
+  description: 'Manage content for each page on the site'
+  route_name: entity.node.add_form
+  route_parameters:
+    node_type: page_content
+  parent: system.admin
+  weight: -9

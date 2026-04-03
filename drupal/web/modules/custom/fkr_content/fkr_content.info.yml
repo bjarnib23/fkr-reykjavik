@@ -1,0 +1,5 @@
+name: FKR Content API
+type: module
+description: 'Exposes FKR page content as JSON API endpoints for the React frontend.'
+core_version_requirement: ^10 || ^11
+package: FKR
