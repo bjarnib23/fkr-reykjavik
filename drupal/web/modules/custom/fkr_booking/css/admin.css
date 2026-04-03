@@ -1,0 +1,5 @@
+/* Hide the "+ Create" button block from the Gin admin sidebar */
+.toolbar-block__content--create,
+.admin-toolbar__item:has(.toolbar-block__content--create) {
+  display: none !important;
+}

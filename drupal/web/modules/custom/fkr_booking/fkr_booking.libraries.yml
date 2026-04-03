@@ -1,0 +1,4 @@
+admin_overrides:
+  css:
+    theme:
+      css/admin.css: {}
