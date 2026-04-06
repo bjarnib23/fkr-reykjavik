@@ -7,3 +7,12 @@ fkr_content.admin:
       type: page_content
   parent: system.admin
   weight: -9
+
+fkr_content.admin_add:
+  title: '+ Ný síða'
+  description: 'Create a new page content node'
+  route_name: entity.node.add_form
+  route_parameters:
+    node_type: page_content
+  parent: fkr_content.admin
+  weight: 10
