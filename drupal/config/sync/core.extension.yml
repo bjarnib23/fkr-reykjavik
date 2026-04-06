@@ -29,6 +29,7 @@ module:
   crop: 0
   cva: 0
   datetime: 0
+  dashboard: 0
   dblog: 0
   drupal_cms_helper: 0
   drupical: 0
