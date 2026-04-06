@@ -21,6 +21,46 @@ class ContentController extends ControllerBase {
   }
 
   /**
+   * Admin list of all page_content nodes.
+   */
+  public function adminList(): array {
+    $nids = $this->entityTypeManager->getStorage('node')->getQuery()
+      ->condition('type', 'page_content')
+      ->sort('title', 'ASC')
+      ->accessCheck(FALSE)
+      ->execute();
+
+    $nodes = $this->entityTypeManager->getStorage('node')->loadMultiple($nids);
+    $rows = [];
+
+    foreach ($nodes as $node) {
+      $rows[] = [
+        $node->getTitle(),
+        $node->get('field_page_subtitle')->value ?? '—',
+        $node->isPublished() ? 'Published' : 'Unpublished',
+        \Drupal\Core\Markup::create(
+          $node->toLink('Edit', 'edit-form')->toString()
+        ),
+      ];
+    }
+
+    return [
+      'add_button' => [
+        '#type'       => 'link',
+        '#title'      => '+ Bæta við síðu',
+        '#url'        => \Drupal\Core\Url::fromRoute('entity.node.add_form', ['node_type' => 'page_content']),
+        '#attributes' => ['class' => ['button', 'button--primary']],
+      ],
+      'table' => [
+        '#type'   => 'table',
+        '#header' => ['Title', 'Subtitle', 'Status', 'Edit'],
+        '#rows'   => $rows,
+        '#empty'  => 'No page content yet.',
+      ],
+    ];
+  }
+
+  /**
    * GET /api/fkr/pages
    * Returns all page content nodes as { page_title: { fields } }.
    */
