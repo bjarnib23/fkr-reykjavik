@@ -1,0 +1,9 @@
+name: FKR Gift Card
+type: module
+description: 'Gift card checkout flow via Commerce and Valitor.'
+core_version_requirement: ^10 || ^11
+package: FKR
+dependencies:
+  - commerce:commerce_order
+  - commerce:commerce_product
+  - commerce:commerce_payment

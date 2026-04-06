@@ -1,0 +1,11 @@
+uuid: 80387e0a-0bfb-41a3-83f1-5e3492ac993c
+langcode: en
+status: true
+dependencies: {  }
+name: 'Page Content'
+type: page_content
+description: 'Content for each page on the site.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: true

@@ -1,0 +1,19 @@
+uuid: be46ca6e-36b2-4d1d-9067-d57377e28433
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_intro_text
+    - node.type.fkr_price_item
+id: node.fkr_price_item.field_intro_text
+field_name: field_intro_text
+entity_type: node
+bundle: fkr_price_item
+label: 'Intro text'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,5 +1,5 @@
 fkr_content.admin:
-  title: 'Síðuefni'
+  title: 'Búa til nýja síðu'
   description: 'Manage content for each page on the site'
   route_name: entity.node.add_form
   route_parameters:

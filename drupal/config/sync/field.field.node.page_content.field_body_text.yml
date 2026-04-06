@@ -1,0 +1,22 @@
+uuid: 30840c21-6a8d-401c-b2d9-9d16e7c76dcf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_body_text
+    - node.type.page_content
+  module:
+    - text
+id: node.page_content.field_body_text
+field_name: field_body_text
+entity_type: node
+bundle: page_content
+label: 'Body Text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

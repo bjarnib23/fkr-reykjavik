@@ -44,6 +44,8 @@ module:
   file: 0
   filter: 0
   fkr_booking: 0
+  fkr_content: 0
+  fkr_giftcard: 0
   focal_point: 0
   friendlycaptcha: 0
   gin_login: 0

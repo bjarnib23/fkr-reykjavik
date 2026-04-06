@@ -1,0 +1,22 @@
+uuid: b1a42e2c-0f19-4393-8429-8315bbba2be1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_price_json
+    - node.type.fkr_price_item
+  module:
+    - text
+id: node.fkr_price_item.field_price_json
+field_name: field_price_json
+entity_type: node
+bundle: fkr_price_item
+label: 'Price Table JSON'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

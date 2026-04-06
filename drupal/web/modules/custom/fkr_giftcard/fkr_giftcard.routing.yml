@@ -1,0 +1,15 @@
+fkr_giftcard.amounts:
+  path: '/api/fkr/giftcard/amounts'
+  defaults:
+    _controller: '\Drupal\fkr_giftcard\Controller\GiftCardController::amounts'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'
+
+fkr_giftcard.checkout:
+  path: '/api/fkr/giftcard/checkout'
+  defaults:
+    _controller: '\Drupal\fkr_giftcard\Controller\GiftCardController::checkout'
+  methods: [POST, OPTIONS]
+  requirements:
+    _access: 'TRUE'
