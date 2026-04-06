@@ -1,0 +1,29 @@
+uuid: 3a934082-3d24-407d-ae2b-4b2a4014173f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_intro_image
+    - media.type.image
+    - node.type.fkr_price_item
+id: node.fkr_price_item.field_intro_image
+field_name: field_intro_image
+entity_type: node
+bundle: fkr_price_item
+label: 'Intro image'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

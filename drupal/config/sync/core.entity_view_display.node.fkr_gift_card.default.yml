@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.fkr_gift_card.field_gc_notes
     - field.field.node.fkr_gift_card.field_gc_phone
     - field.field.node.fkr_gift_card.field_gc_status
+    - field.field.node.fkr_gift_card.field_intro_text_gc
     - field.field.node.fkr_gift_card.field_recipient_name
     - node.type.fkr_gift_card
   module:
@@ -63,6 +64,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 107
+    region: content
+  field_intro_text_gc:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 108
     region: content
   field_recipient_name:
     type: string

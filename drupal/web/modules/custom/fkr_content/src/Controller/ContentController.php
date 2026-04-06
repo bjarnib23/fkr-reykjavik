@@ -21,6 +21,46 @@ class ContentController extends ControllerBase {
   }
 
   /**
+   * Admin list of all page_content nodes.
+   */
+  public function adminList(): array {
+    $nids = $this->entityTypeManager->getStorage('node')->getQuery()
+      ->condition('type', 'page_content')
+      ->sort('title', 'ASC')
+      ->accessCheck(FALSE)
+      ->execute();
+
+    $nodes = $this->entityTypeManager->getStorage('node')->loadMultiple($nids);
+    $rows = [];
+
+    foreach ($nodes as $node) {
+      $rows[] = [
+        $node->getTitle(),
+        $node->get('field_page_subtitle')->value ?? '—',
+        $node->isPublished() ? 'Published' : 'Unpublished',
+        \Drupal\Core\Markup::create(
+          $node->toLink('Edit', 'edit-form')->toString()
+        ),
+      ];
+    }
+
+    return [
+      'add_button' => [
+        '#type'       => 'link',
+        '#title'      => '+ Bæta við síðu',
+        '#url'        => \Drupal\Core\Url::fromRoute('entity.node.add_form', ['node_type' => 'page_content']),
+        '#attributes' => ['class' => ['button', 'button--primary']],
+      ],
+      'table' => [
+        '#type'   => 'table',
+        '#header' => ['Title', 'Subtitle', 'Status', 'Edit'],
+        '#rows'   => $rows,
+        '#empty'  => 'No page content yet.',
+      ],
+    ];
+  }
+
+  /**
    * GET /api/fkr/pages
    * Returns all page content nodes as { page_title: { fields } }.
    */
@@ -69,26 +109,43 @@ class ContentController extends ControllerBase {
 
   /**
    * GET /api/fkr/pricelist
+   * Returns all price rows sorted by weight, with ordered grade columns.
    */
   public function pricelist(): JsonResponse {
-    $nodes = $this->entityTypeManager->getStorage('node')->loadByProperties([
-      'type'   => 'fkr_price_item',
-      'status' => 1,
-    ]);
+    $grades = ['aa','a','b','bb','c','d','e','f','g','gg','h','hh','i','j','jj','k','l','r'];
 
-    if (empty($nodes)) {
+    $nids = $this->entityTypeManager->getStorage('node')->getQuery()
+      ->condition('type', 'fkr_price_item')
+      ->condition('status', 1)
+      ->sort('field_weight', 'ASC')
+      ->accessCheck(FALSE)
+      ->execute();
+
+    if (empty($nids)) {
       return new JsonResponse([], 200, $this->cors());
     }
 
-    $node = reset($nodes);
-    $prices = [];
-    foreach ($node->getFields() as $name => $field) {
-      if (strpos($name, 'field_price_') === 0) {
-        $prices[$name] = $field->value;
+    $nodes = $this->entityTypeManager->getStorage('node')->loadMultiple($nids);
+    $rows = [];
+
+    foreach ($nodes as $node) {
+      $prices = [];
+      foreach ($grades as $grade) {
+        $field = 'field_price_' . $grade;
+        $prices[$grade] = $node->hasField($field) && !$node->get($field)->isEmpty()
+          ? (int) $node->get($field)->value
+          : null;
       }
+      $rows[] = [
+        'item'   => $node->getTitle(),
+        'prices' => $prices,
+      ];
     }
 
-    return new JsonResponse(['prices' => $prices], 200, $this->cors());
+    return new JsonResponse([
+      'grades' => array_map('strtoupper', $grades),
+      'rows'   => $rows,
+    ], 200, $this->cors());
   }
 
   /**

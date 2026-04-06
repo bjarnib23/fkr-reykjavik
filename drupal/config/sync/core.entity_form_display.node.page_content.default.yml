@@ -1,23 +1,22 @@
-uuid: 8edb63c6-e7aa-4018-aaa4-9431b2e5e684
+uuid: f0995d6f-b89d-4aeb-9f24-f4c81bb14e50
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.fkr_gift_card.field_amount
-    - field.field.node.fkr_gift_card.field_buyer_name
-    - field.field.node.fkr_gift_card.field_gc_email
-    - field.field.node.fkr_gift_card.field_gc_notes
-    - field.field.node.fkr_gift_card.field_gc_phone
-    - field.field.node.fkr_gift_card.field_gc_status
-    - field.field.node.fkr_gift_card.field_intro_text_gc
-    - field.field.node.fkr_gift_card.field_recipient_name
-    - node.type.fkr_gift_card
+    - field.field.node.page_content.field_body_text
+    - field.field.node.page_content.field_cta_text
+    - field.field.node.page_content.field_page_image
+    - field.field.node.page_content.field_page_subtitle
+    - image.style.thumbnail
+    - node.type.page_content
   module:
     - content_moderation
     - path
-id: node.fkr_gift_card.default
+    - svg_image
+    - text
+id: node.page_content.default
 targetEntityType: node
-bundle: fkr_gift_card
+bundle: page_content
 mode: default
 content:
   created:
@@ -26,61 +25,33 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_amount:
-    type: options_select
-    weight: 121
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_buyer_name:
-    type: string_textfield
+  field_body_text:
+    type: text_textarea
     weight: 122
     region: content
     settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_cta_text:
+    type: string_textfield
+    weight: 123
+    region: content
+    settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_gc_email:
-    type: email_default
+  field_page_image:
+    type: image_image
     weight: 124
     region: content
     settings:
-      placeholder: ''
-      size: 60
+      progress_indicator: throbber
+      preview_image_style: thumbnail
     third_party_settings: {  }
-  field_gc_notes:
+  field_page_subtitle:
     type: string_textfield
-    weight: 126
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_gc_phone:
-    type: string_textfield
-    weight: 125
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_gc_status:
-    type: options_select
-    weight: 127
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_intro_text_gc:
-    type: string_textfield
-    weight: 128
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_recipient_name:
-    type: string_textfield
-    weight: 123
+    weight: 121
     region: content
     settings:
       size: 60
