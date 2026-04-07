@@ -1,6 +1,6 @@
   .hero {
-    background: #1e3a2a;                                            
-    color: #f5ede0;     
+    background: #263A38;                                            
+    color: #F4EDED;     
     text-align: center;                                             
     padding: 100px 48px;
   }                     
@@ -16,8 +16,8 @@
    
   .intro a {
     display: inline-block;
-    background: #1e3a2a;  
-    color: #f5ede0;                                                 
+    background: #263A38;  
+    color: #F4EDED;                                                 
     padding: 12px 28px;
     margin-top: 16px;                                               
   } 

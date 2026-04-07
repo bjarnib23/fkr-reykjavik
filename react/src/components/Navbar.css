@@ -3,14 +3,14 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px 48px;
-    background: #f5ede0;
+    background: #F4EDED;
     border-bottom: 1px solid #ddd;
 }
 
 .navbar-logo {
     font-size: 18px;
     font-weight: 600;
-    color: #1e3a2a;
+    color: #263A38;
     text-decoration: none;
 }
 
@@ -30,6 +30,6 @@
 
 .navbar-links a:hover,
   .navbar-links a.active {
-    color: #1e3a2a;                                                 
+    color: #263A38;                                                 
     font-weight: 600;
   } 

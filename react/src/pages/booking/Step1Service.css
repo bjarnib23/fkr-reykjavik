@@ -13,10 +13,10 @@
   }
                                                                    
   .service-card:hover {
-    border-color: #1e3a2a;                                         
+    border-color: #263A38;                                         
   }               
 
   .service-card.selected {                                         
-    border: 2px solid #1e3a2a;
+    border: 2px solid #263A38;
     font-weight: 600;                                              
   }   

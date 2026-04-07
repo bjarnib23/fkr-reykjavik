@@ -19,7 +19,7 @@
   }                                                                               
    
   .progress-fill {                                                                
-    background: #1e3a2a;
+    background: #263A38;
     height: 4px;                                                                  
     transition: width 0.3s;
   }                                                                               
@@ -45,11 +45,11 @@
   }                                                                                                         
    
   .service-card:hover {                                                                                     
-    border-color: #1e3a2a;
+    border-color: #263A38;
   }                                                                                                         
                   
   .service-card.selected {                                                                                  
-    border: 2px solid #1e3a2a;
+    border: 2px solid #263A38;
   }
 
   .time-options {
@@ -68,9 +68,9 @@
   }                                                                                                         
                   
   .time-btn.selected {                                                                                      
-    background: #1e3a2a;
+    background: #263A38;
     color: white;                                                                                           
-    border-color: #1e3a2a;
+    border-color: #263A38;
   }
 
   .step-buttons {
@@ -87,7 +87,7 @@
   }                                                                                                         
                   
   .step-buttons button:last-child {
-    background: #1e3a2a;
+    background: #263A38;
     color: white;                                                                                           
     border: none;
     padding: 12px 24px;                                                                                     
