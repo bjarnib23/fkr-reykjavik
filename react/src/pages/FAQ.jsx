@@ -1,23 +1,27 @@
-import {useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import './FAQ.css'
 
 function FAQ() {
     const [faqs, setFaqs] = useState([])
+    const [pageTitle, setPageTitle] = useState('')
 
     useEffect(() => {
-        fetch('http://fkr-reykjavik.ddev.site/jsonapi/node/fkr_faq?sort=field_faq_weight', { cache: 'no-store' })         
-        .then(res => res.json())                                                                 
-        .then(data => setFaqs(data.data))
+        fetch('http://fkr-reykjavik.ddev.site/api/fkr/faq', { cache: 'no-store' })
+            .then(res => res.json())
+            .then(data => {
+                setPageTitle(data.page_title || '')
+                setFaqs(data.items)
+            })
     }, [])
 
     return (
         <main className="faq">
-            <h1>Spurt og svarað</h1>
+            <h1>{pageTitle}</h1>
             <div className="faq-grid">
-                {faqs.map(faq => (
-                    <div key={faq.id} className="faq-card">
-                        <h3>{faq.attributes.title}</h3>
-                        <div dangerouslySetInnerHTML={{ __html: faq.attributes.field_answer.value }} />
+                {faqs.map((faq, i) => (
+                    <div key={i} className="faq-card">
+                        <h3>{faq.question}</h3>
+                        <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
                     </div>
                 ))}
             </div>
