@@ -76,7 +76,8 @@ class ContentController extends ControllerBase {
         'body_text'  => $node->get('field_body_text')->value,
         'subtitle'   => $node->get('field_page_subtitle')->value,
         'cta_text'   => $node->get('field_cta_text')->value,
-        'image'      => $this->getImageUrl($node, 'field_page_image'),
+        'images'     => $this->getImageUrls($node, 'field_page_image'),
+        'slug'       => $node->get('field_slug')->value,
       ];
     }
 
@@ -160,20 +161,22 @@ class ContentController extends ControllerBase {
   }
 
   /**
-   * Resolves an image field to an absolute URL.
+   * Resolves an image field to an array of absolute URLs.
    */
-  private function getImageUrl($node, string $field_name): string {
+  private function getImageUrls($node, string $field_name): array {
     $field = $node->get($field_name);
     if ($field->isEmpty()) {
-      return '';
+      return [];
     }
 
-    $file = $field->first()->get('entity')->getTarget()?->getValue();
-    if (!$file) {
-      return '';
+    $urls = [];
+    foreach ($field as $item) {
+      $file = $item->get('entity')->getTarget()?->getValue();
+      if ($file) {
+        $urls[] = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+      }
     }
-
-    return \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+    return $urls;
   }
 
   private function cors(): array {

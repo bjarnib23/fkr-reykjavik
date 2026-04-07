@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
   import Footer from './components/Footer'
   import Home from './pages/Home'
   import Booking from './pages/booking/Booking'  
-  import FAQ from './pages/FAQ'                                                                       
+  import FAQ from './pages/FAQ'
+  import PriceList from './pages/PriceList'
 
                                                                     
   function App() {
@@ -16,7 +17,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
           <Route path="/ferlid" element={<p>Ferlið</p>} />
           <Route path="/algengar-spurningar" element={<FAQ />} />
           <Route path="/gjafabref" element={<p>Gjafabréf</p>} />
-          <Route path="/verdskra" element={<p>Verðskrá</p>} />
+          <Route path="/verdskra" element={<PriceList />} />
         </Routes>
         <Footer/>
       </BrowserRouter>
