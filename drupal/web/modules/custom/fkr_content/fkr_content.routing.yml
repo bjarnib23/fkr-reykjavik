@@ -29,3 +29,11 @@ fkr_content.settings:
   methods: [GET]
   requirements:
     _access: 'TRUE'
+
+fkr_content.services:
+  path: '/api/fkr/services'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::services'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'
