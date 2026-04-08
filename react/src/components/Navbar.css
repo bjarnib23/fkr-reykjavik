@@ -30,6 +30,12 @@
 
 .navbar-links a:hover,
   .navbar-links a.active {
-    color: #263A38;                                                 
+    color: #263A38;
     font-weight: 600;
-  } 
+  }
+
+.navbar-logo-img {
+    height: 48px;
+    width: auto;
+    display: block;
+}

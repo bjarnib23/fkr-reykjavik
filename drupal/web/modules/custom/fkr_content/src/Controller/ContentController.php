@@ -73,6 +73,7 @@ class ContentController extends ControllerBase {
     $result = [];
     foreach ($nodes as $node) {
       $result[$node->getTitle()] = [
+        'title'      => $node->getTitle(),
         'body_text'  => $node->get('field_body_text')->value,
         'subtitle'   => $node->get('field_page_subtitle')->value,
         'cta_text'   => $node->get('field_cta_text')->value,
@@ -157,6 +158,45 @@ class ContentController extends ControllerBase {
     return new JsonResponse([
       'grades' => array_map('strtoupper', $grades),
       'rows'   => $rows,
+    ], 200, $this->cors());
+  }
+
+  /**
+   * GET /api/fkr/settings
+   */
+  public function settings(): JsonResponse {
+    $nodes = $this->entityTypeManager->getStorage('node')->loadByProperties([
+      'type'   => 'site_settings',
+      'status' => 1,
+    ]);
+
+    if (empty($nodes)) {
+      return new JsonResponse([], 200, $this->cors());
+    }
+
+    $node = reset($nodes);
+
+    $logoUrl = '';
+    $logoField = $node->get('field_logo');
+    if (!$logoField->isEmpty()) {
+      $media = $logoField->first()->get('entity')->getTarget()?->getValue();
+      if ($media) {
+        $imageField = $media->get('field_media_image');
+        if (!$imageField->isEmpty()) {
+          $file = $imageField->first()->get('entity')->getTarget()?->getValue();
+          if ($file) {
+            $logoUrl = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+          }
+        }
+      }
+    }
+
+    return new JsonResponse([
+      'logo'           => $logoUrl,
+      'phone'          => $node->get('field_site_phone')->value,
+      'address'        => $node->get('field_site_address')->value,
+      'company_id'     => $node->get('field_company_id')->value,
+      'footer_heading' => $node->get('field_footer_heading')->value,
     ], 200, $this->cors());
   }
 
