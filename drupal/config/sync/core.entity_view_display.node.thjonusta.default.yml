@@ -1,0 +1,48 @@
+uuid: 9794ef1d-e201-47a5-a86f-3ca5f6bc94ca
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.thjonusta.field_lysing
+    - field.field.node.thjonusta.field_mynd
+    - field.field.node.thjonusta.field_weight
+    - node.type.thjonusta
+  module:
+    - user
+id: node.thjonusta.default
+targetEntityType: node
+bundle: thjonusta
+mode: default
+content:
+  field_lysing:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_mynd:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 118
+    region: content
+  field_weight:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 117
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

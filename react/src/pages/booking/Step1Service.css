@@ -1,22 +1,56 @@
-.service-options {                                               
-    display: flex;
-    flex-direction: column;
+.service-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     margin: 24px 0;
-  }
-                                                                   
-  .service-card {
-    border: 1px solid #ccc;                                        
-    padding: 16px;
+}
+
+.service-card {
+    border: 1px solid #ccc;
     cursor: pointer;
     border-radius: 8px;
-  }
-                                                                   
-  .service-card:hover {
-    border-color: #263A38;                                         
-  }               
+    overflow: hidden;
+    background: white;
+    transition: border-color 0.15s;
+    position: relative;
+}
 
-  .service-card.selected {                                         
+.service-card:hover {
+    border-color: #263A38;
+}
+
+.service-card.selected {
     border: 2px solid #263A38;
-    font-weight: 600;                                              
-  }   
+}
+
+.service-card-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.service-card-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.45);
+    color: white;
+    padding: 10px 14px;
+}
+
+.service-card-label strong {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.service-card-label-plain {
+    padding: 20px 14px;
+}
+
+.service-card-label-plain strong {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2c2c2c;
+}
