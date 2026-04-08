@@ -24,35 +24,26 @@
     transition: width 0.3s;
   }                                                                               
                   
-  .step-label {                                                                   
-    font-size: 13px;
-    color: #666;                                                                  
+  .step-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 32px;
   }
 
-  .service-options {                                                                                        
-    display: flex;                                                                                          
-    flex-direction: column;
-    gap: 12px;                                                                                              
-    margin: 24px 0;
-  }                                                                                                         
-   
-  .service-card {                                                                                           
-    border: 1px solid #ccc;
-    padding: 16px;
-    cursor: pointer;
-    border-radius: 8px;
-  }                                                                                                         
-   
-  .service-card:hover {                                                                                     
-    border-color: #263A38;
-  }                                                                                                         
-                  
-  .service-card.selected {                                                                                  
-    border: 2px solid #263A38;
+  .step-label {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
   }
 
-  .time-options {
+  .step-title {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+  }
+
+.time-options {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;                                                                                              
