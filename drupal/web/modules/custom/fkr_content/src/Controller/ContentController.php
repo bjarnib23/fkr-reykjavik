@@ -201,6 +201,46 @@ class ContentController extends ControllerBase {
   }
 
   /**
+   * GET /api/fkr/services
+   */
+  public function services(): JsonResponse {
+    $nids = $this->entityTypeManager->getStorage('node')->getQuery()
+      ->condition('type', 'thjonusta')
+      ->condition('status', 1)
+      ->sort('field_weight', 'ASC')
+      ->accessCheck(FALSE)
+      ->execute();
+
+    $nodes = $this->entityTypeManager->getStorage('node')->loadMultiple($nids);
+    $items = [];
+
+    foreach ($nodes as $node) {
+      $imageUrl = '';
+      $mediaField = $node->get('field_mynd');
+      if (!$mediaField->isEmpty()) {
+        $media = $mediaField->first()->get('entity')->getTarget()?->getValue();
+        if ($media) {
+          $imageField = $media->get('field_media_image');
+          if (!$imageField->isEmpty()) {
+            $file = $imageField->first()->get('entity')->getTarget()?->getValue();
+            if ($file) {
+              $imageUrl = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+            }
+          }
+        }
+      }
+      $items[] = [
+        'id'    => $node->id(),
+        'title' => $node->getTitle(),
+        'desc'  => $node->get('field_lysing')->value,
+        'image' => $imageUrl,
+      ];
+    }
+
+    return new JsonResponse($items, 200, $this->cors());
+  }
+
+  /**
    * Resolves an image field to an array of absolute URLs.
    */
   private function getImageUrls($node, string $field_name): array {
