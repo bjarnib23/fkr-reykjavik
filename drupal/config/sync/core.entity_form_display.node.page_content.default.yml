@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.page_content.field_cta_text
     - field.field.node.page_content.field_page_image
     - field.field.node.page_content.field_page_subtitle
+    - field.field.node.page_content.field_slug
     - image.style.thumbnail
     - node.type.page_content
   module:
@@ -52,6 +53,14 @@ content:
   field_page_subtitle:
     type: string_textfield
     weight: 121
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_slug:
+    type: string_textfield
+    weight: 125
     region: content
     settings:
       size: 60

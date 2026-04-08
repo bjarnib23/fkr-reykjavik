@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
   import Footer from './components/Footer'
   import Home from './pages/Home'
   import Booking from './pages/booking/Booking'  
+  import FAQ from './pages/FAQ'                                                                       
+
                                                                     
   function App() {
     return (                                                        
@@ -12,7 +14,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
           <Route path="/" element={<Home />} />
           <Route path="/boka-tima" element={<Booking />} />
           <Route path="/ferlid" element={<p>Ferlið</p>} />
-          <Route path="/algengar-spurningar" element={<p>Algengar spurningar</p>} />
+          <Route path="/algengar-spurningar" element={<FAQ />} />
           <Route path="/gjafabref" element={<p>Gjafabréf</p>} />
           <Route path="/verdskra" element={<p>Verðskrá</p>} />
         </Routes>

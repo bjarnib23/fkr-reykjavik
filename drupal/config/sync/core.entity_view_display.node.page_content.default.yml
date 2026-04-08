@@ -1,0 +1,36 @@
+uuid: 6af39189-06b7-499a-9479-89ec11b4610d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.page_content.field_body_text
+    - field.field.node.page_content.field_cta_text
+    - field.field.node.page_content.field_page_image
+    - field.field.node.page_content.field_page_subtitle
+    - field.field.node.page_content.field_slug
+    - node.type.page_content
+  module:
+    - user
+id: node.page_content.default
+targetEntityType: node
+bundle: page_content
+mode: default
+content:
+  field_slug:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_body_text: true
+  field_cta_text: true
+  field_page_image: true
+  field_page_subtitle: true

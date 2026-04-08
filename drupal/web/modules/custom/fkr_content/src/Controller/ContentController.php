@@ -104,7 +104,18 @@ class ContentController extends ControllerBase {
       ];
     }
 
-    return new JsonResponse($items, 200, $this->cors());
+    $pageNodes = $this->entityTypeManager->getStorage('node')->loadByProperties([
+      'type'       => 'page_content',
+      'field_slug' => 'faq',
+      'status'     => 1,
+    ]);
+    $pageNode = reset($pageNodes);
+    $pageTitle = $pageNode ? $pageNode->get('field_page_subtitle')->value : '';
+
+    return new JsonResponse([
+      'page_title' => $pageTitle,
+      'items'      => $items,
+    ], 200, $this->cors());
   }
 
   /**
