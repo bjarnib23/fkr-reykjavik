@@ -1,12 +1,21 @@
+import { useState, useEffect } from 'react'
 import './Footer.css'
 
 function Footer() {
-    return(
+    const [settings, setSettings] = useState({})
+
+    useEffect(() => {
+        fetch('http://fkr-reykjavik.ddev.site/api/fkr/settings', { cache: 'no-store' })
+            .then(res => res.json())
+            .then(data => setSettings(data))
+    }, [])
+
+    return (
         <footer className="footer">
-            <p><strong>Upplýsingar</strong></p>
-            <p>Fossvogur, Reykjavík</p>
-            <p>kt: 550825-0150</p>                                      
-            <p>Sími: 691 0040</p>
+            {settings.footer_heading && <p><strong>{settings.footer_heading}</strong></p>}
+            {settings.address && <p>{settings.address}</p>}
+            {settings.company_id && <p>{settings.company_id}</p>}
+            {settings.phone && <p>{settings.phone}</p>}
         </footer>
     )
 }

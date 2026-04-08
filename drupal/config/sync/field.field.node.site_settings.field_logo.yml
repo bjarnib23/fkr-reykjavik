@@ -1,0 +1,29 @@
+uuid: 3ceb759a-ef13-49fd-98a6-53a88466008e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_logo
+    - media.type.image
+    - node.type.site_settings
+id: node.site_settings.field_logo
+field_name: field_logo
+entity_type: node
+bundle: site_settings
+label: Logo
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

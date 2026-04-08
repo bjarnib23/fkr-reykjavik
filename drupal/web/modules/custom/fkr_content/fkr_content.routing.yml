@@ -21,3 +21,11 @@ fkr_content.pricelist:
   methods: [GET]
   requirements:
     _access: 'TRUE'
+
+fkr_content.settings:
+  path: '/api/fkr/settings'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::settings'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'

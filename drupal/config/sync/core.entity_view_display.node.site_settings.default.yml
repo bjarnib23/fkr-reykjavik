@@ -1,0 +1,65 @@
+uuid: 22fd449a-d1f7-42ee-a121-378eee46049b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.site_settings.field_company_id
+    - field.field.node.site_settings.field_footer_heading
+    - field.field.node.site_settings.field_logo
+    - field.field.node.site_settings.field_site_address
+    - field.field.node.site_settings.field_site_phone
+    - node.type.site_settings
+  module:
+    - user
+id: node.site_settings.default
+targetEntityType: node
+bundle: site_settings
+mode: default
+content:
+  field_company_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_footer_heading:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_logo:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_site_address:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_site_phone:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }
