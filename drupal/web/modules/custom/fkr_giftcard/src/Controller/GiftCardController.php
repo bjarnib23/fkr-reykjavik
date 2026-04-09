@@ -2,12 +2,15 @@
 
 namespace Drupal\fkr_giftcard\Controller;
 
+use Drupal\commerce_cart\CartSession;
+use Drupal\commerce_cart\CartSessionInterface;
 use Drupal\commerce_order\Entity\Order;
 use Drupal\commerce_order\Entity\OrderItem;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -15,12 +18,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GiftCardController extends ControllerBase {
 
-  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(
+    EntityTypeManagerInterface $entity_type_manager,
+    CartSessionInterface $cart_session,
+  ) {
     $this->entityTypeManager = $entity_type_manager;
+    $this->cartSession = $cart_session;
   }
 
   public static function create(ContainerInterface $container): static {
-    return new static($container->get('entity_type.manager'));
+    return new static(
+      $container->get('entity_type.manager'),
+      $container->get('commerce_cart.cart_session'),
+    );
   }
 
   /**
@@ -114,9 +124,31 @@ class GiftCardController extends ControllerBase {
     $order->save();
 
     $checkout_url = \Drupal::request()->getSchemeAndHttpHost()
-      . '/checkout/' . $order->id();
+      . '/checkout/giftcard/start/' . $order->id();
 
     return new JsonResponse(['checkout_url' => $checkout_url], 200, $this->cors());
+  }
+
+  /**
+   * GET /checkout/giftcard/start/{order_id}
+   * Adds the order to the browser cart session then redirects to Commerce checkout.
+   */
+  public function startCheckout(int $order_id): RedirectResponse {
+    $order = $this->entityTypeManager->getStorage('commerce_order')->load($order_id);
+
+    if ($order && $order->getState()->getId() !== 'canceled') {
+      $current_user = \Drupal::currentUser();
+      if ($current_user->isAuthenticated() && $order->getCustomerId() == 0) {
+        $order->setCustomerId($current_user->id());
+        $order->save();
+      }
+      else {
+        $this->cartSession->addCartId($order_id, CartSession::ACTIVE);
+      }
+      \Drupal\Core\Cache\Cache::invalidateTags($order->getCacheTagsToInvalidate());
+    }
+
+    return new RedirectResponse('/checkout/' . $order_id);
   }
 
   private function cors(): array {
