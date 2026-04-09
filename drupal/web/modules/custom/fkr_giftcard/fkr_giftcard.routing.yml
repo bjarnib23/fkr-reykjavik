@@ -13,3 +13,12 @@ fkr_giftcard.checkout:
   methods: [POST, OPTIONS]
   requirements:
     _access: 'TRUE'
+
+fkr_giftcard.start_checkout:
+  path: '/checkout/giftcard/start/{order_id}'
+  defaults:
+    _controller: '\Drupal\fkr_giftcard\Controller\GiftCardController::startCheckout'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'
+    order_id: '\d+'

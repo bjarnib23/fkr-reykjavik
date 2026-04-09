@@ -2,7 +2,9 @@
 
 namespace Drupal\commerce_valitor\Plugin\Commerce\PaymentGateway;
 
+use Drupal\commerce_payment\CreditCard;
 use Drupal\commerce_payment\Entity\PaymentInterface;
+use Drupal\commerce_payment\Entity\PaymentMethodInterface;
 
 /**
  * Provides the VALITOR payment gateway.
@@ -27,6 +29,20 @@ use Drupal\commerce_payment\Entity\PaymentInterface;
  * )
  */
 class ValitorMock extends Valitor {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function createPaymentMethod(PaymentMethodInterface $payment_method, array $payment_details) {
+    $payment_method->card_type = $payment_details['type'];
+    $payment_method->card_number = substr($payment_details['number'], -4);
+    $payment_method->card_exp_month = $payment_details['expiration']['month'];
+    $payment_method->card_exp_year = $payment_details['expiration']['year'];
+    $expires = CreditCard::calculateExpirationTimestamp($payment_details['expiration']['month'], $payment_details['expiration']['year']);
+    $payment_method->setRemoteId('mock-' . $payment_details['number']);
+    $payment_method->setExpiresTime($expires);
+    $payment_method->save();
+  }
 
   /**
    * {@inheritdoc}
