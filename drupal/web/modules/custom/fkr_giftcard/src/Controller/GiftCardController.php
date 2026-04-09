@@ -6,12 +6,15 @@ use Drupal\commerce_cart\CartSession;
 use Drupal\commerce_cart\CartSessionInterface;
 use Drupal\commerce_order\Entity\Order;
 use Drupal\commerce_order\Entity\OrderItem;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Handles gift card checkout via Commerce + Valitor.
@@ -21,15 +24,21 @@ class GiftCardController extends ControllerBase {
   public function __construct(
     EntityTypeManagerInterface $entity_type_manager,
     CartSessionInterface $cart_session,
+    AccountProxyInterface $current_user,
+    RequestStack $request_stack,
   ) {
     $this->entityTypeManager = $entity_type_manager;
     $this->cartSession = $cart_session;
+    $this->currentUser = $current_user;
+    $this->requestStack = $request_stack;
   }
 
   public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('entity_type.manager'),
       $container->get('commerce_cart.cart_session'),
+      $container->get('current_user'),
+      $container->get('request_stack'),
     );
   }
 
@@ -45,7 +54,7 @@ class GiftCardController extends ControllerBase {
     foreach ($variations as $variation) {
       $sku = $variation->getSku();
       if (strpos($sku, 'GJAFABREF-') === 0) {
-        $amount = (int) str_replace('GJAFABREF-', '', $sku);
+        $amount    = (int) str_replace('GJAFABREF-', '', $sku);
         $amounts[] = [
           'sku'    => $sku,
           'amount' => $amount,
@@ -78,7 +87,6 @@ class GiftCardController extends ControllerBase {
       }
     }
 
-    // Find the product variation by SKU.
     $variations = $this->entityTypeManager->getStorage('commerce_product_variation')
       ->loadByProperties(['sku' => $data['sku'], 'status' => 1]);
 
@@ -88,20 +96,17 @@ class GiftCardController extends ControllerBase {
 
     $variation = reset($variations);
 
-    // Load the store.
     $stores = $this->entityTypeManager->getStorage('commerce_store')->loadMultiple();
-    $store = reset($stores);
+    $store  = reset($stores);
 
-    // Create the order item.
     $order_item = OrderItem::create([
-      'type'              => 'default',
-      'purchased_entity'  => $variation,
-      'quantity'          => 1,
-      'unit_price'        => $variation->getPrice(),
+      'type'             => 'default',
+      'purchased_entity' => $variation,
+      'quantity'         => 1,
+      'unit_price'       => $variation->getPrice(),
     ]);
     $order_item->save();
 
-    // Store gift card details in the order item title.
     $gift_info = sprintf(
       'Kaupandi: %s | Viðtakandi: %s | Sími: %s | Athugasemd: %s',
       $data['buyer_name'],
@@ -110,7 +115,6 @@ class GiftCardController extends ControllerBase {
       $data['notes'] ?? ''
     );
 
-    // Create the Commerce order (guest checkout).
     $order = Order::create([
       'type'        => 'default',
       'state'       => 'draft',
@@ -123,8 +127,8 @@ class GiftCardController extends ControllerBase {
     ]);
     $order->save();
 
-    $checkout_url = \Drupal::request()->getSchemeAndHttpHost()
-      . '/checkout/giftcard/start/' . $order->id();
+    $base_url    = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
+    $checkout_url = $base_url . '/checkout/giftcard/start/' . $order->id();
 
     return new JsonResponse(['checkout_url' => $checkout_url], 200, $this->cors());
   }
@@ -137,15 +141,14 @@ class GiftCardController extends ControllerBase {
     $order = $this->entityTypeManager->getStorage('commerce_order')->load($order_id);
 
     if ($order && $order->getState()->getId() !== 'canceled') {
-      $current_user = \Drupal::currentUser();
-      if ($current_user->isAuthenticated() && $order->getCustomerId() == 0) {
-        $order->setCustomerId($current_user->id());
+      if ($this->currentUser->isAuthenticated() && $order->getCustomerId() == 0) {
+        $order->setCustomerId($this->currentUser->id());
         $order->save();
       }
       else {
         $this->cartSession->addCartId($order_id, CartSession::ACTIVE);
       }
-      \Drupal\Core\Cache\Cache::invalidateTags($order->getCacheTagsToInvalidate());
+      Cache::invalidateTags($order->getCacheTagsToInvalidate());
     }
 
     return new RedirectResponse('/checkout/' . $order_id);
