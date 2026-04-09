@@ -1,0 +1,41 @@
+<div id="availability-calendar" data-week="{{ week_offset }}">
+  <div class="cal-nav">
+    <a href="?week={{ prev }}" class="button">&#8592; Previous week</a>
+    <a href="?week={{ next }}" class="button">Next week &#8594;</a>
+  </div>
+
+  <table class="cal-table">
+    <thead>
+      <tr>
+        <th>Time</th>
+        {% for day in days %}
+          <th>{{ day.label }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for time in time_slots %}
+        <tr>
+          <td class="cal-time">{{ time }}</td>
+          {% for day in days %}
+            {% set slot = day.slot_map[time] %}
+            {% set status = slot.status %}
+            {% set label = status == 'booked' ? (slot.customer ?: 'Booked') : status|capitalize %}
+            {% set clickable = status != 'booked' ? 'cal-clickable' : '' %}
+            <td class="cal-slot cal-{{ status }} {{ clickable }}"
+                data-datetime="{{ day.date }}T{{ time }}:00"
+                title="{{ label }}">
+              <span>{{ label }}</span>
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="cal-legend">
+    <span class="cal-slot cal-closed">Closed</span>
+    <span class="cal-slot cal-available">Available</span>
+    <span class="cal-slot cal-booked">Booked</span>
+  </div>
+</div>

@@ -48,61 +48,37 @@ class AvailabilityController extends ControllerBase {
       $monday->modify("$week_offset weeks");
     }
 
+    $time_slots = $this->generateTimeSlots();
     $days = [];
+
     for ($i = 0; $i < 7; $i++) {
       $day = clone $monday;
       $day->modify("+$i days");
       $date_str = $day->format('Y-m-d');
+      $slots = $this->getSlotsForDate($date_str);
+
+      // Index slots by time for easy lookup in the template.
+      $slot_map = [];
+      foreach ($slots as $slot) {
+        $slot_map[$slot['time']] = $slot;
+      }
+
       $days[] = [
-        'date'  => $date_str,
-        'label' => $day->format('D d/m'),
-        'slots' => $this->getSlotsForDate($date_str),
+        'date'     => $date_str,
+        'label'    => $day->format('D d/m'),
+        'slots'    => $slots,
+        'slot_map' => $slot_map,
       ];
     }
 
-    $time_slots = $this->generateTimeSlots();
-    $prev = $week_offset - 1;
-    $next = $week_offset + 1;
-
-    $html  = '<div id="availability-calendar" data-week="' . $week_offset . '">';
-    $html .= '<div class="cal-nav">';
-    $html .= '<a href="?week=' . $prev . '" class="button">&#8592; Previous week</a>';
-    $html .= '<a href="?week=' . $next . '" class="button">Next week &#8594;</a>';
-    $html .= '</div>';
-    $html .= '<table class="cal-table"><thead><tr><th>Time</th>';
-
-    foreach ($days as $day) {
-      $html .= '<th>' . $day['label'] . '</th>';
-    }
-    $html .= '</tr></thead><tbody>';
-
-    foreach ($time_slots as $time) {
-      $html .= '<tr><td class="cal-time">' . $time . '</td>';
-      foreach ($days as $day) {
-        $slot = $this->findSlot($day['slots'], $time);
-        $status = $slot['status'];
-        $datetime = $day['date'] . 'T' . $time . ':00';
-        $label = $status === 'booked' ? ($slot['customer'] ?? 'Booked') : ucfirst($status);
-        $clickable = $status !== 'booked' ? 'cal-clickable' : '';
-        $html .= '<td class="cal-slot cal-' . $status . ' ' . $clickable . '" ';
-        $html .= 'data-datetime="' . $datetime . '" title="' . $label . '">';
-        $html .= '<span>' . $label . '</span>';
-        $html .= '</td>';
-      }
-      $html .= '</tr>';
-    }
-
-    $html .= '</tbody></table>';
-    $html .= '<div class="cal-legend">';
-    $html .= '<span class="cal-slot cal-closed">Closed</span>';
-    $html .= '<span class="cal-slot cal-available">Available</span>';
-    $html .= '<span class="cal-slot cal-booked">Booked</span>';
-    $html .= '</div>';
-    $html .= '</div>';
-
     return [
-      '#markup' => $html,
-      '#attached' => [
+      '#theme'       => 'fkr_availability_calendar',
+      '#week_offset' => $week_offset,
+      '#prev'        => $week_offset - 1,
+      '#next'        => $week_offset + 1,
+      '#days'        => $days,
+      '#time_slots'  => $time_slots,
+      '#attached'    => [
         'library' => ['fkr_booking/availability_calendar'],
       ],
     ];
@@ -126,7 +102,7 @@ class AvailabilityController extends ControllerBase {
     $storage = $this->entityTypeManager->getStorage('node');
 
     $bookings = $storage->loadByProperties([
-      'type' => 'fkr_booking',
+      'type'             => 'fkr_booking',
       'field_dagsetning' => $datetime,
     ]);
 
@@ -135,7 +111,7 @@ class AvailabilityController extends ControllerBase {
     }
 
     $existing = $storage->loadByProperties([
-      'type' => 'fkr_availability',
+      'type'                 => 'fkr_availability',
       'field_available_time' => $datetime,
     ]);
 
@@ -158,37 +134,50 @@ class AvailabilityController extends ControllerBase {
   }
 
   /**
-   * Returns all 12 slots for a given date with their status.
+   * Returns all slots for a given date with their status.
    */
   private function getSlotsForDate(string $date): array {
     $storage = $this->entityTypeManager->getStorage('node');
-    $slots = [];
+    $time_slots = $this->generateTimeSlots();
 
-    foreach ($this->generateTimeSlots() as $time) {
+    // Build all datetimes for this date.
+    $datetimes = array_map(fn($t) => $date . 'T' . $t . ':00', $time_slots);
+
+    // Batch load all availability and bookings for the day.
+    $availability_nids = $storage->getQuery()
+      ->condition('type', 'fkr_availability')
+      ->condition('field_available_time', $datetimes, 'IN')
+      ->accessCheck(FALSE)
+      ->execute();
+
+    $booking_nids = $storage->getQuery()
+      ->condition('type', 'fkr_booking')
+      ->condition('field_dagsetning', $datetimes, 'IN')
+      ->accessCheck(FALSE)
+      ->execute();
+
+    $available_times = [];
+    foreach ($storage->loadMultiple($availability_nids) as $node) {
+      $available_times[] = $node->get('field_available_time')->value;
+    }
+
+    $booked_times = [];
+    foreach ($storage->loadMultiple($booking_nids) as $node) {
+      $booked_times[$node->get('field_dagsetning')->value] = $node->getTitle();
+    }
+
+    $slots = [];
+    foreach ($time_slots as $time) {
       $datetime = $date . 'T' . $time . ':00';
 
-      $availability = $storage->loadByProperties([
-        'type'                 => 'fkr_availability',
-        'field_available_time' => $datetime,
-      ]);
-
-      if (empty($availability)) {
+      if (!in_array($datetime, $available_times)) {
         $slots[] = ['time' => $time, 'status' => 'closed'];
-        continue;
       }
-
-      $bookings = $storage->loadByProperties([
-        'type'             => 'fkr_booking',
-        'field_dagsetning' => $datetime,
-      ]);
-
-      if (!empty($bookings)) {
-        $booking = reset($bookings);
+      elseif (isset($booked_times[$datetime])) {
         $slots[] = [
-          'time'       => $time,
-          'status'     => 'booked',
-          'booking_id' => $booking->id(),
-          'customer'   => $booking->getTitle(),
+          'time'     => $time,
+          'status'   => 'booked',
+          'customer' => $booked_times[$datetime],
         ];
       }
       else {
@@ -210,15 +199,6 @@ class AvailabilityController extends ControllerBase {
       $slots[] = date('H:i', $t);
     }
     return $slots;
-  }
-
-  private function findSlot(array $slots, string $time): array {
-    foreach ($slots as $slot) {
-      if ($slot['time'] === $time) {
-        return $slot;
-      }
-    }
-    return ['time' => $time, 'status' => 'closed'];
   }
 
   private function corsHeaders(): array {
