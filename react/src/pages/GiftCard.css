@@ -1,0 +1,211 @@
+.giftcard {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 40px;
+}
+
+.giftcard-hero {
+  text-align: center;
+  margin-bottom: 72px;
+}
+
+.giftcard-hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 56px;
+  font-weight: 400;
+  color: var(--green);
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+}
+
+.giftcard-hero p {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 16px;
+}
+
+.giftcard-body {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 72px;
+  align-items: start;
+}
+
+.giftcard-text h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 400;
+  color: var(--green);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.giftcard-text p {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+/* Gift card visual */
+.giftcard-visual {
+  background: var(--green);
+  color: var(--bg);
+  border-radius: var(--radius-lg);
+  padding: 40px 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 32px;
+  min-height: 160px;
+  justify-content: flex-end;
+}
+
+.giftcard-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 300;
+  letter-spacing: 8px;
+  line-height: 1;
+}
+
+.giftcard-sub {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* Form */
+.giftcard-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.form-section-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  margin-bottom: 12px;
+  margin-top: 8px;
+}
+
+.amount-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.amount-btn {
+  padding: 10px 20px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: var(--radius);
+  color: var(--text);
+  transition: all 0.15s;
+  font-family: 'Inter', sans-serif;
+}
+
+.amount-btn:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.amount-btn.selected {
+  background: var(--green);
+  color: var(--bg);
+  border-color: var(--green);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.form-field label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--muted);
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--white);
+  color: var(--text);
+  transition: border-color 0.15s;
+  outline: none;
+  margin-bottom: 0;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: var(--green);
+}
+
+.form-field textarea {
+  resize: vertical;
+}
+
+.form-error {
+  color: #b04040;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.giftcard-submit {
+  width: 100%;
+  padding: 14px;
+  background: var(--green);
+  color: var(--bg);
+  border: 1px solid var(--green);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+  font-family: 'Inter', sans-serif;
+}
+
+.giftcard-submit:hover:not(:disabled) {
+  background: transparent;
+  color: var(--green);
+}
+
+.giftcard-submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 860px) {
+  .giftcard-body {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .giftcard {
+    padding: 60px 20px;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

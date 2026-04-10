@@ -1,97 +1,163 @@
-.booking-wrapper {                                                              
-    max-width: 600px;                                                             
-    margin: 60px auto;
-    padding: 0 24px;                                                              
-  }               
+.booking-wrapper {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 72px 24px 80px;
+}
 
-  .booking-wrapper h1 {                                                           
-    text-align: center;
-    font-size: 36px;                                                              
-    letter-spacing: 4px;
-    margin-bottom: 24px;
-  }                                                                               
-   
-  .progress-bar {                                                                 
-    background: #ddd;
-    height: 4px;
-    border-radius: 2px;
-    margin-bottom: 8px;
-  }                                                                               
-   
-  .progress-fill {                                                                
-    background: #263A38;
-    height: 4px;                                                                  
-    transition: width 0.3s;
-  }                                                                               
-                  
-  .step-label-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 32px;
-  }
+.booking-wrapper h1 {
+  font-family: 'Cormorant Garamond', serif;
+  text-align: center;
+  font-size: 52px;
+  font-weight: 400;
+  letter-spacing: 6px;
+  margin-bottom: 40px;
+  color: var(--green);
+}
 
-  .step-label {
-    font-size: 13px;
-    color: #666;
-    margin: 0;
-  }
+.progress-bar {
+  background: var(--border);
+  height: 2px;
+  margin-bottom: 12px;
+}
 
-  .step-title {
-    font-size: 13px;
-    color: #666;
-    margin: 0;
-  }
+.progress-fill {
+  background: var(--green);
+  height: 2px;
+  transition: width 0.4s ease;
+}
 
+.step-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 48px;
+}
+
+.step-label,
+.step-title {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Step headings */
+.booking-wrapper h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+
+.booking-wrapper > div > p {
+  color: var(--muted);
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+/* Time slots */
 .time-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;                                                                                              
-    margin: 16px 0;
-  }                                                                                                         
-                  
-  .time-btn {
-    padding: 12px 20px;
-    border: 1px solid #ccc;
-    background: white;                                                                                      
-    cursor: pointer;                                                                                        
-    border-radius: 8px;                                                                                     
-  }                                                                                                         
-                  
-  .time-btn.selected {                                                                                      
-    background: #263A38;
-    color: white;                                                                                           
-    border-color: #263A38;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
 
-  .step-buttons {
-    display: flex;
-    gap: 12px;
-    margin-top: 32px;                                                                                       
+.time-btn {
+  padding: 10px 22px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  cursor: pointer;
+  border-radius: var(--radius);
+  font-size: 14px;
+  transition: all 0.15s;
+  color: var(--text);
+}
+
+.time-btn:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.time-btn.selected {
+  background: var(--green);
+  color: var(--bg);
+  border-color: var(--green);
+}
+
+/* Navigation buttons */
+.step-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.step-buttons button {
+  padding: 13px 28px;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.step-buttons button:last-child {
+  background: var(--green);
+  color: var(--bg);
+  border-color: var(--green);
+  flex: 1;
+}
+
+.step-buttons button:last-child:hover:not(:disabled) {
+  background: var(--green-mid);
+}
+
+.step-buttons button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.step-buttons button:first-child:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+/* Inputs */
+input,
+textarea {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-family: inherit;
+  margin-bottom: 14px;
+  background: var(--white);
+  color: var(--text);
+  transition: border-color 0.15s;
+  outline: none;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--green);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #aaa;
+}
+
+@media (max-width: 600px) {
+  .booking-wrapper {
+    padding: 48px 20px 60px;
   }
-                                                                                                            
-  .step-buttons button:first-child {
-    background: white;
-    border: 1px solid #ccc;
-    padding: 12px 24px;                                                                                     
-    cursor: pointer;
-  }                                                                                                         
-                  
-  .step-buttons button:last-child {
-    background: #263A38;
-    color: white;                                                                                           
-    border: none;
-    padding: 12px 24px;                                                                                     
-    cursor: pointer;
-    flex: 1;                                                                                                
-  }                                                                                                         
-   
-  input, textarea {                                                                                         
-    width: 100%;  
-    padding: 12px;                                                                                          
-    border: 1px solid #ccc;
-    font-size: 15px;
-    font-family: inherit;                                                                                   
-    margin-bottom: 12px;                                                                                    
-    background: white;                                                                                      
-  }                   
+  .booking-wrapper h1 {
+    font-size: 40px;
+    letter-spacing: 4px;
+  }
+}

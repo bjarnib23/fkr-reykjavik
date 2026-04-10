@@ -1,23 +1,98 @@
-  .hero {
-    background: #263A38;                                            
-    color: #F4EDED;     
-    text-align: center;                                             
-    padding: 100px 48px;
-  }                     
-   
+.hero {
+  background: var(--green);
+  color: var(--bg);
+  text-align: center;
+  padding: 140px 48px 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 48px;
+  background: var(--bg);
+  opacity: 0.4;
+}
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 120px;
+  font-weight: 300;
+  letter-spacing: 16px;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.hero-sub {
+  font-size: 11px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.hero-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 300;
+  font-style: italic;
+  opacity: 0.85;
+  letter-spacing: 1px;
+}
+
+.intro {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 100px 48px;
+  text-align: center;
+}
+
+.intro h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  color: var(--green);
+}
+
+.intro p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 40px;
+}
+
+.intro a {
+  display: inline-block;
+  background: var(--green);
+  color: var(--bg);
+  padding: 14px 40px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: 1px solid var(--green);
+  transition: background 0.2s, color 0.2s;
+}
+
+.intro a:hover {
+  background: transparent;
+  color: var(--green);
+}
+
+@media (max-width: 700px) {
   .hero h1 {
-    font-size: 96px;
-    letter-spacing: 8px;
-  }                                                                 
-   
-  .intro {                                                          
-    padding: 80px 48px;
-  }                    
-   
-  .intro a {
-    display: inline-block;
-    background: #263A38;  
-    color: #F4EDED;                                                 
-    padding: 12px 28px;
-    margin-top: 16px;                                               
-  } 
+    font-size: 72px;
+    letter-spacing: 10px;
+  }
+  .hero {
+    padding: 100px 24px 80px;
+  }
+  .intro {
+    padding: 60px 24px;
+  }
+}

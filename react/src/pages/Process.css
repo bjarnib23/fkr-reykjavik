@@ -1,0 +1,110 @@
+.process {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 80px 24px;
+}
+
+.process-hero {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.process-hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 56px;
+  font-weight: 400;
+  color: var(--green);
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+}
+
+.process-hero p {
+  color: var(--muted);
+  font-size: 15px;
+  font-style: italic;
+}
+
+.process-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--border);
+}
+
+.process-step {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 32px;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+
+.step-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--border);
+  line-height: 1;
+  padding-top: 4px;
+}
+
+.step-body h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--green);
+  margin-bottom: 10px;
+}
+
+.step-body p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.process-cta {
+  text-align: center;
+  margin-top: 80px;
+  padding: 64px 40px;
+  background: var(--green);
+  color: var(--bg);
+  border-radius: var(--radius-lg);
+}
+
+.process-cta h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 400;
+  margin-bottom: 28px;
+  letter-spacing: 1px;
+}
+
+.process-cta a {
+  display: inline-block;
+  border: 1px solid var(--bg);
+  color: var(--bg);
+  padding: 13px 40px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+.process-cta a:hover {
+  background: var(--bg);
+  color: var(--green);
+}
+
+@media (max-width: 600px) {
+  .process {
+    padding: 60px 20px;
+  }
+  .process-step {
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+  }
+  .step-num {
+    font-size: 28px;
+  }
+}

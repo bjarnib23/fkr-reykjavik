@@ -1,55 +1,82 @@
-  .calendar {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 16px;
-    margin: 16px 0;
-  }
+.calendar {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin: 16px 0;
+  background: var(--white);
+}
 
-  .calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
-  .calendar-header button {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    padding: 0 8px;
-  }
+.calendar-header span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--green);
+  letter-spacing: 0.5px;
+}
 
-  .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-  }
+.calendar-header button {
+  background: none;
+  border: 1px solid var(--border);
+  font-size: 16px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  color: var(--text);
+  transition: all 0.15s;
+}
 
-  .calendar-day-label {
-    text-align: center;
-    font-size: 12px;
-    color: #666;
-    padding: 4px;
-  }
+.calendar-header button:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
 
-  .calendar-cell {
-    text-align: center;
-    padding: 8px 4px;
-    cursor: pointer;
-    border-radius: 4px;
-  }
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
 
-  .calendar-cell:hover {
-    background: #f0f0f0;
-  }
+.calendar-day-label {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  padding: 6px 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
 
-  .calendar-cell.selected {
-    background: #263A38;
-    color: white;
-    border-radius: 50%;
-  }
+.calendar-cell {
+  text-align: center;
+  padding: 9px 4px;
+  cursor: pointer;
+  border-radius: var(--radius);
+  font-size: 13px;
+  transition: background 0.15s, color 0.15s;
+}
 
-  .calendar-cell.empty {
-    cursor: default;
-  }
+.calendar-cell:hover:not(.empty) {
+  background: var(--bg-alt);
+  color: var(--green);
+}
+
+.calendar-cell.selected {
+  background: var(--green);
+  color: var(--bg);
+  border-radius: 50%;
+  font-weight: 500;
+}
+
+.calendar-cell.empty {
+  cursor: default;
+}

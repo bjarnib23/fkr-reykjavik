@@ -5,6 +5,7 @@ namespace Drupal\commerce_valitor\Plugin\Commerce\PaymentGateway;
 use Drupal\commerce_payment\CreditCard;
 use Drupal\commerce_payment\Entity\PaymentInterface;
 use Drupal\commerce_payment\Entity\PaymentMethodInterface;
+use Drupal\commerce_price\Price;
 
 /**
  * Provides the VALITOR payment gateway.
@@ -55,6 +56,20 @@ class ValitorMock extends Valitor {
     $payment->setState('completed');
     $payment->setRemoteId('123456789012|123456|123456');
     $payment->setAuthorizedTime($this->time->getRequestTime());
+    $payment->save();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function refundPayment(PaymentInterface $payment, ?Price $amount = NULL) {
+    $this->assertPaymentState($payment, ['completed', 'partially_refunded']);
+    $amount = $amount ?: $payment->getAmount();
+    $old_refunded = $payment->getRefundedAmount();
+    $new_refunded = $old_refunded ? $old_refunded->add($amount) : $amount;
+    $state = $new_refunded->lessThan($payment->getAmount()) ? 'partially_refunded' : 'refunded';
+    $payment->setRefundedAmount($new_refunded);
+    $payment->setState($state);
     $payment->save();
   }
 

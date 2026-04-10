@@ -1,72 +1,92 @@
 .review-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 24px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 28px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
 
 .review-table td {
-    padding: 14px 20px;
-    border-bottom: 1px solid #e0e0e0;
-    font-size: 15px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
 }
 
 .review-table tr:last-child td {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .review-table td:first-child {
-    color: #555;
-    width: 40%;
+  color: var(--muted);
+  width: 38%;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.review-table td:last-child {
+  font-weight: 500;
+  color: var(--text);
 }
 
 .review-notes {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.review-notes label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
 }
 
 .review-notes textarea {
-    width: 100%;
-    height: 100px;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 15px;
-    resize: vertical;
-    box-sizing: border-box;
+  width: 100%;
+  height: 100px;
+  resize: vertical;
 }
 
 .review-confirmation {
-    text-align: center;
-    padding: 48px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
+  text-align: center;
+  padding: 64px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
 .review-confirmation h2 {
-    font-size: 2rem;
-    color: #263A38;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--green);
 }
 
 .review-confirmation p {
-    max-width: 400px;
-    color: #555;
-    line-height: 1.6;
+  max-width: 380px;
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 14px;
 }
 
 .review-confirmation button {
-    margin-top: 8px;
-    padding: 12px 32px;
-    background: #263A38;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
+  margin-top: 8px;
+  padding: 13px 40px;
+  background: var(--green);
+  color: var(--bg);
+  border: 1px solid var(--green);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.review-confirmation button:hover {
+  background: transparent;
+  color: var(--green);
 }

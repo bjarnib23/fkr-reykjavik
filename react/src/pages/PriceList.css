@@ -1,95 +1,127 @@
 .pricelist {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 40px;
 }
 
 .pricelist-hero {
-    display: grid;
-    grid-template-columns: 55% 1fr;
-    gap: 48px;
-    margin-bottom: 48px;
-    align-items: start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  margin-bottom: 72px;
+  align-items: center;
 }
 
 .pricelist-carousel {
-    position: relative;
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
 
 .pricelist-carousel img {
-    width: 58%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    clip-path: inset(0 0 10% 0);
-    display: block;
-    margin: 0 auto;
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  display: block;
 }
 
 .carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    color: white;
-    border: none;
-    font-size: 20px;
-    padding: 8px 14px;
-    cursor: pointer;
-    line-height: 1;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(38, 58, 56, 0.6);
+  color: var(--bg);
+  border: none;
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .carousel-btn:hover {
-    background: rgba(0,0,0,0.4);
-    color: white;
+  background: rgba(38, 58, 56, 0.9);
 }
 
-.carousel-btn.prev { left: 21%; }
-.carousel-btn.next { right: 21%; }
+.carousel-btn.prev { left: 16px; }
+.carousel-btn.next { right: 16px; }
 
 .pricelist-hero-text h1 {
-    margin-bottom: 24px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 400;
+  color: var(--green);
+  margin-bottom: 24px;
+  line-height: 1.1;
 }
 
 .pricelist-hero-text p {
-    margin-bottom: 16px;
-    line-height: 1.6;
-    font-size: 18px;
-}
-
-.pricelist-intro {
-    margin-bottom: 32px;
-    line-height: 1.6;
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 15px;
+  margin-bottom: 16px;
 }
 
 .pricelist-table-wrapper {
-    overflow-x: auto;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
 }
 
 .pricelist-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
 }
 
 .pricelist-table th,
 .pricelist-table td {
-    padding: 10px 12px;
-    text-align: left;
-    border-bottom: 1px solid #e0e0e0;
-    white-space: nowrap;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.pricelist-table tr:last-child td {
+  border-bottom: none;
 }
 
 .pricelist-table thead th {
-    background: #263A38;
-    color: #F4EDED;
-    font-weight: 600;
+  background: var(--green);
+  color: var(--bg);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+}
+
+.pricelist-table tbody tr:nth-child(even) {
+  background: var(--bg-alt);
 }
 
 .pricelist-table tbody tr:hover {
-    background: #F4EDED;
+  background: #e8e0d8;
 }
 
 .pricelist-table td:first-child {
-    font-weight: 500;
+  font-weight: 500;
+  color: var(--green);
+}
+
+@media (max-width: 900px) {
+  .pricelist-hero {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .pricelist {
+    padding: 60px 20px;
+  }
+  .pricelist-carousel img {
+    height: 300px;
+  }
 }

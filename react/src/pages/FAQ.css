@@ -1,35 +1,58 @@
-.faq {                                                                                              
-    max-width: 800px;                                                                                 
-    margin: 60px auto;                                                                                
-    padding: 0 24px;                                                                                  
-  }               
+.faq {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 80px 24px;
+}
 
-  .faq h1 {                                                                                           
-    font-size: 2rem;
-    color: #263A38;                                                                                   
-    margin-bottom: 32px;
-  }                                                                                                   
-   
-  .faq-grid {                                                                                         
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }                                                                                                   
-   
-  .faq-card {                                                                                         
-    background: white;
-    border: 1px solid #d4c5b0;
-    border-radius: 8px;                                                                               
-    padding: 24px;
-  }                                                                                                   
-                  
+.faq h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--green);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.faq-intro {
+  color: var(--muted);
+  margin-bottom: 48px;
+  font-size: 15px;
+}
+
+.faq-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--border);
+}
+
+.faq-card {
+  border-bottom: 1px solid var(--border);
+  padding: 28px 0;
+  transition: background 0.15s;
+}
+
 .faq-card h3 {
-    color: #263A38;
-    margin-bottom: 8px;                                                                               
-    font-size: 1.1rem;
-  }                                                                                                   
-                  
-.faq-card p {
-    color: #444;
-    line-height: 1.6;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--green);
+  margin-bottom: 10px;
+  letter-spacing: 0.3px;
+}
+
+.faq-card p,
+.faq-card div {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .faq {
+    padding: 60px 20px;
   }
+  .faq h1 {
+    font-size: 36px;
+  }
+}

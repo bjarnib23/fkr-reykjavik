@@ -1,16 +1,61 @@
-* {             
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-                                                                    
-  body {
-    font-family: system-ui, sans-serif;                             
-    background: #F4EDED;
-    color: #2c2c2c;                                                 
-  }
-                                                                    
-  a {             
-    text-decoration: none;
-    color: inherit;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg:        #F4EDED;
+  --bg-alt:    #EDE6E6;
+  --green:     #263A38;
+  --green-mid: #3a5553;
+  --text:      #2c2c2c;
+  --muted:     #777;
+  --border:    #d9d0c8;
+  --white:     #ffffff;
+  --radius:    2px;
+  --radius-lg: 8px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+button {
+  font-family: 'Inter', system-ui, sans-serif;
+  cursor: pointer;
+}
+
+input, textarea, select {
+  font-family: 'Inter', system-ui, sans-serif;
+}

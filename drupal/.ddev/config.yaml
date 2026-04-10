@@ -1,4 +1,5 @@
 name: fkr-reykjavik
+bind_all_interfaces: true
 type: drupal11
 docroot: web
 ddev_version_constraint: '>= 1.25.0'

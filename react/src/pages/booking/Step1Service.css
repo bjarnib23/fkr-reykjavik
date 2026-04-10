@@ -1,56 +1,66 @@
 .service-options {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin: 24px 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 28px 0;
 }
 
 .service-card {
-    border: 1px solid #ccc;
-    cursor: pointer;
-    border-radius: 8px;
-    overflow: hidden;
-    background: white;
-    transition: border-color 0.15s;
-    position: relative;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  position: relative;
 }
 
 .service-card:hover {
-    border-color: #263A38;
+  border-color: var(--green);
+  box-shadow: 0 4px 16px rgba(38, 58, 56, 0.1);
 }
 
 .service-card.selected {
-    border: 2px solid #263A38;
+  border: 2px solid var(--green);
+  box-shadow: 0 4px 16px rgba(38, 58, 56, 0.15);
 }
 
 .service-card-img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
 }
 
 .service-card-label {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.45);
-    color: white;
-    padding: 10px 14px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.65), transparent);
+  color: white;
+  padding: 32px 14px 14px;
 }
 
 .service-card-label strong {
-    font-size: 15px;
-    font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }
 
 .service-card-label-plain {
-    padding: 20px 14px;
+  padding: 18px 16px;
 }
 
 .service-card-label-plain strong {
-    font-size: 15px;
-    font-weight: 600;
-    color: #2c2c2c;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.2px;
+}
+
+@media (max-width: 500px) {
+  .service-options {
+    grid-template-columns: 1fr;
+  }
 }
