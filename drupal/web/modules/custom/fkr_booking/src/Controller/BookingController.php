@@ -6,6 +6,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Mail\MailManagerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
@@ -20,15 +21,18 @@ use Symfony\Component\HttpFoundation\Request;
 class BookingController extends ControllerBase {
 
   protected MailManagerInterface $mailManager;
+  protected LockBackendInterface $lock;
 
   public function __construct(
     MailManagerInterface $mail_manager,
     EntityTypeManagerInterface $entity_type_manager,
     ConfigFactoryInterface $config_factory,
+    LockBackendInterface $lock,
   ) {
     $this->mailManager = $mail_manager;
     $this->entityTypeManager = $entity_type_manager;
     $this->configFactory = $config_factory;
+    $this->lock = $lock;
   }
 
   public static function create(ContainerInterface $container): static {
@@ -36,6 +40,7 @@ class BookingController extends ControllerBase {
       $container->get('plugin.manager.mail'),
       $container->get('entity_type.manager'),
       $container->get('config.factory'),
+      $container->get('lock'),
     );
   }
 
@@ -74,31 +79,45 @@ class BookingController extends ControllerBase {
       );
     }
 
-    $existing_booking = $storage->loadByProperties([
-      'type'             => 'fkr_booking',
-      'field_dagsetning' => $data['date'],
-    ]);
-
-    if (!empty($existing_booking)) {
+    $lock_key = 'fkr_booking_slot_' . md5($data['date']);
+    if (!$this->lock->acquire($lock_key)) {
       return new JsonResponse(
-        ['error' => 'This time slot is already booked.'],
-        409,
+        ['error' => 'Could not process your booking. Please try again.'],
+        503,
         $this->corsHeaders()
       );
     }
 
-    $node = $storage->create([
-      'type'                  => 'fkr_booking',
-      'title'                 => $data['name'],
-      'field_email'           => $data['email'],
-      'field_phone'           => $data['phone'],
-      'field_hvad_viltu_panta'=> $data['hvad_viltu_panta'] ?? '',
-      'field_dagsetning'      => $data['date'],
-      'field_notes'           => $data['notes'] ?? '',
-      'field_status'          => 'pending',
-      'status'                => 1,
-    ]);
-    $node->save();
+    try {
+      $existing_booking = $storage->loadByProperties([
+        'type'             => 'fkr_booking',
+        'field_dagsetning' => $data['date'],
+      ]);
+
+      if (!empty($existing_booking)) {
+        return new JsonResponse(
+          ['error' => 'This time slot is already booked.'],
+          409,
+          $this->corsHeaders()
+        );
+      }
+
+      $node = $storage->create([
+        'type'                  => 'fkr_booking',
+        'title'                 => $data['name'],
+        'field_email'           => $data['email'],
+        'field_phone'           => $data['phone'],
+        'field_hvad_viltu_panta'=> $data['hvad_viltu_panta'] ?? '',
+        'field_dagsetning'      => $data['date'],
+        'field_notes'           => $data['notes'] ?? '',
+        'field_status'          => 'pending',
+        'status'                => 1,
+      ]);
+      $node->save();
+    }
+    finally {
+      $this->lock->release($lock_key);
+    }
 
     $langcode   = $this->configFactory->get('system.site')->get('langcode');
     $admin_email = $this->configFactory->get('system.site')->get('mail');
