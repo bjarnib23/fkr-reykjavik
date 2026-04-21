@@ -55,7 +55,7 @@ class AvailabilityController extends ControllerBase {
       $day = clone $monday;
       $day->modify("+$i days");
       $date_str = $day->format('Y-m-d');
-      $slots = $this->getSlotsForDate($date_str);
+      $slots = $this->getSlotsForDate($date_str, TRUE);
 
       // Index slots by time for easy lookup in the template.
       $slot_map = [];
@@ -136,7 +136,7 @@ class AvailabilityController extends ControllerBase {
   /**
    * Returns all slots for a given date with their status.
    */
-  private function getSlotsForDate(string $date): array {
+  private function getSlotsForDate(string $date, bool $include_customer = FALSE): array {
     $storage = $this->entityTypeManager->getStorage('node');
     $time_slots = $this->generateTimeSlots();
 
@@ -174,11 +174,11 @@ class AvailabilityController extends ControllerBase {
         $slots[] = ['time' => $time, 'status' => 'closed'];
       }
       elseif (isset($booked_times[$datetime])) {
-        $slots[] = [
-          'time'     => $time,
-          'status'   => 'booked',
-          'customer' => $booked_times[$datetime],
-        ];
+        $slot = ['time' => $time, 'status' => 'booked'];
+        if ($include_customer) {
+          $slot['customer'] = $booked_times[$datetime];
+        }
+        $slots[] = $slot;
       }
       else {
         $slots[] = ['time' => $time, 'status' => 'available'];
