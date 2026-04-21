@@ -76,9 +76,11 @@ class WebhookController extends ControllerBase {
     $order->save();
 
     $email    = $order->getEmail();
-    $name     = $order->getEmail();
+    $notes    = $order->get('notes')->value ?? '';
+    preg_match('/Kaupandi:\s*([^|]+)/', $notes, $m);
+    $name     = trim($m[1] ?? $email);
     $amount   = (int) $order->getTotalPrice()->getNumber();
-    $langcode = \Drupal::config('system.site')->get('langcode');
+    $langcode = $this->config('system.site')->get('langcode');
 
     try {
       $this->mailManager->mail('fkr_rapyd', 'giftcard_confirmation', $email, $langcode, [
