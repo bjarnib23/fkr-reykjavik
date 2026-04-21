@@ -88,36 +88,6 @@ class BookingController extends ControllerBase {
       );
     }
 
-    try {
-      $existing_booking = $storage->loadByProperties([
-        'type'             => 'fkr_booking',
-        'field_dagsetning' => $data['date'],
-      ]);
-
-      if (!empty($existing_booking)) {
-        return new JsonResponse(
-          ['error' => 'This time slot is already booked.'],
-          409,
-          $this->corsHeaders()
-        );
-      }
-
-      $node = $storage->create([
-        'type'                  => 'fkr_booking',
-        'title'                 => $data['name'],
-        'field_email'           => $data['email'],
-        'field_phone'           => $data['phone'],
-        'field_hvad_viltu_panta'=> $data['service'] ?? '',
-        'field_dagsetning'      => $data['date'],
-        'field_notes'           => $data['notes'] ?? '',
-        'field_status'          => 'pending',
-        'status'                => 1,
-      ]);
-      $node->save();
-    }
-    finally {
-      $this->lock->release($lock_key);
-    }
 
     $langcode   = $this->configFactory->get('system.site')->get('langcode');
     $admin_email = $this->configFactory->get('system.site')->get('mail');
