@@ -7,6 +7,9 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 
+/**
+ * API client for Rapyd Hosted Checkout — creates checkout sessions and verifies webhooks.
+ */
 class RapydClient {
 
   private string $accessKey;
@@ -59,18 +62,19 @@ class RapydClient {
       'requested_by'          => $email,
     ];
 
-    $headers = $this->buildHeaders('post', $path, $body);
+    $body_str = json_encode($body, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    $headers  = $this->buildHeaders('post', $path, $body_str);
 
     try {
       $response = $this->http->request('POST', $base . $path, [
         'headers' => $headers,
-        'json'    => $body,
+        'body'    => $body_str,
       ]);
 
       $decoded = json_decode((string) $response->getBody(), TRUE);
 
-      if (empty($decoded['data']['redirect_url'])) {
-        throw new \RuntimeException('Rapyd response missing redirect_url.');
+      if (!is_array($decoded) || empty($decoded['data']['redirect_url'])) {
+        throw new \RuntimeException('Rapyd response missing or malformed.');
       }
 
       return ['redirect_url' => $decoded['data']['redirect_url']];
@@ -88,20 +92,22 @@ class RapydClient {
    * @param string $salt       From rapyd-idempotency header
    * @param string $timestamp  From rapyd-timestamp header
    * @param string $signature  From rapyd-signature header
+   * @param string $path       Request path used in signature computation
+   *
+   * @return bool
    */
-  public function verifyWebhook(string $raw_body, string $salt, string $timestamp, string $signature): bool {
+  public function verifyWebhook(string $raw_body, string $salt, string $timestamp, string $signature, string $path = '/api/fkr/rapyd/webhook'): bool {
     if (empty($this->secretKey)) {
       return FALSE;
     }
-    $to_sign  = 'post' . '/api/fkr/rapyd/webhook' . $salt . $timestamp . $this->accessKey . $this->secretKey . $raw_body;
+    $to_sign  = 'post' . $path . $salt . $timestamp . $this->accessKey . $this->secretKey . $raw_body;
     $expected = base64_encode(hash_hmac('sha256', $to_sign, $this->secretKey, TRUE));
     return hash_equals($expected, $signature);
   }
 
-  private function buildHeaders(string $method, string $path, array $body): array {
+  private function buildHeaders(string $method, string $path, string $body_str = ''): array {
     $salt      = bin2hex(random_bytes(8));
     $timestamp = (string) time();
-    $body_str  = empty($body) ? '' : json_encode($body);
     $to_sign   = strtolower($method) . $path . $salt . $timestamp . $this->accessKey . $this->secretKey . $body_str;
     $signature = base64_encode(hash_hmac('sha256', $to_sign, $this->secretKey, TRUE));
 
