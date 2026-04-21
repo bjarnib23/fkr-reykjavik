@@ -65,6 +65,9 @@ class GiftCardController extends ControllerBase {
     }
 
     $data = json_decode($request->getContent(), TRUE);
+    if (!is_array($data)) {
+      return new JsonResponse(['error' => 'Invalid JSON body.'], 400, $this->cors());
+    }
 
     foreach (['sku', 'name', 'email', 'phone'] as $field) {
       if (empty($data[$field])) {
@@ -82,6 +85,9 @@ class GiftCardController extends ControllerBase {
     $variation = reset($variations);
     $stores    = $this->entityTypeManager->getStorage('commerce_store')->loadMultiple();
     $store     = reset($stores);
+    if (!$store) {
+      return new JsonResponse(['error' => 'No Commerce store configured.'], 500, $this->cors());
+    }
 
     $order_item = OrderItem::create([
       'type'             => 'default',
