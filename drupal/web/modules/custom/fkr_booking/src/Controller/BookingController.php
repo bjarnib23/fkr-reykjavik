@@ -92,7 +92,7 @@ class BookingController extends ControllerBase {
       'title'                 => $data['name'],
       'field_email'           => $data['email'],
       'field_phone'           => $data['phone'],
-      'field_hvad_viltu_panta'=> $data['hvad_viltu_panta'] ?? '',
+      'field_hvad_viltu_panta'=> $data['service'] ?? '',
       'field_dagsetning'      => $data['date'],
       'field_notes'           => $data['notes'] ?? '',
       'field_status'          => 'pending',
@@ -121,7 +121,7 @@ class BookingController extends ControllerBase {
         'email'           => $data['email'],
         'phone'           => $data['phone'],
         'date'            => $data['date'],
-        'hvad_viltu_panta'=> $data['hvad_viltu_panta'] ?? '',
+        'hvad_viltu_panta'=> $data['service'] ?? '',
         'notes'           => $data['notes'] ?? '',
       ],
     );
