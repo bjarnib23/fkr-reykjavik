@@ -18,10 +18,13 @@ class WebhookController extends ControllerBase {
 
   public function __construct(
     private RapydClient $rapydClient,
-    private EntityTypeManagerInterface $entityTypeManager,
+    EntityTypeManagerInterface $entityTypeManager,
     private MailManagerInterface $mailManager,
-    private LoggerChannelFactoryInterface $loggerFactory,
-  ) {}
+    LoggerChannelFactoryInterface $loggerFactory,
+  ) {
+    $this->entityTypeManager = $entityTypeManager;
+    $this->loggerFactory = $loggerFactory;
+  }
 
   public static function create(ContainerInterface $container): static {
     return new static(
