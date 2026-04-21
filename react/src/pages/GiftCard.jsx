@@ -15,6 +15,7 @@ function GiftCard() {
     fetch(`${API}/api/fkr/giftcard/amounts`)
       .then(r => r.json())
       .then(setAmounts)
+      .catch(() => setApiError('Gat ekki sótt gjafabréfsupphæðir. Reyndu að endurhlaða síðuna.'))
   }, [])
 
   function update(field, value) {
@@ -90,6 +91,7 @@ function GiftCard() {
       <form onSubmit={handleSubmit} noValidate>
         <input
           placeholder="Nafn *"
+          autoComplete="name"
           value={form.name}
           onChange={e => update('name', e.target.value)}
           className={errors.name ? 'error' : ''}
@@ -97,7 +99,9 @@ function GiftCard() {
         {errors.name && <p className="error-msg">{errors.name}</p>}
 
         <input
-          placeholder="Sými *"
+          type="tel"
+          placeholder="Sími *"
+          autoComplete="tel"
           value={form.phone}
           onChange={e => update('phone', e.target.value)}
           className={errors.phone ? 'error' : ''}
@@ -107,6 +111,7 @@ function GiftCard() {
         <input
           type="email"
           placeholder="Tölvupóstur *"
+          autoComplete="email"
           value={form.email}
           onChange={e => update('email', e.target.value)}
           className={errors.email ? 'error' : ''}
@@ -116,6 +121,7 @@ function GiftCard() {
         <input
           type="email"
           placeholder="Staðfesta tölvupóst *"
+          autoComplete="email"
           value={form.confirmEmail}
           onChange={e => update('confirmEmail', e.target.value)}
           className={errors.confirmEmail ? 'error' : ''}
