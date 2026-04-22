@@ -1,0 +1,74 @@
+.process-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  padding: 80px 60px 64px;
+  border-bottom: 1px solid #e5e5e5;
+  gap: 60px;
+}
+
+.process-hero h1 {
+  font-size: clamp(48px, 6vw, 80px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: #0a0a0a;
+}
+
+.process-hero-right {
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 8px;
+}
+
+.process-hero-right p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #555;
+  max-width: 480px;
+}
+
+.process-image img {
+  width: 100%;
+  max-height: 600px;
+  object-fit: cover;
+  display: block;
+}
+
+.process-cta-band {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 60px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.process-cta-band p {
+  font-size: 15px;
+  color: #0a0a0a;
+}
+
+.process-cta {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: #0a0a0a;
+}
+
+.process-cta:hover {
+  opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .process-hero {
+    grid-template-columns: 1fr;
+    padding: 56px 24px 48px;
+    gap: 24px;
+  }
+
+  .process-cta-band {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 32px 24px;
+  }
+}
