@@ -2,6 +2,7 @@
 drupal/vendor/
 drupal/web/core/
 drupal/web/modules/contrib/
+!drupal/web/modules/contrib/commerce_valitor/src/Plugin/Commerce/PaymentGateway/ValitorMock.php
 drupal/web/themes/contrib/
 drupal/web/profiles/contrib/
 drupal/web/sites/default/files/
@@ -9,7 +10,8 @@ drupal/web/sites/default/settings.php
 drupal/web/sites/default/settings.local.php
 
 # DDEV
-drupal/.ddev/
+drupal/.ddev/db_snapshots/
+drupal/.ddev/mutagen/
 
 # React
 react/node_modules/

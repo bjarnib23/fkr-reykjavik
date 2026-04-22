@@ -1,0 +1,8 @@
+name: FKR Rapyd
+description: Integrates Rapyd Hosted Checkout for gift card payments.
+type: module
+core_version_requirement: ^10 || ^11
+package: Custom
+dependencies:
+  - drupal:field
+  - commerce:commerce_order

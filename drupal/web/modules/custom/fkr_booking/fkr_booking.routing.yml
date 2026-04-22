@@ -30,6 +30,7 @@ fkr_booking.update_status:
   methods: [POST]
   requirements:
     _permission: 'access administration pages'
+    _csrf_token: 'TRUE'
     node: \d+
 
 fkr_booking.availability_api:
