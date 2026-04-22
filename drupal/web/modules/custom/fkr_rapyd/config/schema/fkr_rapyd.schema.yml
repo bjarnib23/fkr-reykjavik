@@ -1,0 +1,19 @@
+fkr_rapyd.settings:
+  type: config_object
+  label: 'Rapyd settings'
+  mapping:
+    access_key:
+      type: string
+      label: 'Access key'
+    secret_key:
+      type: string
+      label: 'Secret key'
+    sandbox:
+      type: boolean
+      label: 'Sandbox mode'
+    frontend_url:
+      type: string
+      label: 'Frontend URL'
+    webhook_url:
+      type: string
+      label: 'Webhook base URL'

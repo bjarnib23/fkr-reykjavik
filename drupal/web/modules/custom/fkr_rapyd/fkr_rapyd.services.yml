@@ -1,0 +1,7 @@
+services:
+  fkr_rapyd.client:
+    class: Drupal\fkr_rapyd\RapydClient
+    arguments:
+      - '@config.factory'
+      - '@http_client'
+      - '@logger.factory'

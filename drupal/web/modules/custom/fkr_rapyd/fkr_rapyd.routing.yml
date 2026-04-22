@@ -1,0 +1,7 @@
+fkr_rapyd.webhook:
+  path: '/api/fkr/rapyd/webhook'
+  defaults:
+    _controller: '\Drupal\fkr_rapyd\Controller\WebhookController::handle'
+  methods: [POST]
+  requirements:
+    _access: 'TRUE'

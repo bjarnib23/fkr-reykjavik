@@ -1,9 +1,8 @@
 name: FKR Gift Card
+description: 'Gift card checkout flow via Rapyd Hosted Checkout.'
 type: module
-description: 'Gift card checkout flow via Commerce and Valitor.'
 core_version_requirement: ^10 || ^11
-package: FKR
+package: Custom
 dependencies:
   - commerce:commerce_order
-  - commerce:commerce_product
-  - commerce:commerce_payment
+  - fkr_rapyd:fkr_rapyd

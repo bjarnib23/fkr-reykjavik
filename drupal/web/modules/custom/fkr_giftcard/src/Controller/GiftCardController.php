@@ -2,49 +2,36 @@
 
 namespace Drupal\fkr_giftcard\Controller;
 
-use Drupal\commerce_cart\CartSession;
-use Drupal\commerce_cart\CartSessionInterface;
 use Drupal\commerce_order\Entity\Order;
 use Drupal\commerce_order\Entity\OrderItem;
-use Drupal\Core\Cache\Cache;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\fkr_rapyd\RapydClient;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Handles gift card checkout via Commerce + Valitor.
+ * Handles gift card checkout via Rapyd Hosted Checkout.
  */
 class GiftCardController extends ControllerBase {
 
   public function __construct(
     EntityTypeManagerInterface $entity_type_manager,
-    CartSessionInterface $cart_session,
-    AccountProxyInterface $current_user,
-    RequestStack $request_stack,
+    private RapydClient $rapydClient,
   ) {
     $this->entityTypeManager = $entity_type_manager;
-    $this->cartSession = $cart_session;
-    $this->currentUser = $current_user;
-    $this->requestStack = $request_stack;
   }
 
   public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('entity_type.manager'),
-      $container->get('commerce_cart.cart_session'),
-      $container->get('current_user'),
-      $container->get('request_stack'),
+      $container->get('fkr_rapyd.client'),
     );
   }
 
   /**
    * GET /api/fkr/giftcard/amounts
-   * Returns available gift card amounts from Commerce products.
    */
   public function amounts(): JsonResponse {
     $variations = $this->entityTypeManager->getStorage('commerce_product_variation')
@@ -70,9 +57,7 @@ class GiftCardController extends ControllerBase {
 
   /**
    * POST /api/fkr/giftcard/checkout
-   * Creates a Commerce order and returns the checkout URL.
-   *
-   * Expected body: { sku, buyer_name, recipient_name, email, phone, notes }
+   * Expected body: { sku, name, email, phone, notes }
    */
   public function checkout(Request $request): JsonResponse {
     if ($request->getMethod() === 'OPTIONS') {
@@ -80,8 +65,11 @@ class GiftCardController extends ControllerBase {
     }
 
     $data = json_decode($request->getContent(), TRUE);
+    if (!is_array($data)) {
+      return new JsonResponse(['error' => 'Invalid JSON body.'], 400, $this->cors());
+    }
 
-    foreach (['sku', 'buyer_name', 'recipient_name', 'email', 'phone'] as $field) {
+    foreach (['sku', 'name', 'email', 'phone'] as $field) {
       if (empty($data[$field])) {
         return new JsonResponse(['error' => "Missing required field: $field"], 400, $this->cors());
       }
@@ -95,9 +83,11 @@ class GiftCardController extends ControllerBase {
     }
 
     $variation = reset($variations);
-
-    $stores = $this->entityTypeManager->getStorage('commerce_store')->loadMultiple();
-    $store  = reset($stores);
+    $stores    = $this->entityTypeManager->getStorage('commerce_store')->loadMultiple();
+    $store     = reset($stores);
+    if (!$store) {
+      return new JsonResponse(['error' => 'No Commerce store configured.'], 500, $this->cors());
+    }
 
     $order_item = OrderItem::create([
       'type'             => 'default',
@@ -107,10 +97,9 @@ class GiftCardController extends ControllerBase {
     ]);
     $order_item->save();
 
-    $gift_info = sprintf(
-      'Kaupandi: %s | Viðtakandi: %s | Sími: %s | Athugasemd: %s',
-      $data['buyer_name'],
-      $data['recipient_name'],
+    $notes = sprintf(
+      'Kaupandi: %s | Sími: %s | Athugasemd: %s',
+      $data['name'],
       $data['phone'],
       $data['notes'] ?? ''
     );
@@ -121,37 +110,20 @@ class GiftCardController extends ControllerBase {
       'mail'        => $data['email'],
       'uid'         => 0,
       'store_id'    => $store->id(),
-      'cart'        => TRUE,
       'order_items' => [$order_item],
-      'notes'       => $gift_info,
+      'notes'       => $notes,
     ]);
     $order->save();
 
-    $base_url    = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
-    $checkout_url = $base_url . '/checkout/giftcard/start/' . $order->id();
-
-    return new JsonResponse(['checkout_url' => $checkout_url], 200, $this->cors());
-  }
-
-  /**
-   * GET /checkout/giftcard/start/{order_id}
-   * Adds the order to the browser cart session then redirects to Commerce checkout.
-   */
-  public function startCheckout(int $order_id): RedirectResponse {
-    $order = $this->entityTypeManager->getStorage('commerce_order')->load($order_id);
-
-    if ($order && $order->getState()->getId() !== 'canceled') {
-      if ($this->currentUser->isAuthenticated() && $order->getCustomerId() == 0) {
-        $order->setCustomerId($this->currentUser->id());
-        $order->save();
-      }
-      else {
-        $this->cartSession->addCartId($order_id, CartSession::ACTIVE);
-      }
-      Cache::invalidateTags($order->getCacheTagsToInvalidate());
+    try {
+      $amount = (int) $variation->getPrice()->getNumber();
+      $result = $this->rapydClient->createCheckout($order->id(), $amount, $data['email']);
+      return new JsonResponse(['checkout_url' => $result['redirect_url']], 200, $this->cors());
     }
-
-    return new RedirectResponse('/checkout/' . $order_id);
+    catch (\RuntimeException $e) {
+      $order->delete();
+      return new JsonResponse(['error' => 'Payment service unavailable. Please try again.'], 503, $this->cors());
+    }
   }
 
   private function cors(): array {
