@@ -3,6 +3,7 @@
 namespace Drupal\fkr_booking\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,12 +14,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AvailabilityController extends ControllerBase {
 
-  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(
+    EntityTypeManagerInterface $entity_type_manager,
+    protected Connection $database,
+  ) {
     $this->entityTypeManager = $entity_type_manager;
   }
 
   public static function create(ContainerInterface $container): static {
-    return new static($container->get('entity_type.manager'));
+    return new static(
+      $container->get('entity_type.manager'),
+      $container->get('database'),
+    );
   }
 
   /**
@@ -82,6 +89,75 @@ class AvailabilityController extends ControllerBase {
         'library' => ['fkr_booking/availability_calendar'],
       ],
     ];
+  }
+
+  /**
+   * POST /api/fkr/booking/hold-release — for sendBeacon on page unload.
+   */
+  public function releaseHoldBeacon(Request $request): JsonResponse {
+    if ($request->getMethod() === 'OPTIONS') {
+      return new JsonResponse([], 200, $this->corsHeaders());
+    }
+    $data = json_decode($request->getContent(), TRUE);
+    $token = $data['token'] ?? NULL;
+    if ($token) {
+      $this->database->delete('fkr_slot_holds')->condition('token', $token)->execute();
+    }
+    return new JsonResponse(['status' => 'released'], 200, $this->corsHeaders());
+  }
+
+  /**
+   * POST /api/fkr/booking/hold  — temporarily hold a slot.
+   * DELETE /api/fkr/booking/hold — release a hold by token.
+   */
+  public function holdSlot(Request $request): JsonResponse {
+    if ($request->getMethod() === 'OPTIONS') {
+      return new JsonResponse([], 200, $this->corsHeaders());
+    }
+
+    $data = json_decode($request->getContent(), TRUE);
+
+    if ($request->getMethod() === 'DELETE') {
+      $token = $data['token'] ?? NULL;
+      if ($token) {
+        $this->database->delete('fkr_slot_holds')->condition('token', $token)->execute();
+      }
+      return new JsonResponse(['status' => 'released'], 200, $this->corsHeaders());
+    }
+
+    $datetime = $data['datetime'] ?? NULL;
+    if (!$datetime || !preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/', $datetime)) {
+      return new JsonResponse(['error' => 'Invalid datetime'], 400, $this->corsHeaders());
+    }
+
+    // Clean up expired holds.
+    $this->database->delete('fkr_slot_holds')->condition('expires', time(), '<')->execute();
+
+    // Check if slot is already held or booked.
+    $active = $this->database->select('fkr_slot_holds', 'h')
+      ->fields('h', ['id'])
+      ->condition('datetime', $datetime)
+      ->condition('expires', time(), '>=')
+      ->countQuery()->execute()->fetchField();
+
+    if ($active > 0) {
+      return new JsonResponse(['error' => 'Slot is already held'], 409, $this->corsHeaders());
+    }
+
+    $hold_minutes = \Drupal::config('fkr_booking.settings')->get('hold_minutes') ?? 6;
+    $expires = time() + ($hold_minutes * 60);
+    $token = bin2hex(random_bytes(16));
+
+    $this->database->insert('fkr_slot_holds')->fields([
+      'datetime' => $datetime,
+      'token'    => $token,
+      'expires'  => $expires,
+    ])->execute();
+
+    return new JsonResponse([
+      'token'   => $token,
+      'expires' => $expires,
+    ], 200, $this->corsHeaders());
   }
 
   /**
@@ -166,6 +242,13 @@ class AvailabilityController extends ControllerBase {
       $booked_times[$node->get('field_dagsetning')->value] = $node->getTitle();
     }
 
+    // Collect active holds for this date.
+    $held_times = $this->database->select('fkr_slot_holds', 'h')
+      ->fields('h', ['datetime'])
+      ->condition('datetime', $datetimes, 'IN')
+      ->condition('expires', time(), '>=')
+      ->execute()->fetchCol();
+
     $slots = [];
     foreach ($time_slots as $time) {
       $datetime = $date . 'T' . $time . ':00';
@@ -179,6 +262,9 @@ class AvailabilityController extends ControllerBase {
           $slot['customer'] = $booked_times[$datetime];
         }
         $slots[] = $slot;
+      }
+      elseif (in_array($datetime, $held_times)) {
+        $slots[] = ['time' => $time, 'status' => 'held'];
       }
       else {
         $slots[] = ['time' => $time, 'status' => 'available'];
@@ -204,7 +290,7 @@ class AvailabilityController extends ControllerBase {
   private function corsHeaders(): array {
     return [
       'Access-Control-Allow-Origin'  => '*',
-      'Access-Control-Allow-Methods' => 'GET, OPTIONS',
+      'Access-Control-Allow-Methods' => 'GET, POST, DELETE, OPTIONS',
       'Access-Control-Allow-Headers' => 'Content-Type',
     ];
   }
