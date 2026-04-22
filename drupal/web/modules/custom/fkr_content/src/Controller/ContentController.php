@@ -215,25 +215,10 @@ class ContentController extends ControllerBase {
     $items = [];
 
     foreach ($nodes as $node) {
-      $imageUrl = '';
-      $mediaField = $node->get('field_mynd');
-      if (!$mediaField->isEmpty()) {
-        $media = $mediaField->first()->get('entity')->getTarget()?->getValue();
-        if ($media) {
-          $imageField = $media->get('field_media_image');
-          if (!$imageField->isEmpty()) {
-            $file = $imageField->first()->get('entity')->getTarget()?->getValue();
-            if ($file) {
-              $imageUrl = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
-            }
-          }
-        }
-      }
       $items[] = [
         'id'    => $node->id(),
         'title' => $node->getTitle(),
         'desc'  => $node->get('field_lysing')->value,
-        'image' => $imageUrl,
       ];
     }
 
