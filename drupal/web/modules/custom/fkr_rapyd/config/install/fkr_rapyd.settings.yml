@@ -2,3 +2,4 @@ access_key: ''
 secret_key: ''
 sandbox: true
 frontend_url: 'http://localhost:5173'
+webhook_url: ''

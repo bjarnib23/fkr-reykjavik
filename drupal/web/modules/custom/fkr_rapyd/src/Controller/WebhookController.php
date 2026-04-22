@@ -37,11 +37,20 @@ class WebhookController extends ControllerBase {
 
   public function handle(Request $request): JsonResponse {
     $raw_body  = $request->getContent();
-    $salt      = $request->headers->get('rapyd-idempotency', '');
-    $timestamp = $request->headers->get('rapyd-timestamp', '');
-    $signature = $request->headers->get('rapyd-signature', '');
+    $salt      = $request->headers->get('salt', '');
+    $timestamp = $request->headers->get('timestamp', '');
+    $signature = $request->headers->get('signature', '');
+    $webhook_base = rtrim($this->config('fkr_rapyd.settings')->get('webhook_url') ?: $request->getSchemeAndHttpHost(), '/');
+    $full_url     = $webhook_base . $request->getPathInfo();
 
-    if (!$this->rapydClient->verifyWebhook($raw_body, $salt, $timestamp, $signature, $request->getPathInfo())) {
+    $this->loggerFactory->get('fkr_rapyd')->debug('Webhook headers: salt=@s ts=@t sig=@sig url=@url', [
+      '@s'   => $salt,
+      '@t'   => $timestamp,
+      '@sig' => $signature,
+      '@url' => $full_url,
+    ]);
+
+    if (!$this->rapydClient->verifyWebhook($raw_body, $salt, $timestamp, $signature, $full_url)) {
       $this->loggerFactory->get('fkr_rapyd')->warning('Webhook signature verification failed.');
       return new JsonResponse(['error' => 'Invalid signature'], 401);
     }
@@ -53,9 +62,11 @@ class WebhookController extends ControllerBase {
       return new JsonResponse(['status' => 'ignored']);
     }
 
-    $order_id = $payload['data']['metadata']['order_id'] ?? NULL;
+    $ref = $payload['data']['merchant_reference_id'] ?? '';
+    preg_match('/^fkr-order-(\d+)$/', $ref, $m);
+    $order_id = $m[1] ?? NULL;
     if (!$order_id) {
-      $this->loggerFactory->get('fkr_rapyd')->error('Webhook missing order_id in metadata.');
+      $this->loggerFactory->get('fkr_rapyd')->error('Webhook missing order_id in merchant_reference_id: @ref', ['@ref' => $ref]);
       return new JsonResponse(['status' => 'ok']);
     }
 
@@ -73,9 +84,7 @@ class WebhookController extends ControllerBase {
 
     $code = strtoupper(substr(bin2hex(random_bytes(6)), 0, 10));
     $order->set('field_giftcard_code', $code);
-    // Commerce default workflow: draft → place → pending → fulfill → completed
     $order->getState()->applyTransitionById('place');
-    $order->getState()->applyTransitionById('fulfill');
     $order->save();
 
     $email    = $order->getEmail();
