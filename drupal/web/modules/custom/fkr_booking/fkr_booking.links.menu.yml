@@ -11,3 +11,10 @@ fkr_booking.availability_admin_link:
   route_name: fkr_booking.availability_admin
   parent: fkr_booking.admin
   weight: 1
+
+fkr_booking.settings_link:
+  title: Settings
+  description: 'Booking settings'
+  route_name: fkr_booking.settings
+  parent: fkr_booking.admin
+  weight: 2

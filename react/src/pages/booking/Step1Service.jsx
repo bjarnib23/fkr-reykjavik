@@ -35,8 +35,7 @@ function Step1Service({ data, update, next }) {
                         className={`service-card ${data.service === s.title ? 'selected' : ''}`}
                         onClick={() => update({ service: s.title })}
                     >
-                        {s.image && <img src={s.image} alt={s.title} className="service-card-img" />}
-                        <div className={s.image ? 'service-card-label' : 'service-card-label-plain'}>
+                        <div className="service-card-label-plain">
                             <strong>{s.title}</strong>
                         </div>
                     </div>

@@ -53,3 +53,11 @@
   .calendar-cell.empty {
     cursor: default;
   }
+
+  .calendar-cell.past {
+    color: #bbb !important;
+    cursor: default !important;
+    text-decoration: line-through !important;
+    pointer-events: none !important;
+    opacity: 0.5;
+  }

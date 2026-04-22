@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * @file
+ * Install and schema hooks for fkr_booking.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function fkr_booking_schema(): array {
+  return [
+    'fkr_slot_holds' => [
+      'description' => 'Temporary slot holds during booking checkout.',
+      'fields' => [
+        'id' => [
+          'type' => 'serial',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ],
+        'datetime' => [
+          'type' => 'varchar',
+          'length' => 20,
+          'not null' => TRUE,
+          'description' => 'Slot datetime, e.g. 2026-04-23T10:00:00',
+        ],
+        'token' => [
+          'type' => 'varchar',
+          'length' => 64,
+          'not null' => TRUE,
+        ],
+        'expires' => [
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'description' => 'Unix timestamp when the hold expires.',
+        ],
+      ],
+      'primary key' => ['id'],
+      'indexes' => [
+        'datetime' => ['datetime'],
+        'expires' => ['expires'],
+      ],
+    ],
+  ];
+}
