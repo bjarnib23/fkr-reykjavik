@@ -19,22 +19,35 @@ function Calendar({ selected, onSelect }) {
         return cells
     }
 
-    function handleSelect(day) {
-        if (!day) return
-        const date = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-        onSelect(date)
+    function toDateStr(day) {
+        return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
     }
-    
+
+    function isPast(day) {
+        if (!day) return false
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        const cellDate = new Date(year, month, day)
+        return cellDate < today
+    }
+
+    function handleSelect(day) {
+        if (!day || isPast(day)) return
+        onSelect(toDateStr(day))
+    }
+
     function isSelected(day) {
         if (!day || !selected) return false
-        const date = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-        return date === selected
+        return toDateStr(day) === selected
     }
 
     return (
       <div className="calendar">
         <div className="calendar-header">
-          <button onClick={() => month === 0 ? (setMonth(11), setYear(year - 1)) : setMonth(month - 1)}>‹</button>
+          <button
+            onClick={() => month === 0 ? (setMonth(11), setYear(year - 1)) : setMonth(month - 1)}
+            disabled={year === new Date().getFullYear() && month === new Date().getMonth()}
+          >‹</button>
           <strong>{months[month]} {year}</strong>
           <button onClick={() => month === 11 ? (setMonth(0), setYear(year + 1)) : setMonth(month + 1)}>›</button>
         </div>
@@ -45,6 +58,7 @@ function Calendar({ selected, onSelect }) {
               key={i}
               className={`calendar-cell ${!day ? 'empty' : ''} ${isSelected(day) ? 'selected' : ''}`}
               onClick={() => handleSelect(day)}
+              style={isPast(day) ? { color: '#bbb', textDecoration: 'line-through', pointerEvents: 'none', cursor: 'default' } : {}}
             >
               {day}
             </div>
