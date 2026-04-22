@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './Step4Review.css'
 
-function Step4Review({ data, update, back }) {
+function Step4Review({ data, update, back, releaseHold }) {
+    const navigate = useNavigate()
     const [pageTitle, setPageTitle] = useState('')
     const [pageDesc, setPageDesc] = useState('')
     const [submitted, setSubmitted] = useState(false)
@@ -35,6 +37,7 @@ function Step4Review({ data, update, back }) {
             body: JSON.stringify(payload)
         })
         if (res.ok) {
+            releaseHold?.()
             setSubmitted(true)
         } else {
             alert('Eitthvað fór úrskeiðis, reyndu aftur.')
@@ -46,7 +49,7 @@ function Step4Review({ data, update, back }) {
             <div className="review-confirmation">
                 <h2>Takk fyrir!</h2>
                 <p>Bókunarbeiðnin hefur verið móttekin. Staðfesting verður send á netfangið þitt innan skamms.</p>
-                <button onClick={back}>Til Baka</button>
+                <button onClick={() => navigate('/')}>Til Baka</button>
             </div>
         )
     }

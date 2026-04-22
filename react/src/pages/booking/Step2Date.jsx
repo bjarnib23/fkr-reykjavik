@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Calendar from "./Calendar"
 
-function Step2Date({ data, update, next, back }) {
+function Step2Date({ data, update, next, back, releaseReady }) {
     const [slots, setSlots] = useState([])
     const [pageTitle, setPageTitle] = useState('')
     const [pageDesc, setPageDesc] = useState('')
@@ -19,7 +19,7 @@ function Step2Date({ data, update, next, back }) {
     }, [])
 
     useEffect(() => {
-        if (!data.date) return
+        if (!data.date || !releaseReady) return
         fetch(`http://fkr-reykjavik.ddev.site/api/fkr/availability?date=${data.date}`, { cache: 'no-store' })
             .then(res => res.json())
             .then(slots => {
@@ -36,7 +36,7 @@ function Step2Date({ data, update, next, back }) {
                     return true
                 }))
             })
-    }, [data.date])
+    }, [data.date, releaseReady])
 
     return (
         <div>

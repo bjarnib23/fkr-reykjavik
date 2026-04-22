@@ -89,6 +89,19 @@ class BookingController extends ControllerBase {
     }
 
 
+    $node = $storage->create([
+      'type'                  => 'fkr_booking',
+      'title'                 => $data['name'],
+      'field_dagsetning'      => $data['date'],
+      'field_email'           => $data['email'] ?? '',
+      'field_phone'           => $data['phone'] ?? '',
+      'field_hvad_viltu_panta'=> $data['service'] ?? '',
+      'field_notes'           => $data['notes'] ?? '',
+      'field_status'          => 'pending',
+      'status'                => 1,
+    ]);
+    $node->save();
+
     $langcode   = $this->configFactory->get('system.site')->get('langcode');
     $admin_email = $this->configFactory->get('system.site')->get('mail');
 
@@ -150,6 +163,7 @@ class BookingController extends ControllerBase {
       $rows[] = [
         $node->getTitle(),
         $node->get('field_email')->value,
+        $node->get('field_phone')->value,
         $formatted_date,
         $node->get('field_hvad_viltu_panta')->value,
         Markup::create($select),
@@ -169,7 +183,7 @@ class BookingController extends ControllerBase {
       ],
       'table' => [
         '#type'     => 'table',
-        '#header'   => ['Name', 'Email', 'Date', 'Item', 'Status', 'View'],
+        '#header'   => ['Name', 'Email', 'Phone', 'Date', 'Item', 'Status', 'View'],
         '#rows'     => $rows,
         '#empty'    => 'No bookings yet.',
         '#attached' => [
@@ -203,6 +217,7 @@ class BookingController extends ControllerBase {
     $rows = [
       ['Name',   $node->getTitle()],
       ['Email',  $node->get('field_email')->value],
+      ['Phone',  $node->get('field_phone')->value],
       ['Date',   $node->get('field_dagsetning')->value],
       ['Item',   $node->get('field_hvad_viltu_panta')->value],
       ['Notes',  $node->get('field_notes')->value],
