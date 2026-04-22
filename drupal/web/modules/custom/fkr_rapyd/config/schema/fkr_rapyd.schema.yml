@@ -14,3 +14,6 @@ fkr_rapyd.settings:
     frontend_url:
       type: string
       label: 'Frontend URL'
+    webhook_url:
+      type: string
+      label: 'Webhook base URL'
