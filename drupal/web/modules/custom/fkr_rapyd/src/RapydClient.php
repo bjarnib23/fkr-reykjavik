@@ -101,7 +101,7 @@ class RapydClient {
       return FALSE;
     }
     $to_sign  = 'post' . $path . $salt . $timestamp . $this->accessKey . $this->secretKey . $raw_body;
-    $expected = base64_encode(hash_hmac('sha256', $to_sign, $this->secretKey, TRUE));
+    $expected = base64_encode(hash_hmac('sha256', $to_sign, $this->secretKey));
     return hash_equals($expected, $signature);
   }
 
@@ -109,7 +109,7 @@ class RapydClient {
     $salt      = bin2hex(random_bytes(8));
     $timestamp = (string) time();
     $to_sign   = strtolower($method) . $path . $salt . $timestamp . $this->accessKey . $this->secretKey . $body_str;
-    $signature = base64_encode(hash_hmac('sha256', $to_sign, $this->secretKey, TRUE));
+    $signature = base64_encode(hash_hmac('sha256', $to_sign, $this->secretKey));
 
     return [
       'access_key'   => $this->accessKey,
