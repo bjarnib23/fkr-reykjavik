@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * Implements hook_mail().
+ */
+function fkr_rapyd_mail($key, &$message, $params) {
+  if ($key === 'giftcard_confirmation') {
+    $message['from']    = \Drupal::config('system.site')->get('mail');
+    $message['subject'] = t('Gjafabréf frá FKR Reykjavík');
+    $message['body'][]  = t('Hæ @name,', ['@name' => $params['name']]);
+    $message['body'][]  = t('Takk fyrir kaupið! Hér er gjafabréfið þitt:');
+    $message['body'][]  = t('Gjafabréfskóði: @code', ['@code' => $params['code']]);
+    $message['body'][]  = t('Upphæð: @amount kr.', ['@amount' => number_format($params['amount'], 0, '.', '.')]);
+    $message['body'][]  = t('Kveðja, FKR Reykjavík');
+  }
+}
