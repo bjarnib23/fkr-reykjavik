@@ -1,0 +1,42 @@
+.time-options-label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #888;
+  margin: 32px 0 16px;
+}
+
+.time-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.time-btn {
+  padding: 10px 20px;
+  font-size: 13px;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #0a0a0a;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  letter-spacing: 0.02em;
+}
+
+.time-btn:hover {
+  border-color: #0a0a0a;
+}
+
+.time-btn.selected {
+  background: #0a0a0a;
+  border-color: #0a0a0a;
+  color: #fff;
+}
+
+.time-empty {
+  font-size: 13px;
+  color: #888;
+  padding: 8px 0;
+}

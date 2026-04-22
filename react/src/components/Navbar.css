@@ -1,41 +1,80 @@
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 48px;
-    background: #F4EDED;
-    border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  height: 56px;
+  background: #fff;
+  border-bottom: 1px solid #e5e5e5;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.navbar-logo {
-    font-size: 18px;
-    font-weight: 600;
-    color: #263A38;
-    text-decoration: none;
+.navbar-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.navbar-brand-name {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #0a0a0a;
+}
+
+.navbar-brand-sub {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #888;
 }
 
 .navbar-links {
-    list-style: none;
-    display: flex;
-    gap: 32px;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
 }
 
 .navbar-links a {
-    text-decoration: none;
-    color: #2c2c2c;
-    font-size: 15px;                                                
-  }
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: #555;
+  text-decoration: none;
+  transition: color 0.15s;
+}
 
 .navbar-links a:hover,
-  .navbar-links a.active {
-    color: #263A38;
-    font-weight: 600;
+.navbar-links a.active {
+  color: #0a0a0a;
+}
+
+.navbar-cta {
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: #0a0a0a;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.navbar-cta:hover {
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 24px;
   }
 
-.navbar-logo-img {
-    height: 48px;
-    width: auto;
-    display: block;
+  .navbar-links {
+    display: none;
+  }
+
+  .navbar-brand-sub {
+    display: none;
+  }
 }
