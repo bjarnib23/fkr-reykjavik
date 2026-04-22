@@ -13,6 +13,7 @@ function GiftCardThankYou() {
       <Link
         to="/"
         style={{
+          display: 'inline-block',
           background: '#263A38',
           color: 'white',
           padding: '14px 32px',
