@@ -1,0 +1,23 @@
+uuid: 9c78bbf9-8cbb-4e22-935e-2be37fa7539b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_weight_process
+    - node.type.fkr_process_step
+id: node.fkr_process_step.field_weight_process
+field_name: field_weight_process
+entity_type: node
+bundle: fkr_process_step
+label: 'weight ferlið'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
