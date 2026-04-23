@@ -33,6 +33,22 @@ fkr_booking.update_status:
     _csrf_token: 'TRUE'
     node: \d+
 
+fkr_booking.hold:
+  path: '/api/fkr/booking/hold'
+  defaults:
+    _controller: '\Drupal\fkr_booking\Controller\BookingController::hold'
+  methods: [POST, DELETE, OPTIONS]
+  requirements:
+    _access: 'TRUE'
+
+fkr_booking.hold_release:
+  path: '/api/fkr/booking/hold-release'
+  defaults:
+    _controller: '\Drupal\fkr_booking\Controller\BookingController::holdRelease'
+  methods: [POST, OPTIONS]
+  requirements:
+    _access: 'TRUE'
+
 fkr_booking.availability_api:
   path: '/api/fkr/availability'
   defaults:

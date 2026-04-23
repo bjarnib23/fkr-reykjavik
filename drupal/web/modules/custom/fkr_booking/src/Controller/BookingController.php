@@ -45,6 +45,84 @@ class BookingController extends ControllerBase {
   }
 
   /**
+   * POST /api/fkr/booking/hold  — hold a slot for 10 minutes
+   * DELETE /api/fkr/booking/hold — release a hold by token
+   */
+  public function hold(Request $request): JsonResponse {
+    if ($request->getMethod() === 'OPTIONS') {
+      return new JsonResponse([], 200, $this->corsHeaders());
+    }
+
+    $data = json_decode($request->getContent(), TRUE);
+
+    if ($request->getMethod() === 'DELETE') {
+      $token = $data['token'] ?? NULL;
+      if ($token) {
+        \Drupal::keyValueExpirable('fkr_booking_holds')->delete($token);
+      }
+      return new JsonResponse(['status' => 'released'], 200, $this->corsHeaders());
+    }
+
+    // POST — create a hold.
+    $datetime = $data['datetime'] ?? NULL;
+    if (!$datetime || !preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/', $datetime)) {
+      return new JsonResponse(['error' => 'Invalid datetime'], 400, $this->corsHeaders());
+    }
+
+    $storage = $this->entityTypeManager->getStorage('node');
+
+    $availability = $storage->loadByProperties([
+      'type'                 => 'fkr_availability',
+      'field_available_time' => $datetime,
+    ]);
+
+    if (empty($availability)) {
+      return new JsonResponse(['error' => 'Slot not available'], 409, $this->corsHeaders());
+    }
+
+    $bookings = $storage->loadByProperties([
+      'type'             => 'fkr_booking',
+      'field_dagsetning' => $datetime,
+    ]);
+
+    if (!empty($bookings)) {
+      return new JsonResponse(['error' => 'Slot already booked'], 409, $this->corsHeaders());
+    }
+
+    // Check for an existing hold on this datetime.
+    $holds = \Drupal::keyValueExpirable('fkr_booking_holds');
+    foreach ($holds->getAll() as $existing) {
+      if ($existing === $datetime) {
+        return new JsonResponse(['error' => 'Slot is currently held'], 409, $this->corsHeaders());
+      }
+    }
+
+    $token   = \Drupal::service('uuid')->generate();
+    $ttl     = 600; // 10 minutes
+    $expires = time() + $ttl;
+    $holds->setWithExpire($token, $datetime, $ttl);
+
+    return new JsonResponse(['token' => $token, 'expires' => $expires], 200, $this->corsHeaders());
+  }
+
+  /**
+   * POST /api/fkr/booking/hold-release — release by token (used on unload)
+   */
+  public function holdRelease(Request $request): JsonResponse {
+    if ($request->getMethod() === 'OPTIONS') {
+      return new JsonResponse([], 200, $this->corsHeaders());
+    }
+
+    $data  = json_decode($request->getContent(), TRUE);
+    $token = $data['token'] ?? NULL;
+    if ($token) {
+      \Drupal::keyValueExpirable('fkr_booking_holds')->delete($token);
+    }
+
+    return new JsonResponse(['status' => 'released'], 200, $this->corsHeaders());
+  }
+
+  /**
    * Accepts a booking POST request from the React frontend.
    */
   public function submit(Request $request): JsonResponse {
@@ -89,7 +167,22 @@ class BookingController extends ControllerBase {
     }
 
 
-    $langcode   = $this->configFactory->get('system.site')->get('langcode');
+    $booking = $storage->create([
+      'type'                 => 'fkr_booking',
+      'title'                => $data['name'],
+      'field_email'          => $data['email'],
+      'field_phone'          => $data['phone'] ?? '',
+      'field_dagsetning'     => $data['date'],
+      'field_hvad_viltu_panta' => $data['service'] ?? '',
+      'field_notes'          => $data['notes'] ?? '',
+      'field_status'         => 'pending',
+      'status'               => 1,
+    ]);
+    $booking->save();
+
+    $this->lock->release($lock_key);
+
+    $langcode    = $this->configFactory->get('system.site')->get('langcode');
     $admin_email = $this->configFactory->get('system.site')->get('mail');
 
     $this->mailManager->mail(
@@ -106,12 +199,12 @@ class BookingController extends ControllerBase {
       $admin_email,
       $langcode,
       [
-        'name'            => $data['name'],
-        'email'           => $data['email'],
-        'phone'           => $data['phone'],
-        'date'            => $data['date'],
-        'hvad_viltu_panta'=> $data['service'] ?? '',
-        'notes'           => $data['notes'] ?? '',
+        'name'             => $data['name'],
+        'email'            => $data['email'],
+        'phone'            => $data['phone'] ?? '',
+        'date'             => $data['date'],
+        'hvad_viltu_panta' => $data['service'] ?? '',
+        'notes'            => $data['notes'] ?? '',
       ],
     );
 
@@ -219,7 +312,7 @@ class BookingController extends ControllerBase {
   private function corsHeaders(): array {
     return [
       'Access-Control-Allow-Origin'  => '*',
-      'Access-Control-Allow-Methods' => 'POST, OPTIONS',
+      'Access-Control-Allow-Methods' => 'POST, DELETE, OPTIONS',
       'Access-Control-Allow-Headers' => 'Content-Type',
     ];
   }
