@@ -3,7 +3,7 @@
   grid-template-columns: 1fr 1fr;
   align-items: end;
   padding: 80px 60px 72px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #ddd9d2;
   gap: 60px;
 }
 
@@ -12,7 +12,7 @@
   font-weight: 800;
   line-height: 1.0;
   letter-spacing: -0.03em;
-  color: #0a0a0a;
+  color: #263430;
 }
 
 .home-hero-right {
@@ -25,16 +25,16 @@
 }
 
 .home-hero-desc {
-  font-size: 13px;
+  font-size: 17px;
   line-height: 1.8;
-  color: #555;
+  color: #4a5e58;
   max-width: 380px;
 }
 
 .home-cta {
-  font-size: 12px;
+  font-size: 16px;
   letter-spacing: 0.08em;
-  color: #0a0a0a;
+  color: #263430;
 }
 
 .home-cta:hover {

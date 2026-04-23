@@ -49,9 +49,10 @@ function FAQ() {
               <span className="faq-toggle">{open === i ? '−' : '+'}</span>
             </button>
             {open === i && (
-              <div className="faq-answer">
-                <p>{stripHtml(faq.answer)}</p>
-              </div>
+              <div
+                className="faq-answer"
+                dangerouslySetInnerHTML={{ __html: faq.answer }}
+              />
             )}
           </div>
         ))}

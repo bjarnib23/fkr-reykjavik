@@ -5,7 +5,7 @@
 /* Stepper */
 .booking-stepper {
   display: flex;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #ddd9d2;
   padding: 0 60px;
   overflow-x: auto;
 }
@@ -16,22 +16,22 @@
   gap: 6px;
   padding: 16px 20px 16px 0;
   margin-right: 8px;
-  font-size: 11px;
+  font-size: 15px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #bbb;
+  color: #a0b0ac;
   white-space: nowrap;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
 }
 
 .booking-step-tab.active {
-  color: #0a0a0a;
-  border-bottom-color: #0a0a0a;
+  color: #263430;
+  border-bottom-color: #263430;
 }
 
 .booking-step-tab.done {
-  color: #888;
+  color: #7a9490;
 }
 
 .booking-step-num {
@@ -47,7 +47,7 @@
 
 .booking-content {
   padding: 48px 60px;
-  border-right: 1px solid #e5e5e5;
+  border-right: 1px solid #ddd9d2;
 }
 
 .booking-content h2 {
@@ -65,10 +65,10 @@
 }
 
 .booking-summary-label {
-  font-size: 10px;
+  font-size: 17px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #888;
+  color: #7a9490;
   margin-bottom: 24px;
 }
 
@@ -79,26 +79,26 @@
 }
 
 .booking-summary-row span:first-child {
-  font-size: 10px;
+  font-size: 17px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #888;
+  color: #7a9490;
   margin-bottom: 4px;
 }
 
 .booking-summary-row span:last-child {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
-  color: #0a0a0a;
+  color: #263430;
 }
 
 .booking-summary-continue {
-  background: #0a0a0a;
-  color: #fff;
+  background: #263430;
+  color: #f0ece6;
   border: none;
   padding: 14px 28px;
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 11px;
+  font-size: 15px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
@@ -118,24 +118,24 @@
 
 .step-buttons button {
   background: none;
-  border: 1px solid #e5e5e5;
+  border: 1px solid #ddd9d2;
   padding: 12px 24px;
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 11px;
+  font-size: 15px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
-  color: #0a0a0a;
+  color: #263430;
   transition: border-color 0.15s;
 }
 
-.step-buttons button:hover { border-color: #0a0a0a; }
+.step-buttons button:hover { border-color: #263430; }
 .step-buttons button:disabled { opacity: 0.35; cursor: not-allowed; }
 
 .step-buttons button:last-child {
-  background: #0a0a0a;
-  color: #fff;
-  border-color: #0a0a0a;
+  background: #263430;
+  color: #f0ece6;
+  border-color: #263430;
 }
 
 .step-buttons button:last-child:hover { background: #333; }
@@ -151,6 +151,6 @@
 
   .booking-summary {
     padding: 32px 24px;
-    border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #ddd9d2;
   }
 }

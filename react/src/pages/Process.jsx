@@ -8,6 +8,7 @@ function stripHtml(html) {
 
 function Process() {
   const [page, setPage] = useState({})
+  const [steps, setSteps] = useState([])
 
   useEffect(() => {
     fetch('http://fkr-reykjavik.ddev.site/api/fkr/pages', { cache: 'no-store' })
@@ -16,6 +17,10 @@ function Process() {
         const p = Object.values(pages).find(p => p.slug === 'process')
         if (p) setPage(p)
       })
+
+    fetch('http://fkr-reykjavik.ddev.site/api/fkr/process-steps', { cache: 'no-store' })
+      .then(r => r.json())
+      .then(setSteps)
   }, [])
 
   const image = page.images?.[0]
@@ -31,11 +36,35 @@ function Process() {
         </div>
       </div>
 
-      {image && (
-        <div className="process-image">
-          <img src={image} alt={page.title} />
+      <div className="process-body">
+        {image && (
+          <div className="process-image">
+            <img src={image} alt={page.title} />
+          </div>
+        )}
+
+        <div className="process-right">
+          {steps.length > 0 && (
+            <div className="process-steps">
+              {steps.map((step, i) => (
+                <div key={step.id} className="process-step">
+                  <span className="process-step-number">{String(i + 1).padStart(2, '0')}</span>
+                  <div className="process-step-body">
+                    <h3>{step.title}</h3>
+                    {step.description && <p>{stripHtml(step.description)}</p>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {page.subtitle && (
+            <div className="process-closing">
+              <p>{page.subtitle}</p>
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       <div className="process-cta-band">
         {page.cta_text && <p>{page.cta_text}</p>}

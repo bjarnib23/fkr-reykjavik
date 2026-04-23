@@ -4,8 +4,8 @@
   justify-content: space-between;
   padding: 0 48px;
   height: 56px;
-  background: #fff;
-  border-bottom: 1px solid #e5e5e5;
+  background: #f3eeee;
+  border-bottom: 1px solid #ddd9d2;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -18,18 +18,24 @@
   text-decoration: none;
 }
 
+.navbar-logo {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
 .navbar-brand-name {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
   letter-spacing: 0.02em;
-  color: #0a0a0a;
+  color: #263430;
 }
 
 .navbar-brand-sub {
-  font-size: 10px;
+  font-size: 17px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #888;
+  color: #7a9490;
 }
 
 .navbar-links {
@@ -41,22 +47,40 @@
 }
 
 .navbar-links a {
-  font-size: 12px;
+  font-size: 16px;
   letter-spacing: 0.05em;
-  color: #555;
+  color: #4a5e58;
   text-decoration: none;
-  transition: color 0.15s;
+  position: relative;
+  padding-bottom: 2px;
+  transition: color 0.2s;
+}
+
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #263430;
+  transition: width 0.25s ease;
 }
 
 .navbar-links a:hover,
 .navbar-links a.active {
-  color: #0a0a0a;
+  color: #263430;
+}
+
+.navbar-links a:hover::after,
+.navbar-links a.active::after {
+  width: 100%;
 }
 
 .navbar-cta {
-  font-size: 12px;
+  font-size: 16px;
   letter-spacing: 0.05em;
-  color: #0a0a0a;
+  color: #263430;
   text-decoration: none;
   white-space: nowrap;
 }

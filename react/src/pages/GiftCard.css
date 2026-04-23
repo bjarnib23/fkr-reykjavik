@@ -1,8 +1,7 @@
 .gc-page {
-  background: #fff;
+  background: #f3eeee;
   min-height: 100vh;
-  font-family: 'Inter', system-ui, sans-serif;
-  color: #0a0a0a;
+  color: #263430;
 }
 
 /* ── Hero ── */
@@ -11,25 +10,25 @@
   grid-template-columns: 1fr 1fr;
   align-items: end;
   padding: 80px 60px 64px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #ddd9d2;
   gap: 60px;
 }
 
 .gc-eyebrow {
-  font-size: 11px;
+  font-size: 15px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #888;
+  color: #7a9490;
   margin-bottom: 20px;
 }
 
 .gc-hero h1 {
-  font-family: 'Inter', system-ui, sans-serif;
+  
   font-size: clamp(48px, 6vw, 80px);
   font-weight: 800;
   line-height: 1.0;
   letter-spacing: -0.02em;
-  color: #0a0a0a;
+  color: #263430;
 }
 
 .gc-hero-right {
@@ -39,9 +38,9 @@
 }
 
 .gc-hero-desc {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.8;
-  color: #555;
+  color: #4a5e58;
   max-width: 380px;
 }
 
@@ -58,7 +57,7 @@
 .gc-left {
   padding-right: 80px;
   padding-top: 56px;
-  border-right: 1px solid #e5e5e5;
+  border-right: 1px solid #ddd9d2;
 }
 
 .gc-right {
@@ -75,16 +74,16 @@
 }
 
 .gc-section-label {
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #888;
+  color: #7a9490;
   margin-bottom: 20px;
 }
 
 /* ── Amount rows ── */
 .gc-amounts {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #ddd9d2;
 }
 
 .gc-amount-row {
@@ -92,7 +91,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 18px 0;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #ddd9d2;
   cursor: pointer;
   transition: background 0.1s;
 }
@@ -121,28 +120,28 @@
   font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: #0a0a0a;
+  color: #263430;
 }
 
 .gc-amount-sub {
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #888;
+  color: #7a9490;
 }
 
 .gc-radio {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 1.5px solid #ccc;
+  border: 1.5px solid #b5c2be;
   flex-shrink: 0;
   transition: border-color 0.15s;
   position: relative;
 }
 
 .gc-radio.checked {
-  border-color: #0a0a0a;
+  border-color: #263430;
 }
 
 .gc-radio.checked::after {
@@ -154,7 +153,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #0a0a0a;
+  background: #263430;
 }
 
 /* ── Form fields ── */
@@ -166,20 +165,20 @@
 }
 
 .gc-label {
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #888;
+  color: #7a9490;
 }
 
 .gc-field input,
 .gc-field textarea {
   background: transparent;
   border: none;
-  border-bottom: 1px solid #ccc;
-  color: #0a0a0a;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 14px;
+  border-bottom: 1px solid #b5c2be;
+  color: #263430;
+  
+  font-size: 15px;
   letter-spacing: 0.01em;
   padding: 10px 0;
   outline: none;
@@ -191,7 +190,7 @@
 
 .gc-field input:focus,
 .gc-field textarea:focus {
-  border-bottom-color: #0a0a0a;
+  border-bottom-color: #263430;
 }
 
 .gc-field input.has-error,
@@ -211,14 +210,14 @@
 
 /* ── Errors ── */
 .gc-error {
-  font-size: 11px;
+  font-size: 15px;
   color: #c00;
   letter-spacing: 0.04em;
   margin-top: 4px;
 }
 
 .gc-api-error {
-  font-size: 12px;
+  font-size: 16px;
   color: #c00;
   letter-spacing: 0.04em;
   margin-top: 16px;
@@ -226,12 +225,12 @@
 
 /* ── Submit ── */
 .gc-submit {
-  background: #0a0a0a;
-  color: #fff;
+  background: #263430;
+  color: #f0ece6;
   border: none;
   padding: 16px 40px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 11px;
+  
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -251,7 +250,7 @@
 
 /* ── Gift card preview ── */
 .gc-card-preview {
-  background: #f5f5f5;
+  background: #e8e4dc;
   padding: 28px 28px 24px;
   display: flex;
   flex-direction: column;
@@ -268,17 +267,17 @@
 }
 
 .gc-card-brand {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 800;
   letter-spacing: 0.02em;
-  color: #0a0a0a;
+  color: #263430;
 }
 
 .gc-card-tag {
   font-size: 8px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #888;
+  color: #7a9490;
   text-align: right;
   line-height: 1.6;
 }
@@ -287,7 +286,7 @@
   font-size: 32px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: #bbb;
+  color: #a0b0ac;
 }
 
 .gc-card-bottom {
@@ -305,9 +304,9 @@
 }
 
 .gc-preview-note {
-  font-size: 12px;
+  font-size: 16px;
   line-height: 1.7;
-  color: #888;
+  color: #7a9490;
 }
 
 /* ── Responsive ── */
@@ -335,7 +334,7 @@
     order: 1;
     padding-top: 40px;
     padding-bottom: 40px;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #ddd9d2;
   }
 
   .gc-field-row {

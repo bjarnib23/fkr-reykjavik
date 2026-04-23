@@ -19,19 +19,19 @@
 }
 
 .contact-label {
-  font-size: 10px;
+  font-size: 17px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #888;
+  color: #7a9490;
 }
 
 .contact-field input {
   background: transparent;
   border: none;
-  border-bottom: 1px solid #ccc;
-  color: #0a0a0a;
+  border-bottom: 1px solid #b5c2be;
+  color: #263430;
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   padding: 10px 0;
   outline: none;
   transition: border-color 0.2s;
@@ -41,11 +41,11 @@
 }
 
 .contact-field input:focus {
-  border-bottom-color: #0a0a0a;
+  border-bottom-color: #263430;
 }
 
 .contact-field input::placeholder {
-  color: #ccc;
+  color: #b5c2be;
 }
 
 @media (max-width: 600px) {

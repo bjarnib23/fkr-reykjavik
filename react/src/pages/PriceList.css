@@ -3,7 +3,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 60px;
   padding: 80px 60px 64px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #ddd9d2;
   align-items: start;
 }
 
@@ -11,15 +11,15 @@
   font-size: clamp(52px, 8vw, 100px);
   font-weight: 800;
   letter-spacing: -0.03em;
-  color: #0a0a0a;
+  color: #263430;
   line-height: 1.0;
   margin-bottom: 24px;
 }
 
 .pl-hero-desc {
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.8;
-  color: #555;
+  color: #4a5e58;
   max-width: 440px;
 }
 
@@ -47,17 +47,17 @@
   border: none;
   padding: 8px 12px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 /* Table */
 .pl-table {
   padding: 0 60px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #ddd9d2;
 }
 
 .pl-row-wrap {
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #ddd9d2;
 }
 
 .pl-row-wrap:last-child {
@@ -73,7 +73,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-family: 'Inter', system-ui, sans-serif;
+  
   text-align: left;
   transition: background 0.1s;
 }
@@ -88,9 +88,9 @@
 }
 
 .pl-row-num {
-  font-size: 11px;
+  font-size: 15px;
   letter-spacing: 0.1em;
-  color: #ccc;
+  color: #b5c2be;
   flex-shrink: 0;
   width: 28px;
 }
@@ -98,7 +98,7 @@
 .pl-row-item {
   font-size: 16px;
   font-weight: 500;
-  color: #0a0a0a;
+  color: #263430;
   flex: 1;
   letter-spacing: -0.01em;
 }
@@ -106,7 +106,7 @@
 .pl-row-price {
   font-size: 16px;
   font-weight: 600;
-  color: #0a0a0a;
+  color: #263430;
   flex-shrink: 0;
   letter-spacing: -0.01em;
   min-width: 120px;
@@ -114,7 +114,7 @@
 }
 
 .pl-row-note {
-  font-size: 10px;
+  font-size: 16px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #aaa;
@@ -123,7 +123,7 @@
 
 .pl-row-toggle {
   font-size: 16px;
-  color: #888;
+  color: #7a9490;
   flex-shrink: 0;
   line-height: 1;
   width: 20px;
@@ -150,18 +150,18 @@
 }
 
 .pl-grade-label {
-  font-size: 11px;
+  font-size: 15px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #888;
+  color: #7a9490;
   flex-shrink: 0;
   width: 40px;
 }
 
 .pl-grade-price {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
-  color: #0a0a0a;
+  color: #263430;
   letter-spacing: -0.01em;
 }
 
@@ -171,9 +171,9 @@
 }
 
 .pl-cta {
-  font-size: 12px;
+  font-size: 16px;
   letter-spacing: 0.08em;
-  color: #0a0a0a;
+  color: #263430;
 }
 
 .pl-cta:hover {

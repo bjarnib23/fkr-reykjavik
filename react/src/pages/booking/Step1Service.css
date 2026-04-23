@@ -1,5 +1,5 @@
 .service-list {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #ddd9d2;
   margin-bottom: 8px;
 }
 
@@ -8,7 +8,7 @@
   align-items: center;
   gap: 16px;
   padding: 18px 0;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #ddd9d2;
   cursor: pointer;
   transition: background 0.1s;
 }
@@ -29,23 +29,23 @@
 }
 
 .service-row-name {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
-  color: #0a0a0a;
+  color: #263430;
   letter-spacing: -0.01em;
 }
 
 .service-row-meta {
-  font-size: 10px;
+  font-size: 17px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #888;
+  color: #7a9490;
 }
 
 .service-row-price {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
-  color: #0a0a0a;
+  color: #263430;
   flex-shrink: 0;
 }
 
@@ -53,14 +53,14 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 1.5px solid #ccc;
+  border: 1.5px solid #b5c2be;
   flex-shrink: 0;
   position: relative;
   transition: border-color 0.15s;
 }
 
 .service-radio.checked {
-  border-color: #0a0a0a;
+  border-color: #263430;
 }
 
 .service-radio.checked::after {
@@ -72,5 +72,5 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #0a0a0a;
+  background: #263430;
 }
