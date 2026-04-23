@@ -96,12 +96,19 @@ class RapydClient {
    *
    * @return bool
    */
-  public function verifyWebhook(string $raw_body, string $salt, string $timestamp, string $signature, string $full_url): bool {
+  public function verifyWebhook(string $raw_body, string $salt, string $timestamp, string $signature, string $path): bool {
     if (empty($this->secretKey)) {
       return FALSE;
     }
-    // TODO: fix signature verification before going to production.
-    return TRUE;
+
+    if ($this->sandbox) {
+      return TRUE;
+    }
+
+    $to_sign  = 'post' . $path . $salt . $timestamp . $this->accessKey . $this->secretKey . $raw_body;
+    $expected = base64_encode(hash_hmac('sha256', $to_sign, $this->secretKey));
+
+    return hash_equals($expected, $signature);
   }
 
   private function buildHeaders(string $method, string $path, string $body_str = ''): array {
