@@ -37,20 +37,19 @@ class WebhookController extends ControllerBase {
 
   public function handle(Request $request): JsonResponse {
     $raw_body  = $request->getContent();
-    $salt      = $request->headers->get('salt', '');
-    $timestamp = $request->headers->get('timestamp', '');
-    $signature = $request->headers->get('signature', '');
-    $webhook_base = rtrim($this->config('fkr_rapyd.settings')->get('webhook_url') ?: $request->getSchemeAndHttpHost(), '/');
-    $full_url     = $webhook_base . $request->getPathInfo();
+    $salt      = $request->headers->get('rapyd-idempotency', '');
+    $timestamp = $request->headers->get('rapyd-timestamp', '');
+    $signature = $request->headers->get('rapyd-signature', '');
+    $path      = $request->getPathInfo();
 
-    $this->loggerFactory->get('fkr_rapyd')->debug('Webhook headers: salt=@s ts=@t sig=@sig url=@url', [
-      '@s'   => $salt,
-      '@t'   => $timestamp,
-      '@sig' => $signature,
-      '@url' => $full_url,
+    $this->loggerFactory->get('fkr_rapyd')->debug('Webhook headers: salt=@s ts=@t sig=@sig path=@path', [
+      '@s'    => $salt,
+      '@t'    => $timestamp,
+      '@sig'  => $signature,
+      '@path' => $path,
     ]);
 
-    if (!$this->rapydClient->verifyWebhook($raw_body, $salt, $timestamp, $signature, $full_url)) {
+    if (!$this->rapydClient->verifyWebhook($raw_body, $salt, $timestamp, $signature, $path)) {
       $this->loggerFactory->get('fkr_rapyd')->warning('Webhook signature verification failed.');
       return new JsonResponse(['error' => 'Invalid signature'], 401);
     }
