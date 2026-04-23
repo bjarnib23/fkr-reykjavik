@@ -1,0 +1,7 @@
+_core:
+  default_config_hash: IQwX4Y2OmWtiUckAHpua_5XBwz9zNtMUfeHYJsN8UhU
+access_key: rak_8CB3A4518DBADD7D824E
+secret_key: rsk_e70bb4c6a62cd9cd946ed4c9e79806fab917688bf22f424784951a39092286c39784360c45551d13
+sandbox: true
+frontend_url: 'http://localhost:5173'
+webhook_url: 'https://balancing-tipper-strict.ngrok-free.dev'

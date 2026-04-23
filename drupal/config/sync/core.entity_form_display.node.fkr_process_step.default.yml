@@ -1,17 +1,17 @@
-uuid: 5a60e680-64a8-45d2-b074-cc00f4d8af28
+uuid: d961f872-f54a-428c-8ae5-d157e2f17b76
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.thjonusta.field_lysing
-    - field.field.node.thjonusta.field_weight
-    - node.type.thjonusta
+    - field.field.node.fkr_process_step.field_description_process
+    - field.field.node.fkr_process_step.field_weight_process
+    - node.type.fkr_process_step
   module:
     - content_moderation
     - path
-id: node.thjonusta.default
+id: node.fkr_process_step.default
 targetEntityType: node
-bundle: thjonusta
+bundle: fkr_process_step
 mode: default
 content:
   created:
@@ -20,17 +20,17 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_lysing:
-    type: string_textfield
+  field_description_process:
+    type: string_textarea
     weight: 121
     region: content
     settings:
-      size: 60
+      rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_weight:
+  field_weight_process:
     type: number
-    weight: 25
+    weight: 122
     region: content
     settings:
       placeholder: ''

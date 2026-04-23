@@ -1,34 +1,33 @@
-uuid: 9794ef1d-e201-47a5-a86f-3ca5f6bc94ca
+uuid: ef86e5d4-86b9-41f0-9854-84ed883578eb
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.thjonusta.field_lysing
-    - field.field.node.thjonusta.field_weight
-    - node.type.thjonusta
+    - field.field.node.fkr_process_step.field_description_process
+    - field.field.node.fkr_process_step.field_weight_process
+    - node.type.fkr_process_step
   module:
     - user
-id: node.thjonusta.default
+id: node.fkr_process_step.default
 targetEntityType: node
-bundle: thjonusta
+bundle: fkr_process_step
 mode: default
 content:
-  field_lysing:
-    type: string
+  field_description_process:
+    type: basic_string
     label: above
-    settings:
-      link_to_entity: false
+    settings: {  }
     third_party_settings: {  }
     weight: 101
     region: content
-  field_weight:
+  field_weight_process:
     type: number_integer
     label: above
     settings:
       thousand_separator: ''
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 117
+    weight: 102
     region: content
   links:
     settings: {  }

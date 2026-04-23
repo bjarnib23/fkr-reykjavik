@@ -5,6 +5,10 @@ dependencies:
   config:
     - field.field.node.page_content.field_body_text
     - field.field.node.page_content.field_cta_text
+    - field.field.node.page_content.field_nav_is_cta
+    - field.field.node.page_content.field_nav_label
+    - field.field.node.page_content.field_nav_path
+    - field.field.node.page_content.field_nav_weight
     - field.field.node.page_content.field_page_image
     - field.field.node.page_content.field_page_subtitle
     - field.field.node.page_content.field_slug
@@ -40,6 +44,36 @@ content:
     region: content
     settings:
       size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_nav_is_cta:
+    type: boolean_checkbox
+    weight: 129
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_nav_label:
+    type: string_textfield
+    weight: 126
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_nav_path:
+    type: string_textfield
+    weight: 128
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_nav_weight:
+    type: number
+    weight: 127
+    region: content
+    settings:
       placeholder: ''
     third_party_settings: {  }
   field_page_image:
