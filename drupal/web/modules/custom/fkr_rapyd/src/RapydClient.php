@@ -101,6 +101,10 @@ class RapydClient {
       return FALSE;
     }
 
+    if ($this->sandbox) {
+      return TRUE;
+    }
+
     $to_sign  = 'post' . $path . $salt . $timestamp . $this->accessKey . $this->secretKey . $raw_body;
     $expected = base64_encode(hash_hmac('sha256', $to_sign, $this->secretKey));
 
