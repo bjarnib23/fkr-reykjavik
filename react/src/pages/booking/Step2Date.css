@@ -1,8 +1,8 @@
 .time-options-label {
-  font-size: 10px;
+  font-size: 17px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #888;
+  color: #7a9490;
   margin: 32px 0 16px;
 }
 
@@ -15,28 +15,28 @@
 
 .time-btn {
   padding: 10px 20px;
-  font-size: 13px;
+  font-size: 17px;
   font-family: 'Inter', system-ui, sans-serif;
-  color: #0a0a0a;
-  border: 1px solid #e5e5e5;
-  background: #fff;
+  color: #263430;
+  border: 1px solid #ddd9d2;
+  background: #f0ece6;
   cursor: pointer;
   transition: border-color 0.15s, background 0.15s;
   letter-spacing: 0.02em;
 }
 
 .time-btn:hover {
-  border-color: #0a0a0a;
+  border-color: #263430;
 }
 
 .time-btn.selected {
-  background: #0a0a0a;
-  border-color: #0a0a0a;
-  color: #fff;
+  background: #263430;
+  border-color: #263430;
+  color: #f0ece6;
 }
 
 .time-empty {
-  font-size: 13px;
-  color: #888;
+  font-size: 17px;
+  color: #7a9490;
   padding: 8px 0;
 }

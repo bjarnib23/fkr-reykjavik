@@ -1,5 +1,5 @@
 .calendar {
-  border: 1px solid #e5e5e5;
+  border: 1px solid #ddd9d2;
   padding: 20px;
   margin: 0 0 16px;
   max-width: 340px;
@@ -13,7 +13,7 @@
 }
 
 .calendar-header span {
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 600;
   letter-spacing: 0.02em;
 }
@@ -21,15 +21,15 @@
 .calendar-header button {
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 17px;
   cursor: pointer;
   padding: 4px 8px;
-  color: #888;
+  color: #7a9490;
   transition: color 0.15s;
 }
 
 .calendar-header button:hover {
-  color: #0a0a0a;
+  color: #263430;
 }
 
 .calendar-grid {
@@ -40,10 +40,10 @@
 
 .calendar-day-label {
   text-align: center;
-  font-size: 10px;
+  font-size: 17px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #bbb;
+  color: #a0b0ac;
   padding: 4px 2px 8px;
 }
 
@@ -51,18 +51,18 @@
   text-align: center;
   padding: 8px 4px;
   cursor: pointer;
-  font-size: 13px;
-  color: #0a0a0a;
+  font-size: 17px;
+  color: #263430;
   transition: background 0.1s;
 }
 
 .calendar-cell:hover {
-  background: #f5f5f5;
+  background: #e8e4dc;
 }
 
 .calendar-cell.selected {
-  background: #0a0a0a;
-  color: #fff;
+  background: #263430;
+  color: #f0ece6;
 }
 
 .calendar-cell.empty {
@@ -70,6 +70,6 @@
 }
 
 .calendar-cell.disabled {
-  color: #ccc;
+  color: #b5c2be;
   cursor: default;
 }

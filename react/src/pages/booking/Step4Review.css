@@ -1,5 +1,5 @@
 .review-rows {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #ddd9d2;
   margin-bottom: 32px;
 }
 
@@ -8,21 +8,21 @@
   justify-content: space-between;
   align-items: baseline;
   padding: 14px 0;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #ddd9d2;
   gap: 16px;
 }
 
 .review-row span {
-  font-size: 10px;
+  font-size: 17px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #888;
+  color: #7a9490;
 }
 
 .review-row strong {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
-  color: #0a0a0a;
+  color: #263430;
   text-align: right;
 }
 
@@ -34,19 +34,19 @@
 }
 
 .review-notes-label {
-  font-size: 10px;
+  font-size: 17px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #888;
+  color: #7a9490;
 }
 
 .review-notes-field textarea {
   background: transparent;
   border: none;
-  border-bottom: 1px solid #ccc;
-  color: #0a0a0a;
+  border-bottom: 1px solid #b5c2be;
+  color: #263430;
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   padding: 10px 0;
   outline: none;
   width: 100%;
@@ -55,7 +55,7 @@
 }
 
 .review-notes-field textarea:focus {
-  border-bottom-color: #0a0a0a;
+  border-bottom-color: #263430;
 }
 
 .review-done {
@@ -70,7 +70,7 @@
 }
 
 .review-done p {
-  font-size: 14px;
-  color: #555;
+  font-size: 15px;
+  color: #4a5e58;
   line-height: 1.7;
 }

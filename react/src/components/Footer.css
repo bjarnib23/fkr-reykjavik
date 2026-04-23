@@ -1,8 +1,8 @@
 .footer {
-  background: #fff;
-  border-top: 1px solid #e5e5e5;
-  font-size: 13px;
-  color: #555;
+  background: #f3eeee;
+  border-top: 1px solid #ddd9d2;
+  font-size: 17px;
+  color: #4a5e58;
   line-height: 1.8;
 }
 
@@ -14,24 +14,24 @@
 }
 
 .footer-brand {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 800;
-  color: #0a0a0a;
+  color: #263430;
   letter-spacing: 0.02em;
   margin-bottom: 8px;
 }
 
 .footer-tagline {
-  font-size: 12px;
-  color: #888;
+  font-size: 16px;
+  color: #7a9490;
   max-width: 220px;
 }
 
 .footer-col-label {
-  font-size: 10px;
+  font-size: 17px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #888;
+  color: #7a9490;
   margin-bottom: 12px;
 }
 
@@ -39,9 +39,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #ddd9d2;
   padding: 16px 60px;
-  font-size: 11px;
+  font-size: 15px;
   color: #aaa;
   letter-spacing: 0.05em;
 }

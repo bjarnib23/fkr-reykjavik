@@ -37,3 +37,19 @@ fkr_content.services:
   methods: [GET]
   requirements:
     _access: 'TRUE'
+
+fkr_content.process_steps:
+  path: '/api/fkr/process-steps'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::processSteps'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'
+
+fkr_content.nav:
+  path: '/api/fkr/nav'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::nav'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'

@@ -80,7 +80,7 @@ function PriceList() {
                 <span className="pl-row-num">{String(i + 1).padStart(2, '0')}</span>
                 <span className="pl-row-item">{row.item}</span>
                 <span className="pl-row-price">{fmt(from)}</span>
-                <span className="pl-row-note">Frá · Án efnis</span>
+
                 <span className="pl-row-toggle">{isOpen ? '−' : '+'}</span>
               </button>
 

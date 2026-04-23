@@ -3,7 +3,7 @@
   grid-template-columns: 1fr 1fr;
   align-items: end;
   padding: 80px 60px 64px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #ddd9d2;
   gap: 60px;
 }
 
@@ -12,7 +12,7 @@
   font-weight: 800;
   line-height: 1.0;
   letter-spacing: -0.02em;
-  color: #0a0a0a;
+  color: #263430;
 }
 
 .process-hero-right {
@@ -22,17 +22,106 @@
 }
 
 .process-hero-right p {
-  font-size: 13px;
+  font-size: 17px;
   line-height: 1.8;
-  color: #555;
+  color: #4a5e58;
   max-width: 480px;
+}
+
+.process-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid #ddd9d2;
+}
+
+.process-image {
+  position: sticky;
+  top: 0;
+  height: 100vh;
 }
 
 .process-image img {
   width: 100%;
-  max-height: 600px;
+  height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.process-right {
+  border-left: 1px solid #ddd9d2;
+}
+
+.process-steps {
+  border-bottom: 1px solid #ddd9d2;
+}
+
+.process-step {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 24px;
+  padding: 40px 48px;
+  border-bottom: 1px solid #ddd9d2;
+  align-items: start;
+}
+
+.process-step:last-child {
+  border-bottom: none;
+}
+
+.process-step-number {
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  color: #a0b0ac;
+  padding-top: 4px;
+}
+
+.process-step-body h3 {
+  font-size: 17px;
+  font-weight: 600;
+  color: #263430;
+  margin-bottom: 8px;
+}
+
+.process-step-body p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #4a5e58;
+}
+
+.process-closing {
+  padding: 40px 48px;
+}
+
+.process-closing p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #4a5e58;
+}
+
+@media (max-width: 768px) {
+  .process-body {
+    grid-template-columns: 1fr;
+  }
+
+  .process-image {
+    position: relative;
+    height: 300px;
+  }
+
+  .process-right {
+    border-left: none;
+    border-top: 1px solid #ddd9d2;
+  }
+
+  .process-step {
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    padding: 32px 24px;
+  }
+
+  .process-closing {
+    padding: 32px 24px;
+  }
 }
 
 .process-cta-band {
@@ -40,18 +129,18 @@
   justify-content: space-between;
   align-items: center;
   padding: 40px 60px;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #ddd9d2;
 }
 
 .process-cta-band p {
-  font-size: 15px;
-  color: #0a0a0a;
+  font-size: 16px;
+  color: #263430;
 }
 
 .process-cta {
-  font-size: 12px;
+  font-size: 16px;
   letter-spacing: 0.08em;
-  color: #0a0a0a;
+  color: #263430;
 }
 
 .process-cta:hover {

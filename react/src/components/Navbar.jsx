@@ -2,62 +2,43 @@ import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import './Navbar.css'
 
-const SLUG_TO_PATH = {
-  studio:    '/studio',
-  process:   '/ferlid',
-  booking:   '/boka-tima',
-  giftcard:  '/gjafabref',
-  pricelist: '/verdskra',
-  faq:       '/algengar-spurningar',
-}
-
-const SLUG_ORDER = ['studio', 'process', 'booking', 'giftcard', 'pricelist', 'faq']
-
 function Navbar() {
-  const [links, setLinks]   = useState([])
-  const [brand, setBrand]   = useState({ name: 'FKR', sub: 'Reykjavík · Est. 2011' })
+  const [links, setLinks] = useState([])
+  const [logo, setLogo]   = useState('')
 
   useEffect(() => {
-    fetch('http://fkr-reykjavik.ddev.site/api/fkr/pages', { cache: 'no-store' })
+    fetch('http://fkr-reykjavik.ddev.site/api/fkr/nav', { cache: 'no-store' })
       .then(r => r.json())
-      .then(pages => {
-        const bySlug = {}
-        Object.values(pages).forEach(p => { if (p.slug) bySlug[p.slug] = p })
-
-        const nav = SLUG_ORDER
-          .filter(slug => bySlug[slug] && SLUG_TO_PATH[slug])
-          .map(slug => ({ label: bySlug[slug].title, path: SLUG_TO_PATH[slug] }))
-        setLinks(nav)
-      })
+      .then(setLinks)
 
     fetch('http://fkr-reykjavik.ddev.site/api/fkr/settings', { cache: 'no-store' })
       .then(r => r.json())
-      .then(data => {
-        if (data.site_name) setBrand(b => ({ ...b, name: data.site_name }))
-        if (data.site_sub)  setBrand(b => ({ ...b, sub:  data.site_sub  }))
-      })
+      .then(data => { if (data.logo) setLogo(data.logo) })
   }, [])
 
-  const bookLink = links.find(l => l.path === '/boka-tima')
+  const navLinks = links.filter(l => !l.is_cta)
+  const cta      = links.find(l => l.is_cta)
 
   return (
     <nav className="navbar">
       <NavLink to="/" className="navbar-brand">
-        <span className="navbar-brand-name">{brand.name}</span>
-        <span className="navbar-brand-sub">{brand.sub}</span>
+        {logo
+          ? <img src={logo} alt="Logo" className="navbar-logo" />
+          : <span className="navbar-brand-name">FKR</span>
+        }
       </NavLink>
 
       <ul className="navbar-links">
-        {links.map(link => (
+        {navLinks.map(link => (
           <li key={link.path}>
             <NavLink to={link.path}>{link.label}</NavLink>
           </li>
         ))}
       </ul>
 
-      {bookLink && (
-        <NavLink to="/boka-tima" className="navbar-cta">
-          {bookLink.label} →
+      {cta && (
+        <NavLink to={cta.path} className="navbar-cta">
+          {cta.label} →
         </NavLink>
       )}
     </nav>
