@@ -1,72 +1,76 @@
-.review-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 24px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
+.review-rows {
+  border-top: 1px solid #ddd9d2;
+  margin-bottom: 32px;
 }
 
-.review-table td {
-    padding: 14px 20px;
-    border-bottom: 1px solid #e0e0e0;
-    font-size: 15px;
+.review-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px solid #ddd9d2;
+  gap: 16px;
 }
 
-.review-table tr:last-child td {
-    border-bottom: none;
+.review-row span {
+  font-size: 17px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7a9490;
 }
 
-.review-table td:first-child {
-    color: #555;
-    width: 40%;
+.review-row strong {
+  font-size: 15px;
+  font-weight: 500;
+  color: #263430;
+  text-align: right;
 }
 
-.review-notes {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 24px;
+.review-notes-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
-.review-notes textarea {
-    width: 100%;
-    height: 100px;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 15px;
-    resize: vertical;
-    box-sizing: border-box;
+.review-notes-label {
+  font-size: 17px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7a9490;
 }
 
-.review-confirmation {
-    text-align: center;
-    padding: 48px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
+.review-notes-field textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #b5c2be;
+  color: #263430;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  padding: 10px 0;
+  outline: none;
+  width: 100%;
+  resize: none;
+  border-radius: 0;
 }
 
-.review-confirmation h2 {
-    font-size: 2rem;
-    color: #263A38;
+.review-notes-field textarea:focus {
+  border-bottom-color: #263430;
 }
 
-.review-confirmation p {
-    max-width: 400px;
-    color: #555;
-    line-height: 1.6;
+.review-done {
+  padding: 32px 0;
 }
 
-.review-confirmation button {
-    margin-top: 8px;
-    padding: 12px 32px;
-    background: #263A38;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
+.review-done h2 {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.review-done p {
+  font-size: 15px;
+  color: #4a5e58;
+  line-height: 1.7;
 }

@@ -1,88 +1,348 @@
-.giftcard-wrapper {
-  max-width: 600px;
-  margin: 60px auto;
-  padding: 0 24px;
+.gc-page {
+  background: #f3eeee;
+  min-height: 100vh;
+  color: #263430;
 }
 
-.giftcard-wrapper h1 {
-  text-align: center;
-  font-size: 36px;
-  letter-spacing: 4px;
-  margin-bottom: 32px;
+/* ── Hero ── */
+.gc-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  padding: 80px 60px 64px;
+  border-bottom: 1px solid #ddd9d2;
+  gap: 60px;
 }
 
-.amount-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 32px;
-}
-
-.amount-btn {
-  padding: 12px 20px;
-  border: 1px solid #ccc;
-  background: white;
-  cursor: pointer;
-  border-radius: 8px;
+.gc-eyebrow {
   font-size: 15px;
-  font-family: inherit;
-}
-
-.amount-btn.selected {
-  background: #263A38;
-  color: white;
-  border-color: #263A38;
-}
-
-.selected-amount {
-  font-size: 15px;
-  color: #263A38;
-  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #7a9490;
   margin-bottom: 20px;
 }
 
-.giftcard-wrapper input,
-.giftcard-wrapper textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  font-size: 15px;
-  font-family: inherit;
-  margin-bottom: 12px;
-  background: white;
-  box-sizing: border-box;
+.gc-hero h1 {
+  
+  font-size: clamp(48px, 6vw, 80px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: #263430;
 }
 
-.giftcard-wrapper input.error {
-  border-color: #c0392b;
+.gc-hero-right {
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 8px;
 }
 
-.error-msg {
-  color: #c0392b;
-  font-size: 13px;
-  margin-bottom: 12px;
-  margin-top: -8px;
+.gc-hero-desc {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #4a5e58;
+  max-width: 380px;
 }
 
-.submit-btn {
-  width: 100%;
-  background: #263A38;
-  color: white;
-  border: none;
-  padding: 14px 24px;
-  font-size: 16px;
-  font-family: inherit;
+/* ── Body layout ── */
+.gc-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 60px 100px;
+}
+
+.gc-left {
+  padding-right: 80px;
+  padding-top: 56px;
+  border-right: 1px solid #ddd9d2;
+}
+
+.gc-right {
+  padding-left: 60px;
+  padding-top: 56px;
+  position: sticky;
+  top: 80px;
+  align-self: start;
+}
+
+/* ── Section ── */
+.gc-section {
+  margin-bottom: 48px;
+}
+
+.gc-section-label {
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7a9490;
+  margin-bottom: 20px;
+}
+
+/* ── Amount rows ── */
+.gc-amounts {
+  border-top: 1px solid #ddd9d2;
+}
+
+.gc-amount-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+  border-bottom: 1px solid #ddd9d2;
   cursor: pointer;
+  transition: background 0.1s;
+}
+
+.gc-amount-row:hover {
+  background: #fafafa;
+  margin: 0 -12px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.gc-amount-row.selected {
+  background: #fafafa;
+  margin: 0 -12px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.gc-amount-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gc-amount-price {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #263430;
+}
+
+.gc-amount-sub {
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7a9490;
+}
+
+.gc-radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid #b5c2be;
+  flex-shrink: 0;
+  transition: border-color 0.15s;
+  position: relative;
+}
+
+.gc-radio.checked {
+  border-color: #263430;
+}
+
+.gc-radio.checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #263430;
+}
+
+/* ── Form fields ── */
+.gc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.gc-label {
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7a9490;
+}
+
+.gc-field input,
+.gc-field textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #b5c2be;
+  color: #263430;
+  
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  padding: 10px 0;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+.gc-field input:focus,
+.gc-field textarea:focus {
+  border-bottom-color: #263430;
+}
+
+.gc-field input.has-error,
+.gc-field textarea.has-error {
+  border-bottom-color: #c00;
+}
+
+.gc-field textarea {
+  resize: none;
+}
+
+.gc-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* ── Errors ── */
+.gc-error {
+  font-size: 15px;
+  color: #c00;
+  letter-spacing: 0.04em;
+  margin-top: 4px;
+}
+
+.gc-api-error {
+  font-size: 16px;
+  color: #c00;
+  letter-spacing: 0.04em;
+  margin-top: 16px;
+}
+
+/* ── Submit ── */
+.gc-submit {
+  background: #263430;
+  color: #f0ece6;
+  border: none;
+  padding: 16px 40px;
+  
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s;
   margin-top: 8px;
 }
 
-.submit-btn:disabled {
-  opacity: 0.5;
+.gc-submit:hover {
+  background: #333;
+}
+
+.gc-submit:disabled {
+  opacity: 0.35;
   cursor: not-allowed;
 }
 
-.api-error {
-  color: #c0392b;
-  margin-top: 12px;
-  font-size: 14px;
+/* ── Gift card preview ── */
+.gc-card-preview {
+  background: #e8e4dc;
+  padding: 28px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 20px;
+  aspect-ratio: 1.586 / 1;
+  justify-content: space-between;
+}
+
+.gc-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.gc-card-brand {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #263430;
+}
+
+.gc-card-tag {
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #7a9490;
+  text-align: right;
+  line-height: 1.6;
+}
+
+.gc-card-amount {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #a0b0ac;
+}
+
+.gc-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.gc-card-code,
+.gc-card-expiry {
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #aaa;
+}
+
+.gc-preview-note {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #7a9490;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .gc-hero {
+    grid-template-columns: 1fr;
+    padding: 56px 24px 48px;
+    gap: 24px;
+  }
+
+  .gc-body {
+    grid-template-columns: 1fr;
+    padding: 0 24px 80px;
+  }
+
+  .gc-left {
+    padding-right: 0;
+    border-right: none;
+    order: 2;
+  }
+
+  .gc-right {
+    padding-left: 0;
+    position: static;
+    order: 1;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #ddd9d2;
+  }
+
+  .gc-field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .gc-submit {
+    width: 100%;
+    text-align: center;
+  }
 }
