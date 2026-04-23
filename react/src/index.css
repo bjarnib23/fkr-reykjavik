@@ -1,16 +1,30 @@
-* {             
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-                                                                    
-  body {
-    font-family: system-ui, sans-serif;                             
-    background: #F4EDED;
-    color: #2c2c2c;                                                 
-  }
-                                                                    
-  a {             
-    text-decoration: none;
-    color: inherit;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  background: #f3eeee;
+  color: #263430;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+}

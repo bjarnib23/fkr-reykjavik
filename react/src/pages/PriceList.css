@@ -1,95 +1,202 @@
-.pricelist {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 24px;
+.pl-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  padding: 80px 60px 64px;
+  border-bottom: 1px solid #ddd9d2;
+  align-items: start;
 }
 
-.pricelist-hero {
-    display: grid;
-    grid-template-columns: 55% 1fr;
-    gap: 48px;
-    margin-bottom: 48px;
-    align-items: start;
+.pl-hero h1 {
+  font-size: clamp(52px, 8vw, 100px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #263430;
+  line-height: 1.0;
+  margin-bottom: 24px;
 }
 
-.pricelist-carousel {
-    position: relative;
+.pl-hero-desc {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #4a5e58;
+  max-width: 440px;
 }
 
-.pricelist-carousel img {
-    width: 58%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    clip-path: inset(0 0 10% 0);
-    display: block;
-    margin: 0 auto;
+.pl-hero-image {
+  position: relative;
 }
 
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    color: white;
-    border: none;
-    font-size: 20px;
-    padding: 8px 14px;
-    cursor: pointer;
-    line-height: 1;
+.pl-hero-image img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
 }
 
-.carousel-btn:hover {
-    background: rgba(0,0,0,0.4);
-    color: white;
+.pl-img-nav {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
 }
 
-.carousel-btn.prev { left: 21%; }
-.carousel-btn.next { right: 21%; }
-
-.pricelist-hero-text h1 {
-    margin-bottom: 24px;
+.pl-img-nav button {
+  background: rgba(255,255,255,0.9);
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 15px;
 }
 
-.pricelist-hero-text p {
-    margin-bottom: 16px;
-    line-height: 1.6;
-    font-size: 18px;
+/* Table */
+.pl-table {
+  padding: 0 60px;
+  border-bottom: 1px solid #ddd9d2;
 }
 
-.pricelist-intro {
-    margin-bottom: 32px;
-    line-height: 1.6;
+.pl-row-wrap {
+  border-bottom: 1px solid #ddd9d2;
 }
 
-.pricelist-table-wrapper {
-    overflow-x: auto;
+.pl-row-wrap:last-child {
+  border-bottom: none;
 }
 
-.pricelist-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
+.pl-row {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  padding: 20px 0;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  
+  text-align: left;
+  transition: background 0.1s;
 }
 
-.pricelist-table th,
-.pricelist-table td {
-    padding: 10px 12px;
-    text-align: left;
-    border-bottom: 1px solid #e0e0e0;
-    white-space: nowrap;
+.pl-row:hover,
+.pl-row-wrap.open .pl-row {
+  background: #fafafa;
+  margin: 0 -12px;
+  padding-left: 12px;
+  padding-right: 12px;
+  width: calc(100% + 24px);
 }
 
-.pricelist-table thead th {
-    background: #263A38;
-    color: #F4EDED;
-    font-weight: 600;
+.pl-row-num {
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  color: #b5c2be;
+  flex-shrink: 0;
+  width: 28px;
 }
 
-.pricelist-table tbody tr:hover {
-    background: #F4EDED;
+.pl-row-item {
+  font-size: 16px;
+  font-weight: 500;
+  color: #263430;
+  flex: 1;
+  letter-spacing: -0.01em;
 }
 
-.pricelist-table td:first-child {
-    font-weight: 500;
+.pl-row-price {
+  font-size: 16px;
+  font-weight: 600;
+  color: #263430;
+  flex-shrink: 0;
+  letter-spacing: -0.01em;
+  min-width: 120px;
+  text-align: right;
+}
+
+.pl-row-note {
+  font-size: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #aaa;
+  flex-shrink: 0;
+}
+
+.pl-row-toggle {
+  font-size: 16px;
+  color: #7a9490;
+  flex-shrink: 0;
+  line-height: 1;
+  width: 20px;
+  text-align: right;
+}
+
+/* Grade dropdown */
+.pl-grades {
+  padding: 0 0 8px 52px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.pl-grade-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 24px;
+}
+
+.pl-grade-row:last-child {
+  border-bottom: none;
+}
+
+.pl-grade-label {
+  font-size: 15px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7a9490;
+  flex-shrink: 0;
+  width: 40px;
+}
+
+.pl-grade-price {
+  font-size: 16px;
+  font-weight: 500;
+  color: #263430;
+  letter-spacing: -0.01em;
+}
+
+/* CTA */
+.pl-cta-band {
+  padding: 40px 60px;
+}
+
+.pl-cta {
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  color: #263430;
+}
+
+.pl-cta:hover {
+  opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .pl-hero {
+    grid-template-columns: 1fr;
+    padding: 56px 24px 48px;
+    gap: 32px;
+  }
+
+  .pl-table,
+  .pl-cta-band {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .pl-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pl-row-note { display: none; }
 }

@@ -201,6 +201,61 @@ class ContentController extends ControllerBase {
   }
 
   /**
+   * GET /api/fkr/nav
+   */
+  public function nav(): JsonResponse {
+    $nids = $this->entityTypeManager->getStorage('node')->getQuery()
+      ->condition('type', 'page_content')
+      ->condition('status', 1)
+      ->exists('field_nav_weight')
+      ->sort('field_nav_weight', 'ASC')
+      ->accessCheck(FALSE)
+      ->execute();
+
+    $nodes = $this->entityTypeManager->getStorage('node')->loadMultiple($nids);
+    $items = [];
+
+    foreach ($nodes as $node) {
+      $weight = $node->get('field_nav_weight')->value;
+      if ($weight === NULL) {
+        continue;
+      }
+      $items[] = [
+        'label'  => $node->get('field_nav_label')->value ?: $node->getTitle(),
+        'path'   => $node->get('field_nav_path')->value,
+        'is_cta' => (bool) $node->get('field_nav_is_cta')->value,
+      ];
+    }
+
+    return new JsonResponse($items, 200, $this->cors());
+  }
+
+  /**
+   * GET /api/fkr/process-steps
+   */
+  public function processSteps(): JsonResponse {
+    $nids = $this->entityTypeManager->getStorage('node')->getQuery()
+      ->condition('type', 'fkr_process_step')
+      ->condition('status', 1)
+      ->sort('field_weight_process', 'ASC')
+      ->accessCheck(FALSE)
+      ->execute();
+
+    $nodes = $this->entityTypeManager->getStorage('node')->loadMultiple($nids);
+    $items = [];
+
+    foreach ($nodes as $node) {
+      $items[] = [
+        'id'          => $node->id(),
+        'title'       => $node->getTitle(),
+        'description' => $node->get('field_description_process')->value,
+      ];
+    }
+
+    return new JsonResponse($items, 200, $this->cors());
+  }
+
+  /**
    * GET /api/fkr/services
    */
   public function services(): JsonResponse {

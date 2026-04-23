@@ -1,48 +1,50 @@
-import { useState, useEffect } from 'react'
+import './Step3Contact.css'
 
 function Step3Contact({ data, update, next, back }) {
-    const [pageTitle, setPageTitle] = useState('')
-    const [pageDesc, setPageDesc] = useState('')
+  const canContinue = data.name && data.email && data.phone
 
-    useEffect(() => {
-        fetch('http://fkr-reykjavik.ddev.site/api/fkr/pages', { cache: 'no-store' })
-            .then(res => res.json())
-            .then(pages => {
-                const page = Object.values(pages).find(p => p.slug === 'booking_step3')
-                if (page) {
-                    setPageTitle(page.subtitle || '')
-                    setPageDesc(page.body_text || '')
-                }
-            })
-    }, [])
-
-    return (
-        <div>
-            <h2>{pageTitle}</h2>
-            {pageDesc && <div dangerouslySetInnerHTML={{ __html: pageDesc }} />}
-
+  return (
+    <div>
+      <h2>Your details.</h2>
+      <div className="contact-fields">
+        <div className="contact-field-row">
+          <div className="contact-field">
+            <label className="contact-label">Name *</label>
             <input
-                placeholder="Nafn *"
-                value={data.name}
-                onChange={e => update({ name: e.target.value })}
+              autoComplete="name"
+              value={data.name}
+              onChange={e => update({ name: e.target.value })}
+              placeholder="Jón Sigurðsson"
             />
+          </div>
+          <div className="contact-field">
+            <label className="contact-label">Phone *</label>
             <input
-                placeholder="Tölvupóstur *"
-                value={data.email}
-                onChange={e => update({ email: e.target.value })}
+              type="tel"
+              autoComplete="tel"
+              value={data.phone}
+              onChange={e => update({ phone: e.target.value })}
+              placeholder="+354 000 0000"
             />
-            <input
-                placeholder="Sími *"
-                value={data.phone}
-                onChange={e => update({ phone: e.target.value })}
-            />
-
-            <div className="step-buttons">
-                <button onClick={back}>Til baka</button>
-                <button onClick={next} disabled={!data.name || !data.email || !data.phone}>Næsta skref</button>
-            </div>
+          </div>
         </div>
-    )
+        <div className="contact-field">
+          <label className="contact-label">Email *</label>
+          <input
+            type="email"
+            autoComplete="email"
+            value={data.email}
+            onChange={e => update({ email: e.target.value })}
+            placeholder="jon@example.is"
+          />
+        </div>
+      </div>
+      <div className="step-buttons">
+        <button onClick={back}>Back</button>
+        <button onClick={next} disabled={!canContinue}>Continue</button>
+      </div>
+    </div>
+  )
 }
 
 export default Step3Contact

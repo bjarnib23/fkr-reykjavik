@@ -4,12 +4,12 @@ import './GiftCard.css'
 const API = 'http://fkr-reykjavik.ddev.site'
 
 function GiftCard() {
-  const [amounts, setAmounts]     = useState([])
-  const [selected, setSelected]   = useState(null)
-  const [form, setForm]           = useState({ name: '', email: '', confirmEmail: '', phone: '', notes: '' })
-  const [errors, setErrors]       = useState({})
-  const [apiError, setApiError]   = useState('')
-  const [loading, setLoading]     = useState(false)
+  const [amounts, setAmounts]   = useState([])
+  const [selected, setSelected] = useState(null)
+  const [form, setForm]         = useState({ name: '', email: '', confirmEmail: '', phone: '', notes: '' })
+  const [errors, setErrors]     = useState({})
+  const [apiError, setApiError] = useState('')
+  const [loading, setLoading]   = useState(false)
 
   useEffect(() => {
     fetch(`${API}/api/fkr/giftcard/amounts`)
@@ -25,12 +25,12 @@ function GiftCard() {
 
   function validate() {
     const e = {}
-    if (!selected)              e.amount       = 'Veldu upphæð'
-    if (!form.name.trim())      e.name         = 'Nafn vantar'
-    if (!form.phone.trim())     e.phone        = 'Símanúmer vantar'
-    if (!form.email.trim())     e.email        = 'Tölvupóstur vantar'
+    if (!selected)             e.amount       = 'Veldu upphæð'
+    if (!form.name.trim())     e.name         = 'Nafn vantar'
+    if (!form.phone.trim())    e.phone        = 'Símanúmer vantar'
+    if (!form.email.trim())    e.email        = 'Tölvupóstur vantar'
     else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = 'Ógildur tölvupóstur'
-    if (form.email !== form.confirmEmail)       e.confirmEmail = 'Tölvupóstar passa ekki'
+    if (form.email !== form.confirmEmail)      e.confirmEmail = 'Tölvupóstar passa ekki'
     return e
   }
 
@@ -66,82 +66,146 @@ function GiftCard() {
     }
   }
 
+  function formatPrice(label) {
+    const match = label.match(/([\d.,]+)/)
+    return match ? `kr. ${match[1]}` : label
+  }
+
+  function getSubtitle(label) {
+    const clean = label.replace(/[\d.,]+\s*(kr\.?|ISK)?/i, '').trim()
+    return clean || null
+  }
+
   return (
-    <main className="giftcard-wrapper">
-      <h1>GJAFABRÉF</h1>
-
-      <div className="amount-options">
-        {amounts.map(a => (
-          <button
-            key={a.sku}
-            className={`amount-btn${selected?.sku === a.sku ? ' selected' : ''}`}
-            onClick={() => setSelected(a)}
-            type="button"
-          >
-            {a.label}
-          </button>
-        ))}
+    <div className="gc-page">
+      <div className="gc-hero">
+        <div className="gc-hero-left">
+          <p className="gc-eyebrow">Gift Cards</p>
+          <h1>A quiet<br />and useful<br />present.</h1>
+        </div>
+        <div className="gc-hero-right">
+          <p className="gc-hero-desc">
+            Fjórar upphæðir, sendar á tölvupóst með handskrifuðu korti ef óskað er.
+            Rennur aldrei út. Gildir fyrir allt sem við gerum — skyrtu, breytingu, heilan jakkaföt.
+          </p>
+        </div>
       </div>
-      {errors.amount && <p className="error-msg">{errors.amount}</p>}
 
-      {selected && (
-        <p className="selected-amount">Valin upphæð: {selected.label}</p>
-      )}
+      <div className="gc-body">
+        <div className="gc-left">
+          <form onSubmit={handleSubmit} noValidate>
+            <div className="gc-section">
+              <p className="gc-section-label">Choose an amount</p>
+              <div className="gc-amounts">
+                {amounts.map(a => (
+                  <label
+                    key={a.sku}
+                    className={`gc-amount-row${selected?.sku === a.sku ? ' selected' : ''}`}
+                    onClick={() => { setSelected(a); setErrors(e => ({ ...e, amount: '' })) }}
+                  >
+                    <div className="gc-amount-info">
+                      <span className="gc-amount-price">{formatPrice(a.label)}</span>
+                      {getSubtitle(a.label) && (
+                        <span className="gc-amount-sub">{getSubtitle(a.label)}</span>
+                      )}
+                    </div>
+                    <div className={`gc-radio${selected?.sku === a.sku ? ' checked' : ''}`} />
+                  </label>
+                ))}
+              </div>
+              {errors.amount && <p className="gc-error">{errors.amount}</p>}
+            </div>
 
-      <form onSubmit={handleSubmit} noValidate>
-        <input
-          placeholder="Nafn *"
-          autoComplete="name"
-          value={form.name}
-          onChange={e => update('name', e.target.value)}
-          className={errors.name ? 'error' : ''}
-        />
-        {errors.name && <p className="error-msg">{errors.name}</p>}
+            <div className="gc-section">
+              <p className="gc-section-label">Your details</p>
 
-        <input
-          type="tel"
-          placeholder="Sími *"
-          autoComplete="tel"
-          value={form.phone}
-          onChange={e => update('phone', e.target.value)}
-          className={errors.phone ? 'error' : ''}
-        />
-        {errors.phone && <p className="error-msg">{errors.phone}</p>}
+              <div className="gc-field-row">
+                <div className="gc-field">
+                  <label className="gc-label">Nafn *</label>
+                  <input
+                    autoComplete="name"
+                    value={form.name}
+                    onChange={e => update('name', e.target.value)}
+                    className={errors.name ? 'has-error' : ''}
+                  />
+                  {errors.name && <span className="gc-error">{errors.name}</span>}
+                </div>
+                <div className="gc-field">
+                  <label className="gc-label">Sími *</label>
+                  <input
+                    type="tel"
+                    autoComplete="tel"
+                    value={form.phone}
+                    onChange={e => update('phone', e.target.value)}
+                    className={errors.phone ? 'has-error' : ''}
+                  />
+                  {errors.phone && <span className="gc-error">{errors.phone}</span>}
+                </div>
+              </div>
 
-        <input
-          type="email"
-          placeholder="Tölvupóstur *"
-          autoComplete="email"
-          value={form.email}
-          onChange={e => update('email', e.target.value)}
-          className={errors.email ? 'error' : ''}
-        />
-        {errors.email && <p className="error-msg">{errors.email}</p>}
+              <div className="gc-field">
+                <label className="gc-label">Tölvupóstur *</label>
+                <input
+                  type="email"
+                  autoComplete="email"
+                  value={form.email}
+                  onChange={e => update('email', e.target.value)}
+                  className={errors.email ? 'has-error' : ''}
+                />
+                {errors.email && <span className="gc-error">{errors.email}</span>}
+              </div>
 
-        <input
-          type="email"
-          placeholder="Staðfesta tölvupóst *"
-          autoComplete="email"
-          value={form.confirmEmail}
-          onChange={e => update('confirmEmail', e.target.value)}
-          className={errors.confirmEmail ? 'error' : ''}
-        />
-        {errors.confirmEmail && <p className="error-msg">{errors.confirmEmail}</p>}
+              <div className="gc-field">
+                <label className="gc-label">Staðfesta tölvupóst *</label>
+                <input
+                  type="email"
+                  autoComplete="email"
+                  value={form.confirmEmail}
+                  onChange={e => update('confirmEmail', e.target.value)}
+                  className={errors.confirmEmail ? 'has-error' : ''}
+                />
+                {errors.confirmEmail && <span className="gc-error">{errors.confirmEmail}</span>}
+              </div>
 
-        <textarea
-          placeholder="Athugasemd (valfrjálst)"
-          value={form.notes}
-          onChange={e => update('notes', e.target.value)}
-          rows={3}
-        />
+              <div className="gc-field">
+                <label className="gc-label">Athugasemd</label>
+                <textarea
+                  value={form.notes}
+                  onChange={e => update('notes', e.target.value)}
+                  rows={3}
+                />
+              </div>
+            </div>
 
-        <button type="submit" className="submit-btn" disabled={loading}>
-          {loading ? 'Hinkraðu...' : 'Greiða'}
-        </button>
+            <button type="submit" className="gc-submit" disabled={loading}>
+              {loading ? 'Hinkraðu...' : 'Greiða →'}
+            </button>
 
-        {apiError && <p className="api-error">{apiError}</p>}
-      </form>
-    </main>
+            {apiError && <p className="gc-api-error">{apiError}</p>}
+          </form>
+        </div>
+
+        <div className="gc-right">
+          <p className="gc-section-label">Preview</p>
+          <div className="gc-card-preview">
+            <div className="gc-card-top">
+              <span className="gc-card-brand">FKR</span>
+              <span className="gc-card-tag">REYKJAVÍK<br />GIFT CARD</span>
+            </div>
+            <div className="gc-card-amount">
+              {selected ? formatPrice(selected.label) : 'kr. —'}
+            </div>
+            <div className="gc-card-bottom">
+              <span className="gc-card-code">CODE · —</span>
+              <span className="gc-card-expiry">NO EXPIRY</span>
+            </div>
+          </div>
+          <p className="gc-preview-note">
+            Gjafabréfið er sent á tölvupóst. Við getum einnig sent handskrifað kort — spurðu við greiðslu.
+          </p>
+        </div>
+      </div>
+    </div>
   )
 }
 

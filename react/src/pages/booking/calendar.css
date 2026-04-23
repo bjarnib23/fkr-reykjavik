@@ -1,63 +1,75 @@
-  .calendar {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 16px;
-    margin: 16px 0;
-  }
+.calendar {
+  border: 1px solid #ddd9d2;
+  padding: 20px;
+  margin: 0 0 16px;
+  max-width: 340px;
+}
 
-  .calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
 
-  .calendar-header button {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    padding: 0 8px;
-  }
+.calendar-header span {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
 
-  .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-  }
+.calendar-header button {
+  background: none;
+  border: none;
+  font-size: 17px;
+  cursor: pointer;
+  padding: 4px 8px;
+  color: #7a9490;
+  transition: color 0.15s;
+}
 
-  .calendar-day-label {
-    text-align: center;
-    font-size: 12px;
-    color: #666;
-    padding: 4px;
-  }
+.calendar-header button:hover {
+  color: #263430;
+}
 
-  .calendar-cell {
-    text-align: center;
-    padding: 8px 4px;
-    cursor: pointer;
-    border-radius: 4px;
-  }
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
 
-  .calendar-cell:hover {
-    background: #f0f0f0;
-  }
+.calendar-day-label {
+  text-align: center;
+  font-size: 17px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a0b0ac;
+  padding: 4px 2px 8px;
+}
 
-  .calendar-cell.selected {
-    background: #263A38;
-    color: white;
-    border-radius: 50%;
-  }
+.calendar-cell {
+  text-align: center;
+  padding: 8px 4px;
+  cursor: pointer;
+  font-size: 17px;
+  color: #263430;
+  transition: background 0.1s;
+}
 
-  .calendar-cell.empty {
-    cursor: default;
-  }
+.calendar-cell:hover {
+  background: #e8e4dc;
+}
 
-  .calendar-cell.past {
-    color: #bbb !important;
-    cursor: default !important;
-    text-decoration: line-through !important;
-    pointer-events: none !important;
-    opacity: 0.5;
-  }
+.calendar-cell.selected {
+  background: #263430;
+  color: #f0ece6;
+}
+
+.calendar-cell.empty {
+  cursor: default;
+}
+
+.calendar-cell.disabled {
+  color: #b5c2be;
+  cursor: default;
+}
