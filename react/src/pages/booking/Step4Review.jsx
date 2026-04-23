@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './Step4Review.css'
 
-function Step4Review({ data, update, back }) {
+function Step4Review({ data, update, back, releaseHold }) {
   const [submitted, setSubmitted] = useState(false)
 
   function formatDate(dateStr) {
@@ -18,6 +18,7 @@ function Step4Review({ data, update, back }) {
       body:    JSON.stringify(payload),
     })
     if (res.ok) {
+      releaseHold?.()
       setSubmitted(true)
     } else {
       alert('Eitthvað fór úrskeiðis, reyndu aftur.')
