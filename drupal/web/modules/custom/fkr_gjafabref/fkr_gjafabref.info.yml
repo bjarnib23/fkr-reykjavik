@@ -1,5 +1,0 @@
-name: FKR Gjafabréf
-description: Handles gift cards and Stripe payments for FKR Reykjavík.
-type: module
-core_version_requirement: ^10 || ^11
-package: Custom
