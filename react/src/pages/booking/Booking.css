@@ -64,6 +64,10 @@
   background: #fafafa;
 }
 
+.booking-summary.hidden {
+  display: none;
+}
+
 .booking-summary-label {
   font-size: 17px;
   letter-spacing: 0.18em;
