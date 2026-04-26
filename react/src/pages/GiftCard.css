@@ -200,6 +200,8 @@
 
 .gc-field textarea {
   resize: none;
+  overflow: hidden;
+  min-height: 36px;
 }
 
 .gc-field-row {
@@ -282,11 +284,24 @@
   line-height: 1.6;
 }
 
+.gc-card-amount-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .gc-card-amount {
   font-size: 32px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #a0b0ac;
+}
+
+.gc-card-fox {
+  height: 130px;
+  width: auto;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
 }
 
 .gc-card-bottom {
