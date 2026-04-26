@@ -10,12 +10,20 @@ function GiftCard() {
   const [errors, setErrors]     = useState({})
   const [apiError, setApiError] = useState('')
   const [loading, setLoading]   = useState(false)
+  const [labels, setLabels]     = useState({})
 
   useEffect(() => {
+    fetch(`${API}/api/fkr/pages`, { cache: 'no-store' })
+      .then(r => r.json())
+      .then(pages => {
+        const p = Object.values(pages).find(p => p.slug === 'giftcard')
+        if (p) setLabels(p)
+      })
+
     fetch(`${API}/api/fkr/giftcard/amounts`)
       .then(r => r.json())
       .then(setAmounts)
-      .catch(() => setApiError('Gat ekki sótt gjafabréfsupphæðir. Reyndu að endurhlaða síðuna.'))
+      .catch(() => setApiError(labels.err_load_amounts || ''))
   }, [])
 
   function update(field, value) {
@@ -25,12 +33,12 @@ function GiftCard() {
 
   function validate() {
     const e = {}
-    if (!selected)             e.amount       = 'Veldu upphæð'
-    if (!form.name.trim())     e.name         = 'Nafn vantar'
-    if (!form.phone.trim())    e.phone        = 'Símanúmer vantar'
-    if (!form.email.trim())    e.email        = 'Tölvupóstur vantar'
-    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = 'Ógildur tölvupóstur'
-    if (form.email !== form.confirmEmail)      e.confirmEmail = 'Tölvupóstar passa ekki'
+    if (!selected)             e.amount       = labels.err_select_amount  || ''
+    if (!form.name.trim())     e.name         = labels.err_name_required  || ''
+    if (!form.phone.trim())    e.phone        = labels.err_phone_required || ''
+    if (!form.email.trim())    e.email        = labels.err_email_required || ''
+    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = labels.err_invalid_email || ''
+    if (form.email !== form.confirmEmail)      e.confirmEmail = labels.err_email_mismatch || ''
     return e
   }
 
@@ -55,11 +63,11 @@ function GiftCard() {
         }),
       })
       const json = await res.json()
-      if (!res.ok) { setApiError(json.error || 'Villa kom upp. Reyndu aftur.'); return }
+      if (!res.ok) { setApiError(json.error || labels.err_submit || ''); return }
       window.location.href = json.checkout_url
     }
     catch {
-      setApiError('Greiðsluþjónusta ekki aðgengileg. Reyndu aftur.')
+      setApiError(labels.err_payment || '')
     }
     finally {
       setLoading(false)
@@ -80,14 +88,11 @@ function GiftCard() {
     <div className="gc-page">
       <div className="gc-hero">
         <div className="gc-hero-left">
-          <p className="gc-eyebrow">Gift Cards</p>
-          <h1>A quiet<br />and useful<br />present.</h1>
+          <p className="gc-eyebrow">{labels.subtitle}</p>
+          <h1>{labels.title}</h1>
         </div>
         <div className="gc-hero-right">
-          <p className="gc-hero-desc">
-            Fjórar upphæðir, sendar á tölvupóst með handskrifuðu korti ef óskað er.
-            Rennur aldrei út. Gildir fyrir allt sem við gerum — skyrtu, breytingu, heilan jakkaföt.
-          </p>
+          <p className="gc-hero-desc" dangerouslySetInnerHTML={{ __html: labels.body_text }} />
         </div>
       </div>
 
@@ -95,7 +100,7 @@ function GiftCard() {
         <div className="gc-left">
           <form onSubmit={handleSubmit} noValidate>
             <div className="gc-section">
-              <p className="gc-section-label">Choose an amount</p>
+              <p className="gc-section-label">{labels.label_choose_amount}</p>
               <div className="gc-amounts">
                 {amounts.map(a => (
                   <label
@@ -117,11 +122,11 @@ function GiftCard() {
             </div>
 
             <div className="gc-section">
-              <p className="gc-section-label">Your details</p>
+              <p className="gc-section-label">{labels.label_your_details}</p>
 
               <div className="gc-field-row">
                 <div className="gc-field">
-                  <label className="gc-label">Nafn *</label>
+                  <label className="gc-label">{labels.label_name}</label>
                   <input
                     autoComplete="name"
                     value={form.name}
@@ -131,7 +136,7 @@ function GiftCard() {
                   {errors.name && <span className="gc-error">{errors.name}</span>}
                 </div>
                 <div className="gc-field">
-                  <label className="gc-label">Sími *</label>
+                  <label className="gc-label">{labels.label_phone}</label>
                   <input
                     type="tel"
                     autoComplete="tel"
@@ -144,7 +149,7 @@ function GiftCard() {
               </div>
 
               <div className="gc-field">
-                <label className="gc-label">Tölvupóstur *</label>
+                <label className="gc-label">{labels.label_email}</label>
                 <input
                   type="email"
                   autoComplete="email"
@@ -156,7 +161,7 @@ function GiftCard() {
               </div>
 
               <div className="gc-field">
-                <label className="gc-label">Staðfesta tölvupóst *</label>
+                <label className="gc-label">{labels.label_confirm_email}</label>
                 <input
                   type="email"
                   autoComplete="email"
@@ -168,17 +173,18 @@ function GiftCard() {
               </div>
 
               <div className="gc-field">
-                <label className="gc-label">Athugasemd</label>
+                <label className="gc-label">{labels.label_notes}</label>
                 <textarea
                   value={form.notes}
                   onChange={e => update('notes', e.target.value)}
-                  rows={3}
+                  onInput={e => { e.target.style.height = 'auto'; e.target.style.height = e.target.scrollHeight + 'px' }}
+                  rows={1}
                 />
               </div>
             </div>
 
             <button type="submit" className="gc-submit" disabled={loading}>
-              {loading ? 'Hinkraðu...' : 'Greiða →'}
+              {loading ? labels.label_loading : labels.cta_text}
             </button>
 
             {apiError && <p className="gc-api-error">{apiError}</p>}
@@ -186,23 +192,24 @@ function GiftCard() {
         </div>
 
         <div className="gc-right">
-          <p className="gc-section-label">Preview</p>
+          <p className="gc-section-label">{labels.label_preview}</p>
           <div className="gc-card-preview">
             <div className="gc-card-top">
               <span className="gc-card-brand">FKR</span>
-              <span className="gc-card-tag">REYKJAVÍK<br />GIFT CARD</span>
+              <span className="gc-card-tag">{labels.card_title}</span>
             </div>
-            <div className="gc-card-amount">
-              {selected ? formatPrice(selected.label) : 'kr. —'}
+            <div className="gc-card-amount-row">
+              <span className="gc-card-amount">
+                {selected ? formatPrice(selected.label) : 'kr. —'}
+              </span>
+              <img src="/fox.png" alt="" className="gc-card-fox" />
             </div>
             <div className="gc-card-bottom">
-              <span className="gc-card-code">CODE · —</span>
-              <span className="gc-card-expiry">NO EXPIRY</span>
+              <span className="gc-card-code">{labels.card_code_label}</span>
+              <span className="gc-card-expiry">{labels.card_no_expiry}</span>
             </div>
           </div>
-          <p className="gc-preview-note">
-            Gjafabréfið er sent á tölvupóst. Við getum einnig sent handskrifað kort — spurðu við greiðslu.
-          </p>
+          <p className="gc-preview-note">{labels.card_note}</p>
         </div>
       </div>
     </div>
