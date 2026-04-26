@@ -90,6 +90,9 @@
 
 .process-closing {
   padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .process-closing p {
@@ -138,13 +141,20 @@
 }
 
 .process-cta {
-  font-size: 16px;
+  display: inline-block;
+  font-size: 15px;
   letter-spacing: 0.08em;
   color: #263430;
+  border: 1px solid #263430;
+  padding: 10px 20px;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
 }
 
 .process-cta:hover {
-  opacity: 0.5;
+  background: #263430;
+  color: #f0ece6;
+  opacity: 1;
 }
 
 @media (max-width: 768px) {
