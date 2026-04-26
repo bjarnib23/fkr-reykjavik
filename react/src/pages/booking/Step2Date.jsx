@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Calendar from './Calendar'
 import './Step2Date.css'
 
-function Step2Date({ data, update, next, back, releaseReady }) {
+function Step2Date({ data, update, next, back, releaseReady, heading, buttons, labels }) {
   const [slots, setSlots] = useState([])
 
   useEffect(() => {
@@ -27,15 +27,15 @@ function Step2Date({ data, update, next, back, releaseReady }) {
 
   return (
     <div>
-      <h2>Pick a date & time.</h2>
+      <h2>{heading}</h2>
       <Calendar selected={data.date} onSelect={date => { update({ date, time: '' }); setSlots([]) }} />
 
       {data.date && (
         <div>
-          <p className="time-options-label">Available times — {data.date}</p>
+          <p className="time-options-label">{labels?.slots} — {data.date}</p>
           <div className="time-options">
             {slots.length === 0
-              ? <p className="time-empty">No available times on this day.</p>
+              ? <p className="time-empty">{labels?.noSlots}</p>
               : slots.map(s => (
                   <button
                     key={s.time}
@@ -51,8 +51,8 @@ function Step2Date({ data, update, next, back, releaseReady }) {
       )}
 
       <div className="step-buttons">
-        <button onClick={back}>Back</button>
-        <button onClick={next} disabled={!data.date || !data.time}>Continue</button>
+        <button onClick={back}>{buttons?.secondary}</button>
+        <button onClick={next} disabled={!data.date || !data.time}>{buttons?.primary}</button>
       </div>
     </div>
   )

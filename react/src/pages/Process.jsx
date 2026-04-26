@@ -58,17 +58,11 @@ function Process() {
             </div>
           )}
 
-          {page.subtitle && (
-            <div className="process-closing">
-              <p>{page.subtitle}</p>
-            </div>
-          )}
+          <div className="process-closing">
+            {page.subtitle && <p>{page.subtitle}</p>}
+            <Link to="/boka-tima" className="process-cta">Bóka tíma →</Link>
+          </div>
         </div>
-      </div>
-
-      <div className="process-cta-band">
-        {page.cta_text && <p>{page.cta_text}</p>}
-        <Link to="/boka-tima" className="process-cta">Bóka tíma →</Link>
       </div>
     </main>
   )

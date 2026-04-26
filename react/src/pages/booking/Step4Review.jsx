@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import './Step4Review.css'
 
-function Step4Review({ data, update, back, releaseHold }) {
+const DRUPAL = 'http://fkr-reykjavik.ddev.site'
+
+function Step4Review({ data, update, back, releaseHold, heading, buttons, labels, submitError }) {
   const [submitted, setSubmitted] = useState(false)
 
   function formatDate(dateStr) {
@@ -12,7 +14,7 @@ function Step4Review({ data, update, back, releaseHold }) {
 
   async function handleSubmit() {
     const payload = { ...data, date: `${data.date}T${data.time}:00` }
-    const res = await fetch('http://fkr-reykjavik.ddev.site/api/fkr/booking', {
+    const res = await fetch(`${DRUPAL}/api/fkr/booking`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(payload),
@@ -21,36 +23,39 @@ function Step4Review({ data, update, back, releaseHold }) {
       releaseHold?.()
       setSubmitted(true)
     } else {
-      alert('Eitthvað fór úrskeiðis, reyndu aftur.')
+      alert(submitError)
     }
   }
 
   if (submitted) {
+    const successBody = labels?.successBody
+      ? labels.successBody.replace('{email}', data.email)
+      : ''
     return (
       <div className="review-done">
-        <h2>You're booked.</h2>
-        <p>Confirmation sent to {data.email}. We'll see you then.</p>
+        <h2>{labels?.successHeading}</h2>
+        <p>{successBody}</p>
       </div>
     )
   }
 
   return (
     <div>
-      <h2>Confirm your booking.</h2>
+      <h2>{heading}</h2>
 
       <div className="review-rows">
-        <div className="review-row"><span>Service</span><strong>{data.service}</strong></div>
-        <div className="review-row"><span>Date</span><strong>{formatDate(data.date)}</strong></div>
-        <div className="review-row"><span>Time</span><strong>{data.time}</strong></div>
-        <div className="review-row"><span>Name</span><strong>{data.name}</strong></div>
-        <div className="review-row"><span>Email</span><strong>{data.email}</strong></div>
-        <div className="review-row"><span>Phone</span><strong>{data.phone}</strong></div>
+        <div className="review-row"><span>{labels?.service}</span><strong>{data.service}</strong></div>
+        <div className="review-row"><span>{labels?.date}</span><strong>{formatDate(data.date)}</strong></div>
+        <div className="review-row"><span>{labels?.time}</span><strong>{data.time}</strong></div>
+        <div className="review-row"><span>{labels?.name}</span><strong>{data.name}</strong></div>
+        <div className="review-row"><span>{labels?.email}</span><strong>{data.email}</strong></div>
+        <div className="review-row"><span>{labels?.phone}</span><strong>{data.phone}</strong></div>
       </div>
 
       <div className="review-notes-field">
-        <label className="review-notes-label">Notes (optional)</label>
+        <label className="review-notes-label">{labels?.notes}</label>
         <textarea
-          placeholder="Anything we should know beforehand..."
+          placeholder={labels?.placeholderNotes}
           value={data.notes}
           onChange={e => update({ notes: e.target.value })}
           rows={3}
@@ -58,8 +63,8 @@ function Step4Review({ data, update, back, releaseHold }) {
       </div>
 
       <div className="step-buttons">
-        <button onClick={back}>Back</button>
-        <button onClick={handleSubmit}>Confirm booking</button>
+        <button onClick={back}>{buttons?.secondary}</button>
+        <button onClick={handleSubmit}>{buttons?.primary}</button>
       </div>
     </div>
   )
