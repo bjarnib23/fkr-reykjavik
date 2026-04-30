@@ -1,0 +1,19 @@
+uuid: 53a951d2-a9ea-4a1f-866e-301318ee7f31
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_email_signoff
+    - node.type.giftcard_page
+id: node.giftcard_page.field_email_signoff
+field_name: field_email_signoff
+entity_type: node
+bundle: giftcard_page
+label: 'Undirskrift í tölvupósti'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long
