@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import './Navbar.css'
 
 function Navbar() {
-  const [links, setLinks] = useState([])
-  const [logo, setLogo]   = useState('')
+  const [links, setLinks]   = useState([])
+  const [logo, setLogo]     = useState('')
+  const [menuOpen, setMenuOpen] = useState(false)
+  const location = useLocation()
+
+  useEffect(() => { setMenuOpen(false) }, [location])
 
   useEffect(() => {
     fetch('http://fkr-reykjavik.ddev.site/api/fkr/nav', { cache: 'no-store' })
@@ -37,9 +41,32 @@ function Navbar() {
       </ul>
 
       {cta && (
-        <NavLink to={cta.path} className="navbar-cta">
+        <NavLink to={cta.path} className="navbar-cta navbar-cta-desktop">
           {cta.label} →
         </NavLink>
+      )}
+
+      <button
+        className={`navbar-hamburger${menuOpen ? ' open' : ''}`}
+        onClick={() => setMenuOpen(o => !o)}
+        aria-label="Valmynd"
+      >
+        <span /><span /><span />
+      </button>
+
+      {menuOpen && (
+        <div className="navbar-mobile-menu">
+          {navLinks.map(link => (
+            <NavLink key={link.path} to={link.path} className="navbar-mobile-link">
+              {link.label}
+            </NavLink>
+          ))}
+          {cta && (
+            <NavLink to={cta.path} className="navbar-mobile-link navbar-mobile-cta">
+              {cta.label} →
+            </NavLink>
+          )}
+        </div>
       )}
     </nav>
   )

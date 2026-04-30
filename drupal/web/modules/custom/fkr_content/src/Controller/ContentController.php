@@ -103,6 +103,7 @@ class ContentController extends ControllerBase {
         'placeholder_notes'   => $val('field_placeholder_notes'),
         'success_heading'     => $val('field_success_heading'),
         'success_body'        => $val('field_success_body'),
+        'success_button'      => $val('field_success_button'),
         'label_slots'         => $val('field_label_slots'),
         'label_no_slots'      => $val('field_label_no_slots'),
         'placeholder_name'    => $val('field_placeholder_name'),

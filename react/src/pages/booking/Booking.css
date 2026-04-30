@@ -144,6 +144,36 @@
 
 .step-buttons button:last-child:hover { background: #333; }
 
+.hold-countdown {
+  background: #f0ece6;
+  border-bottom: 1px solid #ddd9d2;
+  padding: 10px 60px;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  color: #4a5e58;
+}
+
+.hold-countdown strong {
+  color: #263430;
+  font-weight: 700;
+}
+
+.hold-expired {
+  background: #fdf3f0;
+  border-bottom: 1px solid #f0d0c8;
+  padding: 10px 60px;
+  font-size: 14px;
+  color: #b04030;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 900px) {
+  .hold-countdown,
+  .hold-expired {
+    padding: 10px 24px;
+  }
+}
+
 @media (max-width: 900px) {
   .booking-stepper { padding: 0 24px; }
 

@@ -26,6 +26,7 @@ dependencies:
     - field.field.node.booking_page.field_secondary_button
     - field.field.node.booking_page.field_slug
     - field.field.node.booking_page.field_success_body
+    - field.field.node.booking_page.field_success_button
     - field.field.node.booking_page.field_success_heading
     - node.type.booking_page
   module:
@@ -220,6 +221,14 @@ content:
   field_success_body:
     type: string_textfield
     weight: 190
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_success_button:
+    type: string_textfield
+    weight: 25
     region: content
     settings:
       size: 60
