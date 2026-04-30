@@ -82,6 +82,14 @@ content:
     third_party_settings: {  }
     weight: 10
     region: content
+  field_giftcard_code:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -10
+    region: content
   ip_address:
     type: string
     label: inline
@@ -141,7 +149,6 @@ content:
     weight: 5
     region: content
 hidden:
-  field_giftcard_code: true
   order_number: true
   total_paid: true
   total_price: true

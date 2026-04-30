@@ -7,10 +7,65 @@ function fkr_rapyd_mail($key, &$message, $params) {
   if ($key === 'giftcard_confirmation') {
     $message['from']    = \Drupal::config('system.site')->get('mail');
     $message['subject'] = t('Gjafabréf frá FKR Reykjavík');
-    $message['body'][]  = t('Hæ @name,', ['@name' => $params['name']]);
-    $message['body'][]  = t('Takk fyrir kaupið! Hér er gjafabréfið þitt:');
-    $message['body'][]  = t('Gjafabréfskóði: @code', ['@code' => $params['code']]);
-    $message['body'][]  = t('Upphæð: @amount kr.', ['@amount' => number_format($params['amount'], 0, '.', '.')]);
-    $message['body'][]  = t('Kveðja, FKR Reykjavík');
+    $message['headers']['Content-Type'] = 'text/html; charset=UTF-8';
+
+    $name   = htmlspecialchars($params['name']);
+    $code   = htmlspecialchars($params['code']);
+    $amount = number_format($params['amount'], 0, '.', '.');
+
+    $labels      = $params['card_labels'] ?? [];
+    $brand       = htmlspecialchars($labels['brand'] ?? '');
+    $card_title  = htmlspecialchars($labels['card_title'] ?? '');
+    $code_label  = htmlspecialchars($labels['card_code_label'] ?? '');
+    $no_expiry   = htmlspecialchars($labels['card_no_expiry'] ?? '');
+    $greeting    = htmlspecialchars($labels['email_greeting'] ?? '');
+    $signoff     = htmlspecialchars($labels['email_signoff'] ?? '');
+    $fox_url     = htmlspecialchars(($labels['frontend_url'] ?? '') . '/fox.png');
+
+    $greeting_line = $greeting
+      ? nl2br(str_replace('{name}', $name, $greeting))
+      : "Hæ {$name},";
+
+    $message['body'][] = <<<HTML
+<!DOCTYPE html>
+<html lang="is">
+<body style="margin:0;padding:0;background:#f5f5f5;font-family:Georgia,serif;">
+  <div style="max-width:560px;margin:40px auto;padding:0 16px;">
+    <p style="font-size:16px;color:#263430;margin-bottom:32px;">{$greeting_line}</p>
+
+    <!-- Gift card — fixed height so email clients render it correctly -->
+    <table width="500" cellpadding="0" cellspacing="0" style="background:#e8e4dc;margin-bottom:32px;">
+      <tr>
+        <td style="padding:32px;">
+          <!-- Top row -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:48px;">
+            <tr>
+              <td style="font-size:18px;font-weight:800;letter-spacing:0.02em;color:#263430;">{$brand}</td>
+              <td align="right" style="font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:#7a9490;line-height:1.6;">{$card_title}</td>
+            </tr>
+          </table>
+          <!-- Middle row -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:48px;">
+            <tr>
+              <td style="font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#a0b0ac;vertical-align:middle;">kr. {$amount}</td>
+              <td align="right" style="vertical-align:middle;"><img src="{$fox_url}" alt="" width="130" height="100" style="opacity:0.35;display:block;"></td>
+            </tr>
+          </table>
+          <!-- Bottom row -->
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="font-size:14px;letter-spacing:0.15em;text-transform:uppercase;color:#888;">{$code_label} &mdash; {$code}</td>
+              <td align="right" style="font-size:14px;letter-spacing:0.15em;text-transform:uppercase;color:#aaa;">{$no_expiry}</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <p style="font-size:14px;color:#7a9490;line-height:1.7;">{$signoff}</p>
+  </div>
+</body>
+</html>
+HTML;
   }
 }
