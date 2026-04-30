@@ -92,6 +92,7 @@ function Booking() {
               service: p.label_service || '', date: p.label_date || '', time: p.label_time || '',
               notes: p.label_notes || '', placeholderNotes: p.placeholder_notes || '',
               successHeading: p.success_heading || '', successBody: p.success_body || '', successButton: p.success_button || '',
+              errName: p.err_name_required || '', errPhone: p.err_phone_required || '', errEmail: p.err_email_required || '', errInvalidEmail: p.err_invalid_email || '',
               slots: p.label_slots || '', noSlots: p.label_no_slots || '',
               placeholderName: p.placeholder_name || '', placeholderPhone: p.placeholder_phone || '', placeholderEmail: p.placeholder_email || '',
             }

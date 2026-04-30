@@ -48,6 +48,16 @@
   color: #b5c2be;
 }
 
+.contact-field input.has-error {
+  border-bottom-color: #c0392b;
+}
+
+.contact-error {
+  font-size: 13px;
+  color: #c0392b;
+  letter-spacing: 0.02em;
+}
+
 @media (max-width: 600px) {
   .contact-field-row {
     grid-template-columns: 1fr;
