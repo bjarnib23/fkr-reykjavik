@@ -4,6 +4,10 @@ status: true
 dependencies:
   config:
     - field.field.node.booking_page.field_body_text
+    - field.field.node.booking_page.field_err_email_required
+    - field.field.node.booking_page.field_err_invalid_email
+    - field.field.node.booking_page.field_err_name_required
+    - field.field.node.booking_page.field_err_phone_required
     - field.field.node.booking_page.field_label_date
     - field.field.node.booking_page.field_label_email
     - field.field.node.booking_page.field_label_name
@@ -50,6 +54,38 @@ content:
     region: content
     settings:
       rows: 4
+      placeholder: ''
+    third_party_settings: {  }
+  field_err_email_required:
+    type: string_textfield
+    weight: 30
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_err_invalid_email:
+    type: string_textfield
+    weight: 30
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_err_name_required:
+    type: string_textfield
+    weight: 30
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_err_phone_required:
+    type: string_textfield
+    weight: 30
+    region: content
+    settings:
+      size: 60
       placeholder: ''
     third_party_settings: {  }
   field_label_date:
