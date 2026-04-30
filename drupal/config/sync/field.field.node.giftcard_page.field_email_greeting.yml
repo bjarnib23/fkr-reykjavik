@@ -1,0 +1,19 @@
+uuid: dc7e2174-a61f-4bd6-9c1a-b2430a43fb46
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_email_greeting
+    - node.type.giftcard_page
+id: node.giftcard_page.field_email_greeting
+field_name: field_email_greeting
+entity_type: node
+bundle: giftcard_page
+label: 'Kveðja í tölvupósti'
+description: 'Notaðu {name} þar sem nafn kaupanda á að birtast. Dæmi: Hæ {name}, takk fyrir viðskiptin! Hér er gjafabréfið þitt:'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

@@ -1,0 +1,19 @@
+uuid: 7f13bc5b-2609-4f4c-9a66-c5a8e79023c2
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_email_greeting
+field_name: field_email_greeting
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

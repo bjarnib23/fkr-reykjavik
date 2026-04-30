@@ -93,11 +93,14 @@ class WebhookController extends ControllerBase {
     $amount   = (int) $order->getTotalPrice()->getNumber();
     $langcode = $this->config('system.site')->get('langcode');
 
+    $cardLabels = $this->loadGiftCardLabels();
+
     try {
       $this->mailManager->mail('fkr_rapyd', 'giftcard_confirmation', $email, $langcode, [
-        'name'   => $name,
-        'code'   => $code,
-        'amount' => $amount,
+        'name'         => $name,
+        'code'         => $code,
+        'amount'       => $amount,
+        'card_labels'  => $cardLabels,
       ]);
     }
     catch (\Exception $e) {
@@ -108,6 +111,30 @@ class WebhookController extends ControllerBase {
     }
 
     return new JsonResponse(['status' => 'ok']);
+  }
+
+  private function loadGiftCardLabels(): array {
+    $storage = $this->entityTypeManager->getStorage('node');
+
+    $gcNodes = $storage->loadByProperties(['type' => 'giftcard_page', 'status' => 1]);
+    $gcNode  = reset($gcNodes);
+
+    $settingsNodes = $storage->loadByProperties(['type' => 'site_settings', 'status' => 1]);
+    $settingsNode  = reset($settingsNodes);
+
+    $val = fn($node, $field) => ($node && $node->hasField($field) && !$node->get($field)->isEmpty())
+      ? $node->get($field)->value
+      : '';
+
+    return [
+      'brand'           => $this->config('system.site')->get('name'),
+      'card_title'      => $val($gcNode, 'field_card_title'),
+      'card_code_label' => $val($gcNode, 'field_card_code_label'),
+      'card_no_expiry'  => $val($gcNode, 'field_card_no_expiry'),
+      'email_greeting'  => $val($gcNode, 'field_email_greeting'),
+      'email_signoff'   => $val($gcNode, 'field_email_signoff'),
+      'frontend_url'    => rtrim($this->config('fkr_rapyd.settings')->get('frontend_url') ?? '', '/'),
+    ];
   }
 
 }
