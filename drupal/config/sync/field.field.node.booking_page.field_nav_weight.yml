@@ -1,0 +1,23 @@
+uuid: c355f01a-26f1-4bc5-bb77-e7fd9c63cbe4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_nav_weight
+    - node.type.booking_page
+id: node.booking_page.field_nav_weight
+field_name: field_nav_weight
+entity_type: node
+bundle: booking_page
+label: 'Nav Weight'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

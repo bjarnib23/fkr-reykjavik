@@ -1,0 +1,19 @@
+uuid: d58bb216-3705-4e66-a3a0-648174c50153
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_page_subtitle
+    - node.type.giftcard_page
+id: node.giftcard_page.field_page_subtitle
+field_name: field_page_subtitle
+entity_type: node
+bundle: giftcard_page
+label: Subtitle
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

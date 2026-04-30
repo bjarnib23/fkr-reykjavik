@@ -1,0 +1,19 @@
+uuid: 2b3f97ee-3e7d-477f-aca0-d39dca2d7a6a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_slug
+    - node.type.booking_page
+id: node.booking_page.field_slug
+field_name: field_slug
+entity_type: node
+bundle: booking_page
+label: Slug
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

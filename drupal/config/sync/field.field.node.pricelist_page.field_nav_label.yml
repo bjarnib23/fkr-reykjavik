@@ -1,0 +1,19 @@
+uuid: fed01f63-675f-4c45-badd-e774a0f56927
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_nav_label
+    - node.type.pricelist_page
+id: node.pricelist_page.field_nav_label
+field_name: field_nav_label
+entity_type: node
+bundle: pricelist_page
+label: 'Nav Label'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

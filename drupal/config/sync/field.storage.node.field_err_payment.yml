@@ -1,0 +1,21 @@
+uuid: 41f16dba-67bc-4732-a54b-87af25bd3201
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_err_payment
+field_name: field_err_payment
+entity_type: node
+type: string
+settings:
+  max_length: 512
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

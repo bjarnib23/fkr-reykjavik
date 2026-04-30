@@ -1,0 +1,19 @@
+uuid: 163c425e-181c-44cc-ac23-f9fcf4b25d99
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_label_email
+    - node.type.site_settings
+id: node.site_settings.field_label_email
+field_name: field_label_email
+entity_type: node
+bundle: site_settings
+label: 'Summary: Email Label'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

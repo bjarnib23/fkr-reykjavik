@@ -1,0 +1,11 @@
+uuid: af7bd905-bbad-42b1-b283-96efdfedda80
+langcode: en
+status: true
+dependencies: {  }
+name: 'Gift Card Page'
+type: giftcard_page
+description: 'The gift card purchase page.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false

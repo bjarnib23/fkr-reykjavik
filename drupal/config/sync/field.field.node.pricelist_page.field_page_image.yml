@@ -1,0 +1,38 @@
+uuid: 22535253-c6d7-47a8-8870-7a58b84748b3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_page_image
+    - node.type.pricelist_page
+  module:
+    - image
+id: node.pricelist_page.field_page_image
+field_name: field_page_image
+entity_type: node
+bundle: pricelist_page
+label: Image
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'png gif jpg jpeg webp avif'
+  max_filesize: ''
+  max_resolution: ''
+  min_resolution: ''
+  alt_field: true
+  alt_field_required: true
+  title_field: false
+  title_field_required: false
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: null
+    height: null
+field_type: image

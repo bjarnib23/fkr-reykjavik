@@ -1,0 +1,19 @@
+uuid: 0531d5b5-0507-488f-9523-207bf60f2c1f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_card_no_expiry
+    - node.type.giftcard_page
+id: node.giftcard_page.field_card_no_expiry
+field_name: field_card_no_expiry
+entity_type: node
+bundle: giftcard_page
+label: 'Card: No Expiry'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

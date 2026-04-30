@@ -1,0 +1,19 @@
+uuid: 049b0a5d-aa56-44da-abaf-d3aed4ff6af3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_err_load_amounts
+    - node.type.giftcard_page
+id: node.giftcard_page.field_err_load_amounts
+field_name: field_err_load_amounts
+entity_type: node
+bundle: giftcard_page
+label: 'Error: Load Amounts'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

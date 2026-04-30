@@ -1,0 +1,19 @@
+uuid: c02d6a3d-dccd-4454-b00d-8ce6f46f8f28
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_nav_label
+    - node.type.booking_page
+id: node.booking_page.field_nav_label
+field_name: field_nav_label
+entity_type: node
+bundle: booking_page
+label: 'Nav Label'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

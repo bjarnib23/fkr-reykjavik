@@ -1,0 +1,19 @@
+uuid: 8e6e0a54-2d38-4306-8c04-6eae865f3060
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_label_date
+    - node.type.booking_page
+id: node.booking_page.field_label_date
+field_name: field_label_date
+entity_type: node
+bundle: booking_page
+label: 'Label: Date'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

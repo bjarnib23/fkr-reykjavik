@@ -1,0 +1,21 @@
+uuid: 94d8e3a5-6de4-495e-80b4-6c7259227fe5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_nav_is_cta
+    - node.type.booking_page
+id: node.booking_page.field_nav_is_cta
+field_name: field_nav_is_cta
+entity_type: node
+bundle: booking_page
+label: 'Nav Is CTA'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

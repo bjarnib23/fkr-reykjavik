@@ -1,0 +1,19 @@
+uuid: b0ebc599-89c5-4305-b533-042b033d2f3d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_label_service
+    - node.type.booking_page
+id: node.booking_page.field_label_service
+field_name: field_label_service
+entity_type: node
+bundle: booking_page
+label: 'Label: Service'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

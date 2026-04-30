@@ -1,0 +1,19 @@
+uuid: 81b4cebf-bed8-49ac-b7e2-7ba6598b2cc8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_placeholder_name
+    - node.type.booking_page
+id: node.booking_page.field_placeholder_name
+field_name: field_placeholder_name
+entity_type: node
+bundle: booking_page
+label: 'Placeholder: Name'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

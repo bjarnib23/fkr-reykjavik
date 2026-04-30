@@ -1,0 +1,19 @@
+uuid: 592ca605-1527-4448-94db-080fe86bf286
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_summary_heading
+    - node.type.site_settings
+id: node.site_settings.field_summary_heading
+field_name: field_summary_heading
+entity_type: node
+bundle: site_settings
+label: 'Summary: Heading'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

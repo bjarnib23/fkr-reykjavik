@@ -1,0 +1,338 @@
+uuid: a04529c4-73d9-435e-8b09-f37df697f986
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.giftcard_page.field_body_text
+    - field.field.node.giftcard_page.field_card_code_label
+    - field.field.node.giftcard_page.field_card_no_expiry
+    - field.field.node.giftcard_page.field_card_note
+    - field.field.node.giftcard_page.field_card_title
+    - field.field.node.giftcard_page.field_cta_text
+    - field.field.node.giftcard_page.field_err_email_mismatch
+    - field.field.node.giftcard_page.field_err_email_required
+    - field.field.node.giftcard_page.field_err_invalid_email
+    - field.field.node.giftcard_page.field_err_load_amounts
+    - field.field.node.giftcard_page.field_err_name_required
+    - field.field.node.giftcard_page.field_err_payment
+    - field.field.node.giftcard_page.field_err_phone_required
+    - field.field.node.giftcard_page.field_err_select_amount
+    - field.field.node.giftcard_page.field_err_submit
+    - field.field.node.giftcard_page.field_label_choose_amount
+    - field.field.node.giftcard_page.field_label_confirm_email
+    - field.field.node.giftcard_page.field_label_email
+    - field.field.node.giftcard_page.field_label_loading
+    - field.field.node.giftcard_page.field_label_name
+    - field.field.node.giftcard_page.field_label_notes
+    - field.field.node.giftcard_page.field_label_phone
+    - field.field.node.giftcard_page.field_label_preview
+    - field.field.node.giftcard_page.field_label_your_details
+    - field.field.node.giftcard_page.field_nav_is_cta
+    - field.field.node.giftcard_page.field_nav_label
+    - field.field.node.giftcard_page.field_nav_path
+    - field.field.node.giftcard_page.field_nav_weight
+    - field.field.node.giftcard_page.field_page_subtitle
+    - field.field.node.giftcard_page.field_slug
+    - node.type.giftcard_page
+  module:
+    - content_moderation
+    - path
+    - text
+id: node.giftcard_page.default
+targetEntityType: node
+bundle: giftcard_page
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_body_text:
+    type: text_textarea
+    weight: 30
+    region: content
+    settings:
+      rows: 4
+      placeholder: ''
+    third_party_settings: {  }
+  field_card_code_label:
+    type: string_textfield
+    weight: 140
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_card_no_expiry:
+    type: string_textfield
+    weight: 150
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_card_note:
+    type: string_textfield
+    weight: 160
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_card_title:
+    type: string_textfield
+    weight: 130
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_cta_text:
+    type: string_textfield
+    weight: 40
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_err_email_mismatch:
+    type: string_textfield
+    weight: 220
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_err_email_required:
+    type: string_textfield
+    weight: 200
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_err_invalid_email:
+    type: string_textfield
+    weight: 210
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_err_load_amounts:
+    type: string_textfield
+    weight: 230
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_err_name_required:
+    type: string_textfield
+    weight: 180
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_err_payment:
+    type: string_textfield
+    weight: 250
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_err_phone_required:
+    type: string_textfield
+    weight: 190
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_err_select_amount:
+    type: string_textfield
+    weight: 170
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_err_submit:
+    type: string_textfield
+    weight: 240
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_label_choose_amount:
+    type: string_textfield
+    weight: 90
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_label_confirm_email:
+    type: string_textfield
+    weight: 80
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_label_email:
+    type: string_textfield
+    weight: 70
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_label_loading:
+    type: string_textfield
+    weight: 110
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_label_name:
+    type: string_textfield
+    weight: 50
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_label_notes:
+    type: string_textfield
+    weight: 35
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_label_phone:
+    type: string_textfield
+    weight: 60
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_label_preview:
+    type: string_textfield
+    weight: 120
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_label_your_details:
+    type: string_textfield
+    weight: 100
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_nav_is_cta:
+    type: boolean_checkbox
+    weight: 290
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_nav_label:
+    type: string_textfield
+    weight: 260
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_nav_path:
+    type: string_textfield
+    weight: 280
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_nav_weight:
+    type: number
+    weight: 270
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_page_subtitle:
+    type: string_textfield
+    weight: 20
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_slug:
+    type: string_textfield
+    weight: 10
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 120
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  url_redirects:
+    weight: 50
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  promote: true
+  publish_on: true
+  publish_state: true
+  sticky: true
+  unpublish_on: true
+  unpublish_state: true
