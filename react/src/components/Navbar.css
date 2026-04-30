@@ -89,16 +89,82 @@
   opacity: 0.6;
 }
 
+.navbar-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.navbar-hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: #263430;
+  transition: all 0.2s;
+}
+
+.navbar-mobile-menu {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .navbar {
     padding: 0 24px;
+    position: relative;
+  }
+
+  .navbar-brand-sub {
+    display: none;
   }
 
   .navbar-links {
     display: none;
   }
 
-  .navbar-brand-sub {
+  .navbar-cta-desktop {
     display: none;
+  }
+
+  .navbar-hamburger {
+    display: flex;
+  }
+
+  .navbar-mobile-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: #f3eeee;
+    border-bottom: 1px solid #ddd9d2;
+    padding: 8px 0 16px;
+    z-index: 99;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .navbar-mobile-link {
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    color: #4a5e58;
+    text-decoration: none;
+    padding: 14px 24px;
+    border-bottom: 1px solid #f0ece6;
+  }
+
+  .navbar-mobile-link.active {
+    color: #263430;
+  }
+
+  .navbar-mobile-cta {
+    color: #263430;
+    font-weight: 600;
+    border-bottom: none;
+    margin-top: 4px;
   }
 }

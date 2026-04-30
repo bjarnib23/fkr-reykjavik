@@ -73,3 +73,23 @@
   color: #b5c2be;
   cursor: default;
 }
+
+@media (max-width: 480px) {
+  .calendar {
+    padding: 16px 12px;
+  }
+
+  .calendar-header span {
+    font-size: 15px;
+  }
+
+  .calendar-day-label {
+    font-size: 11px;
+    padding-bottom: 6px;
+  }
+
+  .calendar-cell {
+    font-size: 13px;
+    padding: 10px 2px;
+  }
+}

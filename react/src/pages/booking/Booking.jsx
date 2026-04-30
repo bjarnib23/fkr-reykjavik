@@ -19,6 +19,7 @@ function Booking() {
   const [data, setData]               = useState({
     service: '', date: '', time: '', name: '', email: '', phone: '', notes: ''
   })
+  const [submitted, setSubmitted]         = useState(false)
   const [holdToken, setHoldToken]         = useState(null)
   const [holdExpires, setHoldExpires]     = useState(null)
   const [secondsLeft, setSecondsLeft]     = useState(null)
@@ -90,7 +91,7 @@ function Booking() {
               name: p.label_name || '', phone: p.label_phone || '', email: p.label_email || '',
               service: p.label_service || '', date: p.label_date || '', time: p.label_time || '',
               notes: p.label_notes || '', placeholderNotes: p.placeholder_notes || '',
-              successHeading: p.success_heading || '', successBody: p.success_body || '',
+              successHeading: p.success_heading || '', successBody: p.success_body || '', successButton: p.success_button || '',
               slots: p.label_slots || '', noSlots: p.label_no_slots || '',
               placeholderName: p.placeholder_name || '', placeholderPhone: p.placeholder_phone || '', placeholderEmail: p.placeholder_email || '',
             }
@@ -211,7 +212,7 @@ function Booking() {
             className={`booking-step-tab${step === i + 1 ? ' active' : ''}${step > i + 1 ? ' done' : ''}`}
             onClick={() => {
               const target = i + 1
-              if (target >= step) return
+              if (submitted || target >= step) return
               if (target <= 2 && holdTokenRef.current) {
                 setReleaseReady(false)
                 const token = holdTokenRef.current
@@ -236,7 +237,7 @@ function Booking() {
               history.pushState({ step: target }, '')
               setStep(target)
             }}
-            style={i + 1 < step ? { cursor: 'pointer' } : {}}
+            style={i + 1 < step && !submitted ? { cursor: 'pointer' } : {}}
           >
             <span className="booking-step-num">{String(i + 1).padStart(2, '0')}</span>
             {stepTitles[i + 1] && <span className="booking-step-label">· {stepTitles[i + 1]}</span>}
@@ -261,7 +262,7 @@ function Booking() {
           {step === 1 && <Step1Service data={data} update={update} next={next} back={back} buttons={stepButtons[1]} />}
           {step === 2 && <Step2Date    data={data} update={update} next={nextFromStep2} back={back} releaseReady={releaseReady} heading={stepTitles[2]} buttons={stepButtons[2]} labels={stepLabels[2]} />}
           {step === 3 && <Step3Contact data={data} update={update} next={next} back={back} heading={stepTitles[3]} buttons={stepButtons[3]} labels={stepLabels[3]} />}
-          {step === 4 && <Step4Review  data={data} update={update} back={back} releaseHold={() => releaseHold(holdToken)} heading={stepTitles[4]} buttons={stepButtons[4]} labels={stepLabels[4]} submitError={messages.submitError} />}
+          {step === 4 && <Step4Review  data={data} update={update} back={back} releaseHold={() => releaseHold(holdToken)} heading={stepTitles[4]} buttons={stepButtons[4]} labels={stepLabels[4]} submitError={messages.submitError} onSubmitted={() => setSubmitted(true)} />}
         </div>
 
         <div className={`booking-summary${step === 4 ? ' hidden' : ''}`}>
