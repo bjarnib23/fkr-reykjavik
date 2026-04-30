@@ -1,7 +1,33 @@
+import { useState } from 'react'
 import './Step3Contact.css'
 
 function Step3Contact({ data, update, next, back, heading, buttons, labels }) {
-  const canContinue = data.name && data.email && data.phone
+  const [errors, setErrors] = useState({})
+
+  function validate() {
+    const e = {}
+    if (!data.name.trim())  e.name  = labels?.errName  || ''
+    if (!data.phone.trim()) e.phone = labels?.errPhone || ''
+    if (!data.email.trim()) e.email = labels?.errEmail || ''
+    else if (!/\S+@\S+\.\S+/.test(data.email)) e.email = labels?.errInvalidEmail || ''
+    return e
+  }
+
+  function handleNameChange(e) {
+    update({ name: e.target.value.replace(/[0-9]/g, '') })
+    setErrors(p => ({ ...p, name: '' }))
+  }
+
+  function handlePhoneChange(e) {
+    update({ phone: e.target.value.replace(/[^0-9+\s\-]/g, '') })
+    setErrors(p => ({ ...p, phone: '' }))
+  }
+
+  function handleNext() {
+    const e = validate()
+    if (Object.keys(e).length) { setErrors(e); return }
+    next()
+  }
 
   return (
     <div>
@@ -13,9 +39,11 @@ function Step3Contact({ data, update, next, back, heading, buttons, labels }) {
             <input
               autoComplete="name"
               value={data.name}
-              onChange={e => update({ name: e.target.value })}
+              onChange={handleNameChange}
               placeholder={labels?.placeholderName}
+              className={errors.name ? 'has-error' : ''}
             />
+            {errors.name && <span className="contact-error">{errors.name}</span>}
           </div>
           <div className="contact-field">
             <label className="contact-label">{labels?.phone}</label>
@@ -23,9 +51,11 @@ function Step3Contact({ data, update, next, back, heading, buttons, labels }) {
               type="tel"
               autoComplete="tel"
               value={data.phone}
-              onChange={e => update({ phone: e.target.value })}
+              onChange={handlePhoneChange}
               placeholder={labels?.placeholderPhone}
+              className={errors.phone ? 'has-error' : ''}
             />
+            {errors.phone && <span className="contact-error">{errors.phone}</span>}
           </div>
         </div>
         <div className="contact-field">
@@ -34,14 +64,16 @@ function Step3Contact({ data, update, next, back, heading, buttons, labels }) {
             type="email"
             autoComplete="email"
             value={data.email}
-            onChange={e => update({ email: e.target.value })}
+            onChange={e => { update({ email: e.target.value }); setErrors(p => ({ ...p, email: '' })) }}
             placeholder={labels?.placeholderEmail}
+            className={errors.email ? 'has-error' : ''}
           />
+          {errors.email && <span className="contact-error">{errors.email}</span>}
         </div>
       </div>
       <div className="step-buttons">
         <button onClick={back}>{buttons?.secondary}</button>
-        <button onClick={next} disabled={!canContinue}>{buttons?.primary}</button>
+        <button onClick={handleNext}>{buttons?.primary}</button>
       </div>
     </div>
   )
