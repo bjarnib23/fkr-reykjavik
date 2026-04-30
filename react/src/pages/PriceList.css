@@ -132,34 +132,30 @@
 
 /* Grade dropdown */
 .pl-grades {
-  padding: 0 0 8px 52px;
+  padding: 16px 0 20px 52px;
   border-top: 1px solid #f0f0f0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px 24px;
 }
 
 .pl-grade-row {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 1px solid #f0f0f0;
-  gap: 24px;
-}
-
-.pl-grade-row:last-child {
-  border-bottom: none;
+  gap: 10px;
 }
 
 .pl-grade-label {
-  font-size: 15px;
+  font-size: 13px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #7a9490;
   flex-shrink: 0;
-  width: 40px;
+  width: 32px;
 }
 
 .pl-grade-price {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   color: #263430;
   letter-spacing: -0.01em;
