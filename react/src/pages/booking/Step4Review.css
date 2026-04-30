@@ -74,4 +74,26 @@
   font-size: 15px;
   color: #4a5e58;
   line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.review-done-btn {
+  display: inline-block;
+  background: #263430;
+  color: #f0ece6;
+  padding: 14px 32px;
+  text-decoration: none;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  font-family: inherit;
+}
+
+@media (max-width: 480px) {
+  .review-row span {
+    font-size: 13px;
+  }
+
+  .review-row strong {
+    font-size: 14px;
+  }
 }
