@@ -110,8 +110,8 @@ class GiftCardController extends ControllerBase {
       'mail'        => $data['email'],
       'uid'         => 0,
       'store_id'    => $store->id(),
-      'order_items' => [$order_item],
-      'notes'       => $notes,
+      'order_items'       => [$order_item],
+      'customer_comments' => $notes,
     ]);
     $order->save();
 
