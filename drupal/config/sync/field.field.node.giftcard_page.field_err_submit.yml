@@ -1,0 +1,19 @@
+uuid: ea344eca-f8c5-4a82-b8e2-6791ae63ef23
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_err_submit
+    - node.type.giftcard_page
+id: node.giftcard_page.field_err_submit
+field_name: field_err_submit
+entity_type: node
+bundle: giftcard_page
+label: 'Error: Submit'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

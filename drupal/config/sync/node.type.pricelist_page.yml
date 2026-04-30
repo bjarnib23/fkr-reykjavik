@@ -1,0 +1,11 @@
+uuid: 473664d0-499a-44e1-9976-cfc456212045
+langcode: en
+status: true
+dependencies: {  }
+name: 'Price List Page'
+type: pricelist_page
+description: 'The price list page.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false

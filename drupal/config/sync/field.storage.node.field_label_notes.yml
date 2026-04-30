@@ -1,0 +1,21 @@
+uuid: 342cd1d6-19c6-45c8-aa6d-c9cc0c3d93a7
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_label_notes
+field_name: field_label_notes
+entity_type: node
+type: string
+settings:
+  max_length: 512
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

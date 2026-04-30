@@ -1,0 +1,19 @@
+uuid: fec90ff5-63d6-46b7-b8bd-5957fcf316c9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_label_no_slots
+    - node.type.booking_page
+id: node.booking_page.field_label_no_slots
+field_name: field_label_no_slots
+entity_type: node
+bundle: booking_page
+label: 'No Slots Message'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

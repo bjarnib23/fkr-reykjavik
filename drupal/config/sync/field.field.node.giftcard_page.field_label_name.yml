@@ -1,0 +1,19 @@
+uuid: 30042bd2-b539-4f89-a801-8760a312403b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_label_name
+    - node.type.giftcard_page
+id: node.giftcard_page.field_label_name
+field_name: field_label_name
+entity_type: node
+bundle: giftcard_page
+label: 'Label: Name'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

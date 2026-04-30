@@ -1,0 +1,19 @@
+uuid: e75b05e8-9aeb-4768-bbd2-696bfaa2de46
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_label_email
+    - node.type.booking_page
+id: node.booking_page.field_label_email
+field_name: field_label_email
+entity_type: node
+bundle: booking_page
+label: 'Email Label'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

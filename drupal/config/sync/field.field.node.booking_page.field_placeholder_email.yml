@@ -1,0 +1,19 @@
+uuid: d4bc220f-5132-40ae-87f8-74b49750c485
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_placeholder_email
+    - node.type.booking_page
+id: node.booking_page.field_placeholder_email
+field_name: field_placeholder_email
+entity_type: node
+bundle: booking_page
+label: 'Placeholder: Email'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

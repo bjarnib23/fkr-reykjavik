@@ -1,0 +1,23 @@
+uuid: 2f19afa9-089f-4f6f-8378-4b334317c2c6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_nav_weight
+    - node.type.pricelist_page
+id: node.pricelist_page.field_nav_weight
+field_name: field_nav_weight
+entity_type: node
+bundle: pricelist_page
+label: 'Nav Weight'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

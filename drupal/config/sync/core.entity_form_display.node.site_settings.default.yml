@@ -5,9 +5,20 @@ dependencies:
   config:
     - field.field.node.site_settings.field_company_id
     - field.field.node.site_settings.field_footer_heading
+    - field.field.node.site_settings.field_label_email
+    - field.field.node.site_settings.field_label_name
+    - field.field.node.site_settings.field_label_phone
     - field.field.node.site_settings.field_logo
+    - field.field.node.site_settings.field_msg_hold_countdown
+    - field.field.node.site_settings.field_msg_hold_expired
+    - field.field.node.site_settings.field_msg_slot_taken
+    - field.field.node.site_settings.field_msg_submit_error
+    - field.field.node.site_settings.field_nav_is_cta
     - field.field.node.site_settings.field_site_address
     - field.field.node.site_settings.field_site_phone
+    - field.field.node.site_settings.field_summary_heading
+    - field.field.node.site_settings.field_summary_location
+    - field.field.node.site_settings.field_summary_when
     - node.type.site_settings
   module:
     - content_moderation
@@ -40,12 +51,73 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_label_email:
+    type: string_textfield
+    weight: 32
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_label_name:
+    type: string_textfield
+    weight: 30
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_label_phone:
+    type: string_textfield
+    weight: 31
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_logo:
     type: media_library_widget
     weight: 121
     region: content
     settings:
       media_types: {  }
+    third_party_settings: {  }
+  field_msg_hold_countdown:
+    type: string_textfield
+    weight: 43
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_msg_hold_expired:
+    type: string_textfield
+    weight: 41
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_msg_slot_taken:
+    type: string_textfield
+    weight: 40
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_msg_submit_error:
+    type: string_textfield
+    weight: 42
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_nav_is_cta:
+    type: boolean_checkbox
+    weight: 129
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   field_site_address:
     type: string_textfield
@@ -58,6 +130,30 @@ content:
   field_site_phone:
     type: string_textfield
     weight: 122
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_summary_heading:
+    type: string_textfield
+    weight: 20
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_summary_location:
+    type: string_textfield
+    weight: 21
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_summary_when:
+    type: string_textfield
+    weight: 22
     region: content
     settings:
       size: 60
@@ -106,6 +202,7 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_available_time: true
   promote: true
   publish_on: true
   publish_state: true

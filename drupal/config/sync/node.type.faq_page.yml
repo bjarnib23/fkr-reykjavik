@@ -1,0 +1,11 @@
+uuid: 82e14c45-eff1-476d-8f0a-302394fed43f
+langcode: en
+status: true
+dependencies: {  }
+name: 'FAQ Page'
+type: faq_page
+description: 'The FAQ page.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false

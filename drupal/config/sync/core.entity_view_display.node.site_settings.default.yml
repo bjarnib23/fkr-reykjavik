@@ -5,9 +5,20 @@ dependencies:
   config:
     - field.field.node.site_settings.field_company_id
     - field.field.node.site_settings.field_footer_heading
+    - field.field.node.site_settings.field_label_email
+    - field.field.node.site_settings.field_label_name
+    - field.field.node.site_settings.field_label_phone
     - field.field.node.site_settings.field_logo
+    - field.field.node.site_settings.field_msg_hold_countdown
+    - field.field.node.site_settings.field_msg_hold_expired
+    - field.field.node.site_settings.field_msg_slot_taken
+    - field.field.node.site_settings.field_msg_submit_error
+    - field.field.node.site_settings.field_nav_is_cta
     - field.field.node.site_settings.field_site_address
     - field.field.node.site_settings.field_site_phone
+    - field.field.node.site_settings.field_summary_heading
+    - field.field.node.site_settings.field_summary_location
+    - field.field.node.site_settings.field_summary_when
     - node.type.site_settings
   module:
     - user
@@ -32,6 +43,11 @@ content:
     third_party_settings: {  }
     weight: 105
     region: content
+  field_label_name:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 106
+    region: content
   field_logo:
     type: entity_reference_entity_view
     label: above
@@ -40,6 +56,16 @@ content:
       link: false
     third_party_settings: {  }
     weight: 101
+    region: content
+  field_nav_is_cta:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 105
     region: content
   field_site_address:
     type: string
@@ -62,4 +88,13 @@ content:
     third_party_settings: {  }
     weight: 100
     region: content
-hidden: {  }
+hidden:
+  field_label_email: true
+  field_label_phone: true
+  field_msg_hold_countdown: true
+  field_msg_hold_expired: true
+  field_msg_slot_taken: true
+  field_msg_submit_error: true
+  field_summary_heading: true
+  field_summary_location: true
+  field_summary_when: true

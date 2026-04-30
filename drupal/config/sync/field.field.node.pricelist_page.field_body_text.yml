@@ -1,0 +1,22 @@
+uuid: 1a1e7391-b558-4412-aa37-9bfa3a4759cf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_body_text
+    - node.type.pricelist_page
+  module:
+    - text
+id: node.pricelist_page.field_body_text
+field_name: field_body_text
+entity_type: node
+bundle: pricelist_page
+label: 'Body Text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

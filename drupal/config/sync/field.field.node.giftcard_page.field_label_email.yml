@@ -1,0 +1,19 @@
+uuid: 258a8bba-b381-47ec-8241-0e9ac1209fb3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_label_email
+    - node.type.giftcard_page
+id: node.giftcard_page.field_label_email
+field_name: field_label_email
+entity_type: node
+bundle: giftcard_page
+label: 'Email Label'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
