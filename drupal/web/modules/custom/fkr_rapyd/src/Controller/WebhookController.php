@@ -87,7 +87,7 @@ class WebhookController extends ControllerBase {
     $order->save();
 
     $email    = $order->getEmail();
-    $notes    = $order->get('notes')->value ?? '';
+    $notes    = $order->hasField('customer_comments') ? ($order->get('customer_comments')->value ?? '') : '';
     preg_match('/Kaupandi:\s*([^|]+)/', $notes, $m);
     $name     = trim($m[1] ?? $email);
     $amount   = (int) $order->getTotalPrice()->getNumber();
