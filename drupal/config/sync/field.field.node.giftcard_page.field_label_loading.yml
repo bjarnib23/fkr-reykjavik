@@ -1,0 +1,19 @@
+uuid: cdfb0163-e3ee-4051-9262-511d2ca55f68
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_label_loading
+    - node.type.giftcard_page
+id: node.giftcard_page.field_label_loading
+field_name: field_label_loading
+entity_type: node
+bundle: giftcard_page
+label: 'Label: Loading'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

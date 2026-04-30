@@ -1,0 +1,19 @@
+uuid: 3a85c2d8-d5a0-48ae-8fce-18bfcf656ea1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_err_payment
+    - node.type.giftcard_page
+id: node.giftcard_page.field_err_payment
+field_name: field_err_payment
+entity_type: node
+bundle: giftcard_page
+label: 'Error: Payment'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

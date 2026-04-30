@@ -1,0 +1,23 @@
+uuid: 9afd5443-6c0e-486a-8fe5-757431890102
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_nav_weight
+    - node.type.basic_page
+id: node.basic_page.field_nav_weight
+field_name: field_nav_weight
+entity_type: node
+bundle: basic_page
+label: 'Nav Weight'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
