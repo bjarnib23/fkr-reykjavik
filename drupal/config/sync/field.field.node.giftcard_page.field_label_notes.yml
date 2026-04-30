@@ -1,0 +1,19 @@
+uuid: 18ec85c3-1747-4250-b89f-6a0da8d6ab10
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_label_notes
+    - node.type.giftcard_page
+id: node.giftcard_page.field_label_notes
+field_name: field_label_notes
+entity_type: node
+bundle: giftcard_page
+label: 'Label: Notes'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

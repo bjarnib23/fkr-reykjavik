@@ -1,0 +1,21 @@
+uuid: 3372092c-79a5-43a6-814c-53dbf350e4d0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_nav_is_cta
+    - node.type.pricelist_page
+id: node.pricelist_page.field_nav_is_cta
+field_name: field_nav_is_cta
+entity_type: node
+bundle: pricelist_page
+label: 'Nav Is CTA'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

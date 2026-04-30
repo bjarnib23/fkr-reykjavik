@@ -1,0 +1,19 @@
+uuid: e64fcacd-404c-4717-bbcb-a252f17f788b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_cta_text
+    - node.type.basic_page
+id: node.basic_page.field_cta_text
+field_name: field_cta_text
+entity_type: node
+bundle: basic_page
+label: 'CTA Button Text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

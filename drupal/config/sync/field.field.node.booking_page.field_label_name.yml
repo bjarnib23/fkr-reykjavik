@@ -1,0 +1,19 @@
+uuid: b2b903eb-e2ad-4e9e-9f0a-b80337db6f5b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_label_name
+    - node.type.booking_page
+id: node.booking_page.field_label_name
+field_name: field_label_name
+entity_type: node
+bundle: booking_page
+label: 'Label: Name'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

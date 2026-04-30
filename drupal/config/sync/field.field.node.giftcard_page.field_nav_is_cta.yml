@@ -1,0 +1,21 @@
+uuid: 18d281a0-d78c-4080-a2c3-c046cb123282
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_nav_is_cta
+    - node.type.giftcard_page
+id: node.giftcard_page.field_nav_is_cta
+field_name: field_nav_is_cta
+entity_type: node
+bundle: giftcard_page
+label: 'Nav Is CTA'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

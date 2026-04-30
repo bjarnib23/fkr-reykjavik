@@ -1,0 +1,19 @@
+uuid: c92cba41-cc9b-4cd6-ac68-38a27dc4bc44
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_nav_path
+    - node.type.faq_page
+id: node.faq_page.field_nav_path
+field_name: field_nav_path
+entity_type: node
+bundle: faq_page
+label: 'Nav Path'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

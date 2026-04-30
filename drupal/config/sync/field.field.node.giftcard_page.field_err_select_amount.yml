@@ -1,0 +1,19 @@
+uuid: d30e637e-5a2a-474a-b24e-3130e0c69c20
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_err_select_amount
+    - node.type.giftcard_page
+id: node.giftcard_page.field_err_select_amount
+field_name: field_err_select_amount
+entity_type: node
+bundle: giftcard_page
+label: 'Error: Select Amount'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

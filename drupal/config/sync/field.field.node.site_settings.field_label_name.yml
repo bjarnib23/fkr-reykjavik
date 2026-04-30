@@ -1,0 +1,19 @@
+uuid: 9c814dca-0929-4b50-b117-0287f75a9a31
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_label_name
+    - node.type.site_settings
+id: node.site_settings.field_label_name
+field_name: field_label_name
+entity_type: node
+bundle: site_settings
+label: 'Label: Name'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

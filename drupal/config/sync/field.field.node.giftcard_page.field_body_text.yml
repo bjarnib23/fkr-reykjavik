@@ -1,0 +1,22 @@
+uuid: 5409b212-0042-47bd-b442-a1e139cee15c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_body_text
+    - node.type.giftcard_page
+  module:
+    - text
+id: node.giftcard_page.field_body_text
+field_name: field_body_text
+entity_type: node
+bundle: giftcard_page
+label: 'Body Text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

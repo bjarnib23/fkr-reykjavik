@@ -25,7 +25,7 @@ class ContentController extends ControllerBase {
    */
   public function adminList(): array {
     $nids = $this->entityTypeManager->getStorage('node')->getQuery()
-      ->condition('type', 'page_content')
+      ->condition('type', ['basic_page', 'booking_page', 'giftcard_page', 'pricelist_page', 'faq_page'], 'IN')
       ->sort('title', 'ASC')
       ->accessCheck(FALSE)
       ->execute();
@@ -36,21 +36,15 @@ class ContentController extends ControllerBase {
     foreach ($nodes as $node) {
       $rows[] = [
         $node->getTitle(),
-        $node->get('field_page_subtitle')->value ?? '—',
+        $node->hasField('field_page_subtitle') ? ($node->get('field_page_subtitle')->value ?? '—') : '—',
         $node->isPublished() ? 'Published' : 'Unpublished',
-        \Drupal\Core\Markup::create(
+        \Drupal\Core\Render\Markup::create(
           $node->toLink('Edit', 'edit-form')->toString()
         ),
       ];
     }
 
     return [
-      'add_button' => [
-        '#type'       => 'link',
-        '#title'      => '+ Bæta við síðu',
-        '#url'        => \Drupal\Core\Url::fromRoute('entity.node.add_form', ['node_type' => 'page_content']),
-        '#attributes' => ['class' => ['button', 'button--primary']],
-      ],
       'table' => [
         '#type'   => 'table',
         '#header' => ['Title', 'Subtitle', 'Status', 'Edit'],
@@ -61,59 +55,79 @@ class ContentController extends ControllerBase {
   }
 
   /**
+   * Page listing the 5 page content types to add, styled like Drupal's Add content page.
+   */
+  public function addPage(): array {
+    $type_ids = ['basic_page', 'booking_page', 'giftcard_page', 'pricelist_page', 'faq_page'];
+    $types    = $this->entityTypeManager->getStorage('node_type')->loadMultiple($type_ids);
+
+    return [
+      '#theme'   => 'node_add_list',
+      '#content' => $types,
+    ];
+  }
+
+  /**
    * GET /api/fkr/pages
    * Returns all page content nodes as { page_title: { fields } }.
+   * Queries across all dedicated page content types.
    */
   public function pages(): JsonResponse {
-    $nodes = $this->entityTypeManager->getStorage('node')->loadByProperties([
-      'type'   => 'page_content',
-      'status' => 1,
-    ]);
+    $storage = $this->entityTypeManager->getStorage('node');
+    $types   = ['basic_page', 'booking_page', 'giftcard_page', 'pricelist_page', 'faq_page'];
+
+    $nodes = [];
+    foreach ($types as $type) {
+      $nodes += $storage->loadByProperties(['type' => $type, 'status' => 1]);
+    }
 
     $result = [];
     foreach ($nodes as $node) {
+      $has = fn(string $f) => $node->hasField($f) && !$node->get($f)->isEmpty();
+      $val = fn(string $f) => $has($f) ? $node->get($f)->value : NULL;
+
       $result[$node->getTitle()] = [
-        'title'      => $node->getTitle(),
-        'body_text'  => $node->get('field_body_text')->value,
-        'subtitle'   => $node->get('field_page_subtitle')->value,
-        'cta_text'        => $node->get('field_cta_text')->value,
-        'primary_button'   => $node->get('field_primary_button')->value,
-        'secondary_button' => $node->get('field_secondary_button')->value,
-        'label_name'          => $node->get('field_label_name')->value,
-        'label_phone'         => $node->get('field_label_phone')->value,
-        'label_email'         => $node->get('field_label_email')->value,
-        'label_service'       => $node->get('field_label_service')->value,
-        'label_date'          => $node->get('field_label_date')->value,
-        'label_time'          => $node->get('field_label_time')->value,
-        'label_notes'         => $node->get('field_label_notes')->value,
-        'placeholder_notes'   => $node->get('field_placeholder_notes')->value,
-        'success_heading'     => $node->get('field_success_heading')->value,
-        'success_body'        => $node->get('field_success_body')->value,
-        'label_slots'         => $node->get('field_label_slots')->value,
-        'label_no_slots'      => $node->get('field_label_no_slots')->value,
-        'placeholder_name'    => $node->get('field_placeholder_name')->value,
-        'placeholder_phone'   => $node->get('field_placeholder_phone')->value,
-        'placeholder_email'   => $node->get('field_placeholder_email')->value,
-        'label_choose_amount' => $node->get('field_label_choose_amount')->value,
-        'label_your_details'  => $node->get('field_label_your_details')->value,
-        'label_confirm_email' => $node->get('field_label_confirm_email')->value,
-        'label_loading'       => $node->get('field_label_loading')->value,
-        'label_preview'       => $node->get('field_label_preview')->value,
-        'card_title'          => $node->get('field_card_title')->value,
-        'card_code_label'     => $node->get('field_card_code_label')->value,
-        'card_no_expiry'      => $node->get('field_card_no_expiry')->value,
-        'card_note'           => $node->get('field_card_note')->value,
-        'err_select_amount'   => $node->get('field_err_select_amount')->value,
-        'err_name_required'   => $node->get('field_err_name_required')->value,
-        'err_phone_required'  => $node->get('field_err_phone_required')->value,
-        'err_email_required'  => $node->get('field_err_email_required')->value,
-        'err_invalid_email'   => $node->get('field_err_invalid_email')->value,
-        'err_email_mismatch'  => $node->get('field_err_email_mismatch')->value,
-        'err_load_amounts'    => $node->get('field_err_load_amounts')->value,
-        'err_submit'          => $node->get('field_err_submit')->value,
-        'err_payment'         => $node->get('field_err_payment')->value,
-        'images'          => $this->getImageUrls($node, 'field_page_image'),
-        'slug'            => $node->get('field_slug')->value,
+        'title'            => $node->getTitle(),
+        'subtitle'         => $val('field_page_subtitle'),
+        'body_text'        => $val('field_body_text'),
+        'cta_text'         => $val('field_cta_text'),
+        'primary_button'   => $val('field_primary_button'),
+        'secondary_button' => $val('field_secondary_button'),
+        'label_name'          => $val('field_label_name'),
+        'label_phone'         => $val('field_label_phone'),
+        'label_email'         => $val('field_label_email'),
+        'label_service'       => $val('field_label_service'),
+        'label_date'          => $val('field_label_date'),
+        'label_time'          => $val('field_label_time'),
+        'label_notes'         => $val('field_label_notes'),
+        'placeholder_notes'   => $val('field_placeholder_notes'),
+        'success_heading'     => $val('field_success_heading'),
+        'success_body'        => $val('field_success_body'),
+        'label_slots'         => $val('field_label_slots'),
+        'label_no_slots'      => $val('field_label_no_slots'),
+        'placeholder_name'    => $val('field_placeholder_name'),
+        'placeholder_phone'   => $val('field_placeholder_phone'),
+        'placeholder_email'   => $val('field_placeholder_email'),
+        'label_choose_amount' => $val('field_label_choose_amount'),
+        'label_your_details'  => $val('field_label_your_details'),
+        'label_confirm_email' => $val('field_label_confirm_email'),
+        'label_loading'       => $val('field_label_loading'),
+        'label_preview'       => $val('field_label_preview'),
+        'card_title'          => $val('field_card_title'),
+        'card_code_label'     => $val('field_card_code_label'),
+        'card_no_expiry'      => $val('field_card_no_expiry'),
+        'card_note'           => $val('field_card_note'),
+        'err_select_amount'   => $val('field_err_select_amount'),
+        'err_name_required'   => $val('field_err_name_required'),
+        'err_phone_required'  => $val('field_err_phone_required'),
+        'err_email_required'  => $val('field_err_email_required'),
+        'err_invalid_email'   => $val('field_err_invalid_email'),
+        'err_email_mismatch'  => $val('field_err_email_mismatch'),
+        'err_load_amounts'    => $val('field_err_load_amounts'),
+        'err_submit'          => $val('field_err_submit'),
+        'err_payment'         => $val('field_err_payment'),
+        'images'              => $node->hasField('field_page_image') ? $this->getImageUrls($node, 'field_page_image') : [],
+        'slug'                => $val('field_slug'),
       ];
     }
 
@@ -250,7 +264,7 @@ class ContentController extends ControllerBase {
    */
   public function nav(): JsonResponse {
     $nids = $this->entityTypeManager->getStorage('node')->getQuery()
-      ->condition('type', 'page_content')
+      ->condition('type', ['basic_page', 'booking_page', 'giftcard_page', 'pricelist_page', 'faq_page'], 'IN')
       ->condition('status', 1)
       ->exists('field_nav_weight')
       ->sort('field_nav_weight', 'ASC')

@@ -1,0 +1,19 @@
+uuid: c52a872e-53a5-42c2-a501-df2182e78368
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_summary_location
+    - node.type.site_settings
+id: node.site_settings.field_summary_location
+field_name: field_summary_location
+entity_type: node
+bundle: site_settings
+label: 'Summary: Location Label'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

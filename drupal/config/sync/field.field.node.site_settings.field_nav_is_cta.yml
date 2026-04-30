@@ -1,0 +1,21 @@
+uuid: fa50d7fc-b422-4d98-b484-66b04ba1fc14
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_nav_is_cta
+    - node.type.site_settings
+id: node.site_settings.field_nav_is_cta
+field_name: field_nav_is_cta
+entity_type: node
+bundle: site_settings
+label: 'nav is cta'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

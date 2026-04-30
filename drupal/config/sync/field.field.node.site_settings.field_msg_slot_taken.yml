@@ -1,0 +1,19 @@
+uuid: 22e21f58-361c-4ccf-a17d-e77b42cf13f4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_msg_slot_taken
+    - node.type.site_settings
+id: node.site_settings.field_msg_slot_taken
+field_name: field_msg_slot_taken
+entity_type: node
+bundle: site_settings
+label: 'Message: Slot Taken'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
