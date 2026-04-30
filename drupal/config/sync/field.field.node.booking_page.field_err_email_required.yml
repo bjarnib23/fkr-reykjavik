@@ -1,0 +1,19 @@
+uuid: ecf7f40b-eb59-46e5-a8d3-712f282bc26e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_err_email_required
+    - node.type.booking_page
+id: node.booking_page.field_err_email_required
+field_name: field_err_email_required
+entity_type: node
+bundle: booking_page
+label: 'err email required'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
