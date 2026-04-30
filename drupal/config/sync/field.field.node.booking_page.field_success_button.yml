@@ -1,0 +1,19 @@
+uuid: 90a960b3-0374-4e00-9bd2-4223ecad3124
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_success_button
+    - node.type.booking_page
+id: node.booking_page.field_success_button
+field_name: field_success_button
+entity_type: node
+bundle: booking_page
+label: 'Takki eftir bókun'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

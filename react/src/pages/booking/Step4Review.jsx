@@ -1,9 +1,10 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import './Step4Review.css'
 
 const DRUPAL = 'http://fkr-reykjavik.ddev.site'
 
-function Step4Review({ data, update, back, releaseHold, heading, buttons, labels, submitError }) {
+function Step4Review({ data, update, back, releaseHold, heading, buttons, labels, submitError, onSubmitted }) {
   const [submitted, setSubmitted] = useState(false)
 
   function formatDate(dateStr) {
@@ -22,6 +23,7 @@ function Step4Review({ data, update, back, releaseHold, heading, buttons, labels
     if (res.ok) {
       releaseHold?.()
       setSubmitted(true)
+      onSubmitted?.()
     } else {
       alert(submitError)
     }
@@ -35,6 +37,9 @@ function Step4Review({ data, update, back, releaseHold, heading, buttons, labels
       <div className="review-done">
         <h2>{labels?.successHeading}</h2>
         <p>{successBody}</p>
+        {labels?.successButton && (
+          <Link to="/" className="review-done-btn">{labels.successButton}</Link>
+        )}
       </div>
     )
   }
