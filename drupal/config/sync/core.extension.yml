@@ -108,6 +108,7 @@ module:
   workflows: 0
   pathauto: 1
   views: 10
+  paragraphs: 11
 theme:
   claro: 0
   gin: 0

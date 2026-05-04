@@ -8,11 +8,9 @@ dependencies:
     - field.field.node.fkr_booking.field_hvad_viltu_panta
     - field.field.node.fkr_booking.field_notes
     - field.field.node.fkr_booking.field_phone
-    - field.field.node.fkr_booking.field_status
     - node.type.fkr_booking
   module:
     - datetime
-    - options
     - user
 id: node.fkr_booking.default
 targetEntityType: node
@@ -57,13 +55,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 102
-    region: content
-  field_status:
-    type: list_default
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 106
     region: content
   links:
     settings: {  }
