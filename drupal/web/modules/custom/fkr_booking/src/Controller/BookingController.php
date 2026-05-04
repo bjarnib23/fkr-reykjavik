@@ -15,9 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Handles booking form submissions from the React frontend.
- */
 class BookingController extends ControllerBase {
 
   protected MailManagerInterface $mailManager;
@@ -44,10 +41,6 @@ class BookingController extends ControllerBase {
     );
   }
 
-  /**
-   * POST /api/fkr/booking/hold  — hold a slot for 10 minutes
-   * DELETE /api/fkr/booking/hold — release a hold by token
-   */
   public function hold(Request $request): JsonResponse {
     if ($request->getMethod() === 'OPTIONS') {
       return new JsonResponse([], 200, $this->corsHeaders());
@@ -63,7 +56,6 @@ class BookingController extends ControllerBase {
       return new JsonResponse(['status' => 'released'], 200, $this->corsHeaders());
     }
 
-    // POST — create a hold.
     $datetime = $data['datetime'] ?? NULL;
     if (!$datetime || !preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/', $datetime)) {
       return new JsonResponse(['error' => 'Invalid datetime'], 400, $this->corsHeaders());
@@ -89,7 +81,6 @@ class BookingController extends ControllerBase {
       return new JsonResponse(['error' => 'Slot already booked'], 409, $this->corsHeaders());
     }
 
-    // Check for an existing hold on this datetime.
     $holds = \Drupal::keyValueExpirable('fkr_booking_holds');
     foreach ($holds->getAll() as $existing) {
       if ($existing === $datetime) {
@@ -98,16 +89,13 @@ class BookingController extends ControllerBase {
     }
 
     $token   = \Drupal::service('uuid')->generate();
-    $ttl     = 600; // 10 minutes
+    $ttl     = 600;
     $expires = time() + $ttl;
     $holds->setWithExpire($token, $datetime, $ttl);
 
     return new JsonResponse(['token' => $token, 'expires' => $expires], 200, $this->corsHeaders());
   }
 
-  /**
-   * POST /api/fkr/booking/hold-release — release by token (used on unload)
-   */
   public function holdRelease(Request $request): JsonResponse {
     if ($request->getMethod() === 'OPTIONS') {
       return new JsonResponse([], 200, $this->corsHeaders());
@@ -122,9 +110,6 @@ class BookingController extends ControllerBase {
     return new JsonResponse(['status' => 'released'], 200, $this->corsHeaders());
   }
 
-  /**
-   * Accepts a booking POST request from the React frontend.
-   */
   public function submit(Request $request): JsonResponse {
     if ($request->getMethod() === 'OPTIONS') {
       return new JsonResponse([], 200, $this->corsHeaders());
@@ -215,9 +200,6 @@ class BookingController extends ControllerBase {
     );
   }
 
-  /**
-   * Admin list of all bookings, sorted by date.
-   */
   public function adminList(): array {
     $nids = $this->entityTypeManager->getStorage('node')->getQuery()
       ->condition('type', 'fkr_booking')
@@ -231,21 +213,12 @@ class BookingController extends ControllerBase {
     foreach ($nodes as $node) {
       $raw_date       = $node->get('field_dagsetning')->value ?? '';
       $formatted_date = $raw_date ? date('D d M Y \a\t H:i', strtotime($raw_date)) : '—';
-      $status         = $node->get('field_status')->first()?->value ?? 'pending';
-
-      $select = '<select class="booking-status-select" data-nid="' . $node->id() . '">';
-      foreach (['pending' => 'Pending', 'confirmed' => 'Confirmed', 'rejected' => 'Rejected'] as $val => $label) {
-        $selected = $status === $val ? ' selected' : '';
-        $select  .= '<option value="' . $val . '"' . $selected . '>' . $label . '</option>';
-      }
-      $select .= '</select>';
 
       $rows[] = [
         $node->getTitle(),
         $node->get('field_email')->value,
         $formatted_date,
         $node->get('field_hvad_viltu_panta')->value,
-        Markup::create($select),
         Markup::create(
           Link::fromTextAndUrl('View', Url::fromRoute('fkr_booking.booking_details', ['node' => $node->id()]))->toString()
           . ' | ' . $node->toLink('Edit', 'edit-form')->toString()
@@ -262,36 +235,13 @@ class BookingController extends ControllerBase {
       ],
       'table' => [
         '#type'     => 'table',
-        '#header'   => ['Name', 'Email', 'Date', 'Item', 'Status', 'View'],
+        '#header'   => ['Name', 'Email', 'Date', 'Item', 'View'],
         '#rows'     => $rows,
         '#empty'    => 'No bookings yet.',
-        '#attached' => [
-          'library' => ['fkr_booking/admin_bookings'],
-        ],
       ],
     ];
   }
 
-  /**
-   * Updates the status of a booking via AJAX.
-   */
-  public function updateStatus(NodeInterface $node, Request $request): JsonResponse {
-    $data   = json_decode($request->getContent(), TRUE);
-    $status = $data['status'] ?? NULL;
-
-    if (!in_array($status, ['pending', 'confirmed', 'rejected'])) {
-      return new JsonResponse(['error' => 'Invalid status'], 400);
-    }
-
-    $node->set('field_status', $status);
-    $node->save();
-
-    return new JsonResponse(['status' => $status]);
-  }
-
-  /**
-   * Admin detail view of a single booking.
-   */
   public function bookingDetails(NodeInterface $node): array {
     $rows = [
       ['Name',   $node->getTitle()],
@@ -299,7 +249,6 @@ class BookingController extends ControllerBase {
       ['Date',   $node->get('field_dagsetning')->value],
       ['Item',   $node->get('field_hvad_viltu_panta')->value],
       ['Notes',  $node->get('field_notes')->value],
-      ['Status', $node->get('field_status')->value],
     ];
 
     return [

@@ -11,9 +11,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Handles incoming Rapyd webhook notifications.
- */
 class WebhookController extends ControllerBase {
 
   public function __construct(
@@ -118,9 +115,6 @@ class WebhookController extends ControllerBase {
 
     $gcNodes = $storage->loadByProperties(['type' => 'giftcard_page', 'status' => 1]);
     $gcNode  = reset($gcNodes);
-
-    $settingsNodes = $storage->loadByProperties(['type' => 'site_settings', 'status' => 1]);
-    $settingsNode  = reset($settingsNodes);
 
     $val = fn($node, $field) => ($node && $node->hasField($field) && !$node->get($field)->isEmpty())
       ? $node->get($field)->value

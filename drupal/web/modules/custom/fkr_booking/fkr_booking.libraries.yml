@@ -3,14 +3,6 @@ admin_overrides:
     theme:
       css/admin.css: {}
 
-admin_bookings:
-  js:
-    js/admin-bookings.js: {}
-  dependencies:
-    - core/drupal
-    - core/jquery
-    - core/once
-
 availability_calendar:
   js:
     js/availability-calendar.js: {}
