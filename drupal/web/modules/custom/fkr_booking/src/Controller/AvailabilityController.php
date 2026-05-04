@@ -9,9 +9,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Handles availability calendar for admin and React frontend.
- */
 class AvailabilityController extends ControllerBase {
 
   public function __construct(
@@ -28,9 +25,6 @@ class AvailabilityController extends ControllerBase {
     );
   }
 
-  /**
-   * GET /api/fkr/availability?date=YYYY-MM-DD
-   */
   public function getAvailability(Request $request): JsonResponse {
     if ($request->getMethod() === 'OPTIONS') {
       return new JsonResponse([], 200, $this->corsHeaders());
@@ -44,9 +38,6 @@ class AvailabilityController extends ControllerBase {
     return new JsonResponse($this->getSlotsForDate($date), 200, $this->corsHeaders());
   }
 
-  /**
-   * Admin calendar page at /admin/fkr/availability.
-   */
   public function adminCalendar(Request $request): array {
     $week_offset = (int) $request->query->get('week', 0);
 
@@ -64,7 +55,6 @@ class AvailabilityController extends ControllerBase {
       $date_str = $day->format('Y-m-d');
       $slots = $this->getSlotsForDate($date_str, TRUE);
 
-      // Index slots by time for easy lookup in the template.
       $slot_map = [];
       foreach ($slots as $slot) {
         $slot_map[$slot['time']] = $slot;
@@ -91,9 +81,6 @@ class AvailabilityController extends ControllerBase {
     ];
   }
 
-  /**
-   * POST /api/fkr/booking/hold-release — for sendBeacon on page unload.
-   */
   public function releaseHoldBeacon(Request $request): JsonResponse {
     if ($request->getMethod() === 'OPTIONS') {
       return new JsonResponse([], 200, $this->corsHeaders());
@@ -106,10 +93,6 @@ class AvailabilityController extends ControllerBase {
     return new JsonResponse(['status' => 'released'], 200, $this->corsHeaders());
   }
 
-  /**
-   * POST /api/fkr/booking/hold  — temporarily hold a slot.
-   * DELETE /api/fkr/booking/hold — release a hold by token.
-   */
   public function holdSlot(Request $request): JsonResponse {
     if ($request->getMethod() === 'OPTIONS') {
       return new JsonResponse([], 200, $this->corsHeaders());
@@ -130,10 +113,8 @@ class AvailabilityController extends ControllerBase {
       return new JsonResponse(['error' => 'Invalid datetime'], 400, $this->corsHeaders());
     }
 
-    // Clean up expired holds.
     $this->database->delete('fkr_slot_holds')->condition('expires', time(), '<')->execute();
 
-    // Check if slot is already held or booked.
     $active = $this->database->select('fkr_slot_holds', 'h')
       ->fields('h', ['id'])
       ->condition('datetime', $datetime)
@@ -160,9 +141,6 @@ class AvailabilityController extends ControllerBase {
     ], 200, $this->corsHeaders());
   }
 
-  /**
-   * POST /api/fkr/availability/toggle
-   */
   public function toggleSlot(Request $request): JsonResponse {
     if ($request->getMethod() === 'OPTIONS') {
       return new JsonResponse([], 200, $this->corsHeaders());
@@ -209,17 +187,11 @@ class AvailabilityController extends ControllerBase {
     return new JsonResponse(['status' => 'available'], 200, $this->corsHeaders());
   }
 
-  /**
-   * Returns all slots for a given date with their status.
-   */
   private function getSlotsForDate(string $date, bool $include_customer = FALSE): array {
-    $storage = $this->entityTypeManager->getStorage('node');
+    $storage    = $this->entityTypeManager->getStorage('node');
     $time_slots = $this->generateTimeSlots();
+    $datetimes  = array_map(fn($t) => $date . 'T' . $t . ':00', $time_slots);
 
-    // Build all datetimes for this date.
-    $datetimes = array_map(fn($t) => $date . 'T' . $t . ':00', $time_slots);
-
-    // Batch load all availability and bookings for the day.
     $availability_nids = $storage->getQuery()
       ->condition('type', 'fkr_availability')
       ->condition('field_available_time', $datetimes, 'IN')
@@ -242,7 +214,6 @@ class AvailabilityController extends ControllerBase {
       $booked_times[$node->get('field_dagsetning')->value] = $node->getTitle();
     }
 
-    // Collect active holds for this date.
     $held_times = $this->database->select('fkr_slot_holds', 'h')
       ->fields('h', ['datetime'])
       ->condition('datetime', $datetimes, 'IN')
@@ -274,9 +245,6 @@ class AvailabilityController extends ControllerBase {
     return $slots;
   }
 
-  /**
-   * Generates time slots from 10:00 to 15:30 every 30 minutes.
-   */
   private function generateTimeSlots(): array {
     $slots = [];
     $start = strtotime('10:00');

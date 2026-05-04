@@ -11,9 +11,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Handles gift card checkout via Rapyd Hosted Checkout.
- */
 class GiftCardController extends ControllerBase {
 
   public function __construct(
@@ -30,9 +27,6 @@ class GiftCardController extends ControllerBase {
     );
   }
 
-  /**
-   * GET /api/fkr/giftcard/amounts
-   */
   public function amounts(): JsonResponse {
     $variations = $this->entityTypeManager->getStorage('commerce_product_variation')
       ->loadByProperties(['type' => 'default', 'status' => 1]);
@@ -55,10 +49,6 @@ class GiftCardController extends ControllerBase {
     return new JsonResponse($amounts, 200, $this->cors());
   }
 
-  /**
-   * POST /api/fkr/giftcard/checkout
-   * Expected body: { sku, name, email, phone, notes }
-   */
   public function checkout(Request $request): JsonResponse {
     if ($request->getMethod() === 'OPTIONS') {
       return new JsonResponse([], 200, $this->cors());
