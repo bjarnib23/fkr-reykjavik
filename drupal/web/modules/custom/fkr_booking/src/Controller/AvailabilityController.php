@@ -155,9 +155,8 @@ class AvailabilityController extends ControllerBase {
 
     $storage = $this->entityTypeManager->getStorage('node');
 
-    $bookings = $storage->loadByProperties([
-      'type'             => 'fkr_booking',
-      'field_dagsetning' => $datetime,
+    $bookings = $this->entityTypeManager->getStorage('fkr_booking')->loadByProperties([
+      'date' => $datetime,
     ]);
 
     if (!empty($bookings)) {
@@ -198,9 +197,8 @@ class AvailabilityController extends ControllerBase {
       ->accessCheck(FALSE)
       ->execute();
 
-    $booking_nids = $storage->getQuery()
-      ->condition('type', 'fkr_booking')
-      ->condition('field_dagsetning', $datetimes, 'IN')
+    $booking_ids = $this->entityTypeManager->getStorage('fkr_booking')->getQuery()
+      ->condition('date', $datetimes, 'IN')
       ->accessCheck(FALSE)
       ->execute();
 
@@ -210,8 +208,8 @@ class AvailabilityController extends ControllerBase {
     }
 
     $booked_times = [];
-    foreach ($storage->loadMultiple($booking_nids) as $node) {
-      $booked_times[$node->get('field_dagsetning')->value] = $node->getTitle();
+    foreach ($this->entityTypeManager->getStorage('fkr_booking')->loadMultiple($booking_ids) as $booking) {
+      $booked_times[$booking->get('date')->value] = $booking->get('name')->value;
     }
 
     $held_times = $this->database->select('fkr_slot_holds', 'h')

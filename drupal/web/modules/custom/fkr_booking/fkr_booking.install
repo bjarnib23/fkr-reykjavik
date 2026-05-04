@@ -10,8 +10,7 @@
  */
 function fkr_booking_schema(): array {
   return [
-    'fkr_slot_holds' => [
-      'description' => 'Temporary slot holds during booking checkout.',
+    'fkr_slot_holds' => [      'description' => 'Temporary slot holds during booking checkout.',
       'fields' => [
         'id' => [
           'type' => 'serial',
@@ -43,4 +42,12 @@ function fkr_booking_schema(): array {
       ],
     ],
   ];
+}
+
+/**
+ * Install the fkr_booking custom entity type schema.
+ */
+function fkr_booking_update_9001(): void {
+  \Drupal::entityDefinitionUpdateManager()
+    ->installEntityType(\Drupal::entityTypeManager()->getDefinition('fkr_booking'));
 }
