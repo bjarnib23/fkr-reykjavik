@@ -32,7 +32,6 @@ function Process() {
           <h1>{page.title || ''}</h1>
         </div>
         <div className="process-hero-right">
-          {page.body_text && <p>{stripHtml(page.body_text)}</p>}
         </div>
       </div>
 
@@ -59,7 +58,7 @@ function Process() {
           )}
 
           <div className="process-closing">
-            {page.subtitle && <p>{page.subtitle}</p>}
+            {page.body_text && <p>{stripHtml(page.body_text)}</p>}
             <Link to="/boka-tima" className="process-cta">Bóka tíma →</Link>
           </div>
         </div>
