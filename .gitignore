@@ -20,3 +20,7 @@ react/dist/
 # OS
 .DS_Store
 .history/
+
+# Claude Code
+.claude/
+docs/superpowers/
