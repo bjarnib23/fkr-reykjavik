@@ -1,0 +1,31 @@
+uuid: abe7cae6-8f33-4364-8295-10326fb53074
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_price_items
+    - node.type.pricelist_page
+    - paragraphs.paragraphs_type.price_item
+  module:
+    - entity_reference_revisions
+id: node.pricelist_page.field_price_items
+field_name: field_price_items
+entity_type: node
+bundle: pricelist_page
+label: 'Price Items'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      price_item: price_item
+    negate: 0
+    target_bundles_drag_drop:
+      price_item:
+        weight: 4
+        enabled: true
+field_type: entity_reference_revisions

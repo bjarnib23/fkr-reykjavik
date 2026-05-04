@@ -1,0 +1,19 @@
+uuid: b721cfa8-4cd7-414d-a98e-97f6dffe1d2f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_service
+    - paragraphs.paragraphs_type.price_item
+id: paragraph.price_item.field_service
+field_name: field_service
+entity_type: paragraph
+bundle: price_item
+label: Service
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
