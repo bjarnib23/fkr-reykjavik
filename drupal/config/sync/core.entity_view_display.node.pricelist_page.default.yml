@@ -1,0 +1,44 @@
+uuid: 329adec7-ac69-4b45-b8dd-6165f18aa27b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.pricelist_page.field_body_text
+    - field.field.node.pricelist_page.field_nav_is_cta
+    - field.field.node.pricelist_page.field_nav_label
+    - field.field.node.pricelist_page.field_nav_path
+    - field.field.node.pricelist_page.field_nav_weight
+    - field.field.node.pricelist_page.field_page_image
+    - field.field.node.pricelist_page.field_price_items
+    - field.field.node.pricelist_page.field_slug
+    - node.type.pricelist_page
+  module:
+    - entity_reference_revisions
+    - user
+id: node.pricelist_page.default
+targetEntityType: node
+bundle: pricelist_page
+mode: default
+content:
+  field_price_items:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_body_text: true
+  field_nav_is_cta: true
+  field_nav_label: true
+  field_nav_path: true
+  field_nav_weight: true
+  field_page_image: true
+  field_slug: true
