@@ -177,19 +177,25 @@ class ContentController extends ControllerBase {
       }
 
       $service = $paragraph->get('field_service')->value;
-      $grade   = $paragraph->get('field_grade')->value;
-      $price   = (int) $paragraph->get('field_price')->value;
+      $prices  = [];
 
-      if (!in_array($grade, $grades)) {
-        $grades[] = $grade;
+      foreach ($paragraph->get('field_price_entries') as $entry_item) {
+        $entry = $entry_item->entity;
+        if (!$entry) {
+          continue;
+        }
+
+        $grade = $entry->get('field_grade')->value;
+        $price = (int) $entry->get('field_price')->value;
+
+        if (!in_array($grade, $grades)) {
+          $grades[] = $grade;
+        }
+
+        $prices[$grade] = $price;
       }
 
-      $rows[$service][$grade] = $price;
-    }
-
-    $result = [];
-    foreach ($rows as $service => $prices) {
-      $result[] = [
+      $rows[] = [
         'item'   => $service,
         'prices' => $prices,
       ];
@@ -197,7 +203,7 @@ class ContentController extends ControllerBase {
 
     return new JsonResponse([
       'grades' => $grades,
-      'rows'   => $result,
+      'rows'   => $rows,
     ], 200, $this->cors());
   }
 
