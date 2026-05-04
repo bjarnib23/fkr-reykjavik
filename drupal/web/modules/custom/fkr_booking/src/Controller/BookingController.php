@@ -10,7 +10,7 @@ use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Mail\MailManagerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
-use Drupal\node\NodeInterface;
+use Drupal\fkr_booking\Entity\Booking;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,9 +61,7 @@ class BookingController extends ControllerBase {
       return new JsonResponse(['error' => 'Invalid datetime'], 400, $this->corsHeaders());
     }
 
-    $storage = $this->entityTypeManager->getStorage('node');
-
-    $availability = $storage->loadByProperties([
+    $availability = $this->entityTypeManager->getStorage('node')->loadByProperties([
       'type'                 => 'fkr_availability',
       'field_available_time' => $datetime,
     ]);
@@ -72,9 +70,8 @@ class BookingController extends ControllerBase {
       return new JsonResponse(['error' => 'Slot not available'], 409, $this->corsHeaders());
     }
 
-    $bookings = $storage->loadByProperties([
-      'type'             => 'fkr_booking',
-      'field_dagsetning' => $datetime,
+    $bookings = $this->entityTypeManager->getStorage('fkr_booking')->loadByProperties([
+      'date' => $datetime,
     ]);
 
     if (!empty($bookings)) {
@@ -127,9 +124,7 @@ class BookingController extends ControllerBase {
       }
     }
 
-    $storage = $this->entityTypeManager->getStorage('node');
-
-    $availability = $storage->loadByProperties([
+    $availability = $this->entityTypeManager->getStorage('node')->loadByProperties([
       'type'                 => 'fkr_availability',
       'field_available_time' => $data['date'],
     ]);
@@ -151,17 +146,14 @@ class BookingController extends ControllerBase {
       );
     }
 
-
-    $booking = $storage->create([
-      'type'                 => 'fkr_booking',
-      'title'                => $data['name'],
-      'field_email'          => $data['email'],
-      'field_phone'          => $data['phone'] ?? '',
-      'field_dagsetning'     => $data['date'],
-      'field_hvad_viltu_panta' => $data['service'] ?? '',
-      'field_notes'          => $data['notes'] ?? '',
-      'field_status'         => 'pending',
-      'status'               => 1,
+    $booking = $this->entityTypeManager->getStorage('fkr_booking')->create([
+      'name'           => $data['name'],
+      'email'          => $data['email'],
+      'phone'          => $data['phone'] ?? '',
+      'date'           => $data['date'],
+      'service'        => $data['service'] ?? '',
+      'notes'          => $data['notes'] ?? '',
+      'booking_status' => 'pending',
     ]);
     $booking->save();
 
@@ -201,54 +193,44 @@ class BookingController extends ControllerBase {
   }
 
   public function adminList(): array {
-    $nids = $this->entityTypeManager->getStorage('node')->getQuery()
-      ->condition('type', 'fkr_booking')
-      ->sort('field_dagsetning', 'ASC')
+    $ids = $this->entityTypeManager->getStorage('fkr_booking')->getQuery()
+      ->sort('date', 'ASC')
       ->accessCheck(FALSE)
       ->execute();
 
-    $nodes = $this->entityTypeManager->getStorage('node')->loadMultiple($nids);
-    $rows  = [];
+    $bookings = $this->entityTypeManager->getStorage('fkr_booking')->loadMultiple($ids);
+    $rows     = [];
 
-    foreach ($nodes as $node) {
-      $raw_date       = $node->get('field_dagsetning')->value ?? '';
+    foreach ($bookings as $booking) {
+      $raw_date       = $booking->get('date')->value ?? '';
       $formatted_date = $raw_date ? date('D d M Y \a\t H:i', strtotime($raw_date)) : '—';
 
       $rows[] = [
-        $node->getTitle(),
-        $node->get('field_email')->value,
+        $booking->get('name')->value,
+        $booking->get('email')->value,
         $formatted_date,
-        $node->get('field_hvad_viltu_panta')->value,
-        Markup::create(
-          Link::fromTextAndUrl('View', Url::fromRoute('fkr_booking.booking_details', ['node' => $node->id()]))->toString()
-          . ' | ' . $node->toLink('Edit', 'edit-form')->toString()
-        ),
+        $booking->get('service')->value,
+        Link::fromTextAndUrl('View', Url::fromRoute('fkr_booking.booking_details', ['fkr_booking' => $booking->id()]))->toString(),
       ];
     }
 
     return [
-      'add_button' => [
-        '#type'       => 'link',
-        '#title'      => '+ Add booking',
-        '#url'        => Url::fromRoute('node.add', ['node_type' => 'fkr_booking']),
-        '#attributes' => ['class' => ['button', 'button--primary']],
-      ],
       'table' => [
-        '#type'     => 'table',
-        '#header'   => ['Name', 'Email', 'Date', 'Item', 'View'],
-        '#rows'     => $rows,
-        '#empty'    => 'No bookings yet.',
+        '#type'   => 'table',
+        '#header' => ['Name', 'Email', 'Date', 'Item', 'View'],
+        '#rows'   => $rows,
+        '#empty'  => 'No bookings yet.',
       ],
     ];
   }
 
-  public function bookingDetails(NodeInterface $node): array {
+  public function bookingDetails(Booking $fkr_booking): array {
     $rows = [
-      ['Name',   $node->getTitle()],
-      ['Email',  $node->get('field_email')->value],
-      ['Date',   $node->get('field_dagsetning')->value],
-      ['Item',   $node->get('field_hvad_viltu_panta')->value],
-      ['Notes',  $node->get('field_notes')->value],
+      ['Name',   $fkr_booking->get('name')->value],
+      ['Email',  $fkr_booking->get('email')->value],
+      ['Date',   $fkr_booking->get('date')->value],
+      ['Item',   $fkr_booking->get('service')->value],
+      ['Notes',  $fkr_booking->get('notes')->value],
     ];
 
     return [
