@@ -157,37 +157,47 @@ class ContentController extends ControllerBase {
   }
 
   public function pricelist(): JsonResponse {
-    $grades = ['aa','a','b','bb','c','d','e','f','g','gg','h','hh','i','j','jj','k','l','r'];
+    $page_nodes = $this->entityTypeManager->getStorage('node')->loadByProperties([
+      'type'   => 'pricelist_page',
+      'status' => 1,
+    ]);
 
-    $nids = $this->entityTypeManager->getStorage('node')->getQuery()
-      ->condition('type', 'fkr_price_item')
-      ->condition('status', 1)
-      ->sort('field_weight', 'ASC')
-      ->accessCheck(FALSE)
-      ->execute();
-
-    if (empty($nids)) {
+    if (empty($page_nodes)) {
       return new JsonResponse([], 200, $this->cors());
     }
 
-    $rows = [];
-    foreach ($this->entityTypeManager->getStorage('node')->loadMultiple($nids) as $node) {
-      $prices = [];
-      foreach ($grades as $grade) {
-        $field          = 'field_price_' . $grade;
-        $prices[$grade] = $node->hasField($field) && !$node->get($field)->isEmpty()
-          ? (int) $node->get($field)->value
-          : null;
+    $page   = reset($page_nodes);
+    $grades = [];
+    $rows   = [];
+
+    foreach ($page->get('field_price_items') as $item) {
+      $paragraph = $item->entity;
+      if (!$paragraph) {
+        continue;
       }
-      $rows[] = [
-        'item'   => $node->getTitle(),
+
+      $service = $paragraph->get('field_service')->value;
+      $grade   = $paragraph->get('field_grade')->value;
+      $price   = (int) $paragraph->get('field_price')->value;
+
+      if (!in_array($grade, $grades)) {
+        $grades[] = $grade;
+      }
+
+      $rows[$service][$grade] = $price;
+    }
+
+    $result = [];
+    foreach ($rows as $service => $prices) {
+      $result[] = [
+        'item'   => $service,
         'prices' => $prices,
       ];
     }
 
     return new JsonResponse([
-      'grades' => array_map('strtoupper', $grades),
-      'rows'   => $rows,
+      'grades' => $grades,
+      'rows'   => $result,
     ], 200, $this->cors());
   }
 

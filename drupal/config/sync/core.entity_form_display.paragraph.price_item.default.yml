@@ -1,0 +1,40 @@
+uuid: 7656d9f7-688a-420e-995d-e27c649ff2f6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.price_item.field_grade
+    - field.field.paragraph.price_item.field_price
+    - field.field.paragraph.price_item.field_service
+    - paragraphs.paragraphs_type.price_item
+id: paragraph.price_item.default
+targetEntityType: paragraph
+bundle: price_item
+mode: default
+content:
+  field_grade:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_price:
+    type: number
+    weight: 2
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_service:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
