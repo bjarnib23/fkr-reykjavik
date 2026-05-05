@@ -1,13 +1,13 @@
-uuid: dc7c65d9-8a02-4a8f-be99-ed475e07a28a
+uuid: a6dd9c8d-8f7f-4079-9911-1c908d70eec8
 langcode: en
 status: true
 dependencies:
   module:
-    - node
+    - paragraphs
     - text
-id: node.field_price_json
-field_name: field_price_json
-entity_type: node
+id: paragraph.field_answer
+field_name: field_answer
+entity_type: paragraph
 type: text_long
 settings: {  }
 module: text

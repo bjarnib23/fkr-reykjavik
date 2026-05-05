@@ -1,0 +1,37 @@
+uuid: bff767d6-dcd4-4166-a297-076edbf5634f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_faq_items
+    - node.type.faq_page
+    - paragraphs.paragraphs_type.faq_item
+  module:
+    - entity_reference_revisions
+id: node.faq_page.field_faq_items
+field_name: field_faq_items
+entity_type: node
+bundle: faq_page
+label: 'FAQ Items'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      faq_item: faq_item
+    negate: 0
+    target_bundles_drag_drop:
+      faq_item:
+        weight: 4
+        enabled: true
+      price_entry:
+        weight: 5
+        enabled: false
+      price_item:
+        weight: 6
+        enabled: false
+field_type: entity_reference_revisions

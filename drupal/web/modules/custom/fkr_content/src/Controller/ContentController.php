@@ -127,31 +127,32 @@ class ContentController extends ControllerBase {
   }
 
   public function faq(): JsonResponse {
-    $nids = $this->entityTypeManager->getStorage('node')->getQuery()
-      ->condition('type', 'fkr_faq')
-      ->condition('status', 1)
-      ->sort('field_faq_weight', 'ASC')
-      ->accessCheck(FALSE)
-      ->execute();
+    $page_nodes = $this->entityTypeManager->getStorage('node')->loadByProperties([
+      'type'   => 'faq_page',
+      'status' => 1,
+    ]);
 
+    if (empty($page_nodes)) {
+      return new JsonResponse(['page_title' => '', 'items' => []], 200, $this->cors());
+    }
+
+    $page  = reset($page_nodes);
     $items = [];
-    foreach ($this->entityTypeManager->getStorage('node')->loadMultiple($nids) as $node) {
+
+    foreach ($page->get('field_faq_items') as $item) {
+      $paragraph = $item->entity;
+      if (!$paragraph) {
+        continue;
+      }
+
       $items[] = [
-        'question' => $node->getTitle(),
-        'answer'   => $node->get('field_answer')->value,
+        'question' => $paragraph->get('field_question')->value,
+        'answer'   => $paragraph->get('field_answer')->value,
       ];
     }
 
-    $pageNodes = $this->entityTypeManager->getStorage('node')->loadByProperties([
-      'type'       => 'page_content',
-      'field_slug' => 'faq',
-      'status'     => 1,
-    ]);
-    $pageNode  = reset($pageNodes);
-    $pageTitle = $pageNode ? $pageNode->get('field_page_subtitle')->value : '';
-
     return new JsonResponse([
-      'page_title' => $pageTitle,
+      'page_title' => $page->get('field_page_subtitle')->value ?? '',
       'items'      => $items,
     ], 200, $this->cors());
   }

@@ -1,0 +1,42 @@
+uuid: 359709cb-565b-4815-a3fa-eabb9cd49daa
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.faq_page.field_faq_items
+    - field.field.node.faq_page.field_nav_is_cta
+    - field.field.node.faq_page.field_nav_label
+    - field.field.node.faq_page.field_nav_path
+    - field.field.node.faq_page.field_nav_weight
+    - field.field.node.faq_page.field_page_subtitle
+    - field.field.node.faq_page.field_slug
+    - node.type.faq_page
+  module:
+    - entity_reference_revisions
+    - user
+id: node.faq_page.default
+targetEntityType: node
+bundle: faq_page
+mode: default
+content:
+  field_faq_items:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_nav_is_cta: true
+  field_nav_label: true
+  field_nav_path: true
+  field_nav_weight: true
+  field_page_subtitle: true
+  field_slug: true
