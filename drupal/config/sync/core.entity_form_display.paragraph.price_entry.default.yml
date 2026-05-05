@@ -1,0 +1,31 @@
+uuid: e8b19e12-36e6-4770-a3be-b8f5479fb16f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.price_entry.field_grade
+    - field.field.paragraph.price_entry.field_price
+    - paragraphs.paragraphs_type.price_entry
+id: paragraph.price_entry.default
+targetEntityType: paragraph
+bundle: price_entry
+mode: default
+content:
+  field_grade:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_price:
+    type: number
+    weight: 2
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
