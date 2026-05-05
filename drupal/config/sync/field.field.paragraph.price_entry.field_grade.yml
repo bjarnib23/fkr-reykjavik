@@ -1,14 +1,14 @@
-uuid: 28df42bc-84b4-4ad5-8798-796c10e1f9c8
+uuid: e1966361-2358-46ae-93c5-5a523bf04799
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_grade
-    - paragraphs.paragraphs_type.price_item
-id: paragraph.price_item.field_grade
+    - paragraphs.paragraphs_type.price_entry
+id: paragraph.price_entry.field_grade
 field_name: field_grade
 entity_type: paragraph
-bundle: price_item
+bundle: price_entry
 label: Grade
 description: ''
 required: false

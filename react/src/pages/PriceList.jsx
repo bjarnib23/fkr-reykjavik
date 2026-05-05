@@ -40,7 +40,7 @@ function PriceList() {
 
   function fromPrice(row) {
     for (const g of grades) {
-      const val = row.prices?.[g.toLowerCase()]
+      const val = row.prices?.[g]
       if (val !== null && val !== undefined) return val
     }
     return null
@@ -71,7 +71,7 @@ function PriceList() {
           const from = fromPrice(row)
           const isOpen = open === i
           const gradeEntries = grades
-            .map(g => ({ grade: g, price: row.prices?.[g.toLowerCase()] }))
+            .map(g => ({ grade: g, price: row.prices?.[g] }))
             .filter(e => e.price !== null && e.price !== undefined)
 
           return (

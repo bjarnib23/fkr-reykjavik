@@ -1,0 +1,10 @@
+uuid: c1a4290a-b3e5-4aa8-8758-564ba2c99b3c
+langcode: en
+status: true
+dependencies: {  }
+id: price_entry
+label: 'Price Entry'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }
