@@ -1,12 +1,12 @@
-uuid: e867bc6f-0873-4d23-adf0-d7e1011ef1ec
+uuid: a846e0b8-fdec-4813-afee-cbf4e6c5dd59
 langcode: en
 status: true
 dependencies:
   module:
-    - node
-id: node.field_intro_text
-field_name: field_intro_text
-entity_type: node
+    - paragraphs
+id: paragraph.field_question
+field_name: field_question
+entity_type: paragraph
 type: string
 settings:
   max_length: 255

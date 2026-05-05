@@ -3,31 +3,24 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.price_item.field_grade
-    - field.field.paragraph.price_item.field_price
+    - field.field.paragraph.price_item.field_price_entries
     - field.field.paragraph.price_item.field_service
     - paragraphs.paragraphs_type.price_item
+  module:
+    - entity_reference_revisions
 id: paragraph.price_item.default
 targetEntityType: paragraph
 bundle: price_item
 mode: default
 content:
-  field_grade:
-    type: string
+  field_price_entries:
+    type: entity_reference_revisions_entity_view
     label: above
     settings:
-      link_to_entity: false
+      view_mode: default
+      link: ''
     third_party_settings: {  }
     weight: 1
-    region: content
-  field_price:
-    type: number_integer
-    label: above
-    settings:
-      thousand_separator: ''
-      prefix_suffix: true
-    third_party_settings: {  }
-    weight: 2
     region: content
   field_service:
     type: string
