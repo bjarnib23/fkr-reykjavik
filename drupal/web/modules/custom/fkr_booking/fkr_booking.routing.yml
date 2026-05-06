@@ -1,3 +1,11 @@
+fkr_booking.booking_form:
+  path: '/fkr/booking'
+  defaults:
+    _form: '\Drupal\fkr_booking\Form\BookingForm'
+    _title: 'Book an Appointment'
+  requirements:
+    _access: 'TRUE'
+
 fkr_booking.submit:
   path: '/api/fkr/booking'
   defaults:
