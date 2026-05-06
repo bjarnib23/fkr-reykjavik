@@ -27,6 +27,18 @@ class GiftCardController extends ControllerBase {
     );
   }
 
+  public function thankYou(): array {
+    return [
+      '#markup' => '<h1>Thank you!</h1><p>Your payment was successful. You will receive your gift card by email shortly.</p>',
+    ];
+  }
+
+  public function cancel(): array {
+    return [
+      '#markup' => '<h1>Payment cancelled</h1><p>Your payment was not completed. <a href="/fkr/giftcard">Try again</a>.</p>',
+    ];
+  }
+
   public function amounts(): JsonResponse {
     $variations = $this->entityTypeManager->getStorage('commerce_product_variation')
       ->loadByProperties(['type' => 'default', 'status' => 1]);
