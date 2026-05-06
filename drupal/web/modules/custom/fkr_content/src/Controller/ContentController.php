@@ -306,19 +306,27 @@ class ContentController extends ControllerBase {
   }
 
   public function services(): JsonResponse {
-    $nids = $this->entityTypeManager->getStorage('node')->getQuery()
-      ->condition('type', 'thjonusta')
-      ->condition('status', 1)
-      ->sort('field_weight', 'ASC')
-      ->accessCheck(FALSE)
-      ->execute();
+    $page_nodes = $this->entityTypeManager->getStorage('node')->loadByProperties([
+      'type'   => 'booking_page',
+      'status' => 1,
+    ]);
 
+    if (empty($page_nodes)) {
+      return new JsonResponse([], 200, $this->cors());
+    }
+
+    $page  = reset($page_nodes);
     $items = [];
-    foreach ($this->entityTypeManager->getStorage('node')->loadMultiple($nids) as $node) {
+
+    foreach ($page->get('field_services') as $item) {
+      $paragraph = $item->entity;
+      if (!$paragraph) {
+        continue;
+      }
+
       $items[] = [
-        'id'    => $node->id(),
-        'title' => $node->getTitle(),
-        'desc'  => $node->get('field_lysing')->value,
+        'id'    => $paragraph->id(),
+        'title' => $paragraph->get('field_service_title')->value,
       ];
     }
 
