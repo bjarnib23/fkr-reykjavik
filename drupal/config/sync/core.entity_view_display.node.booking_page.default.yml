@@ -1,0 +1,88 @@
+uuid: a8845564-5f27-42ed-b961-04a461cca07b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.booking_page.field_body_text
+    - field.field.node.booking_page.field_err_email_required
+    - field.field.node.booking_page.field_err_invalid_email
+    - field.field.node.booking_page.field_err_name_required
+    - field.field.node.booking_page.field_err_phone_required
+    - field.field.node.booking_page.field_label_date
+    - field.field.node.booking_page.field_label_email
+    - field.field.node.booking_page.field_label_name
+    - field.field.node.booking_page.field_label_no_slots
+    - field.field.node.booking_page.field_label_notes
+    - field.field.node.booking_page.field_label_phone
+    - field.field.node.booking_page.field_label_service
+    - field.field.node.booking_page.field_label_slots
+    - field.field.node.booking_page.field_label_time
+    - field.field.node.booking_page.field_nav_is_cta
+    - field.field.node.booking_page.field_nav_label
+    - field.field.node.booking_page.field_nav_path
+    - field.field.node.booking_page.field_nav_weight
+    - field.field.node.booking_page.field_page_subtitle
+    - field.field.node.booking_page.field_placeholder_email
+    - field.field.node.booking_page.field_placeholder_name
+    - field.field.node.booking_page.field_placeholder_notes
+    - field.field.node.booking_page.field_placeholder_phone
+    - field.field.node.booking_page.field_primary_button
+    - field.field.node.booking_page.field_secondary_button
+    - field.field.node.booking_page.field_services
+    - field.field.node.booking_page.field_slug
+    - field.field.node.booking_page.field_success_body
+    - field.field.node.booking_page.field_success_button
+    - field.field.node.booking_page.field_success_heading
+    - node.type.booking_page
+  module:
+    - entity_reference_revisions
+    - user
+id: node.booking_page.default
+targetEntityType: node
+bundle: booking_page
+mode: default
+content:
+  field_services:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_body_text: true
+  field_err_email_required: true
+  field_err_invalid_email: true
+  field_err_name_required: true
+  field_err_phone_required: true
+  field_label_date: true
+  field_label_email: true
+  field_label_name: true
+  field_label_no_slots: true
+  field_label_notes: true
+  field_label_phone: true
+  field_label_service: true
+  field_label_slots: true
+  field_label_time: true
+  field_nav_is_cta: true
+  field_nav_label: true
+  field_nav_path: true
+  field_nav_weight: true
+  field_page_subtitle: true
+  field_placeholder_email: true
+  field_placeholder_name: true
+  field_placeholder_notes: true
+  field_placeholder_phone: true
+  field_primary_button: true
+  field_secondary_button: true
+  field_slug: true
+  field_success_body: true
+  field_success_button: true
+  field_success_heading: true

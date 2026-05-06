@@ -1,0 +1,10 @@
+uuid: 62c9dae6-7200-4fb7-9323-6b6d4dc112d2
+langcode: en
+status: true
+dependencies: {  }
+id: service
+label: Service
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }
