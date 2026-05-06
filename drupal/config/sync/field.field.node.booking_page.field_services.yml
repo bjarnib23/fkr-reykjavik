@@ -1,0 +1,43 @@
+uuid: 992cf8ab-6f04-49ed-9eda-c5b7dd451dce
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_services
+    - node.type.booking_page
+    - paragraphs.paragraphs_type.service
+  module:
+    - entity_reference_revisions
+id: node.booking_page.field_services
+field_name: field_services
+entity_type: node
+bundle: booking_page
+label: Services
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      service: service
+    negate: 0
+    target_bundles_drag_drop:
+      faq_item:
+        weight: 6
+        enabled: false
+      price_entry:
+        weight: 7
+        enabled: false
+      price_item:
+        weight: 8
+        enabled: false
+      process_step:
+        weight: 9
+        enabled: false
+      service:
+        weight: 10
+        enabled: true
+field_type: entity_reference_revisions
