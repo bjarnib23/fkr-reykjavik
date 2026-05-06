@@ -44,7 +44,7 @@ class RapydClient {
    *
    * @throws \RuntimeException on API error or missing credentials
    */
-  public function createCheckout(int $order_id, int $amount, string $email): array {
+  public function createCheckout(int $order_id, int $amount, string $email, ?string $complete_url = NULL, ?string $error_url = NULL): array {
     if (empty($this->accessKey) || empty($this->secretKey)) {
       throw new \RuntimeException('Rapyd API credentials are not configured.');
     }
@@ -55,8 +55,8 @@ class RapydClient {
       'amount'                => $amount,
       'currency'              => 'ISK',
       'country'               => 'IS',
-      'complete_payment_url'  => $this->frontendUrl . '/giftcard/thank-you?order_id=' . $order_id,
-      'error_payment_url'     => $this->frontendUrl . '/giftcard/cancel',
+      'complete_payment_url'  => $complete_url ?? $this->frontendUrl . '/giftcard/thank-you?order_id=' . $order_id,
+      'error_payment_url'     => $error_url ?? $this->frontendUrl . '/giftcard/cancel',
       'merchant_reference_id' => 'fkr-order-' . $order_id,
       'metadata'              => ['order_id' => $order_id],
       'requested_by'          => $email,
