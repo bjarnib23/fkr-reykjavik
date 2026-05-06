@@ -62,6 +62,30 @@ fkr_content.process_steps:
   requirements:
     _access: 'TRUE'
 
+fkr_content.faq_page:
+  path: '/fkr/faq'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::faqPage'
+    _title: 'FAQ'
+  requirements:
+    _access: 'TRUE'
+
+fkr_content.pricelist_page:
+  path: '/fkr/pricelist'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::pricelistPage'
+    _title: 'Price List'
+  requirements:
+    _access: 'TRUE'
+
+fkr_content.process_page:
+  path: '/fkr/process'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::processPage'
+    _title: 'The Process'
+  requirements:
+    _access: 'TRUE'
+
 fkr_content.nav:
   path: '/api/fkr/nav'
   defaults:
