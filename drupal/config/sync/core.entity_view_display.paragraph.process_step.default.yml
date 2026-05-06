@@ -1,0 +1,29 @@
+uuid: 3456545e-4d56-4670-8930-4eb8afc64ec1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.process_step.field_step_description
+    - field.field.paragraph.process_step.field_title
+    - paragraphs.paragraphs_type.process_step
+id: paragraph.process_step.default
+targetEntityType: paragraph
+bundle: process_step
+mode: default
+content:
+  field_step_description:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }
