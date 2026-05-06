@@ -13,6 +13,12 @@
   padding: 56px 60px 48px;
 }
 
+.footer-logo {
+  height: 40px;
+  width: auto;
+  margin-bottom: 8px;
+}
+
 .footer-brand {
   font-size: 16px;
   font-weight: 800;
@@ -28,11 +34,52 @@
 }
 
 .footer-col-label {
-  font-size: 17px;
+  font-size: 13px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #7a9490;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+}
+
+.footer-col-label--mt {
+  margin-top: 20px;
+}
+
+.footer-nav-link {
+  display: block;
+  color: #4a5e58;
+  text-decoration: none;
+  font-size: 15px;
+  line-height: 2;
+}
+
+.footer-nav-link:hover {
+  color: #263430;
+}
+
+.footer-hours {
+  font-size: 15px;
+  white-space: pre-line;
+}
+
+.footer-contact-value {
+  font-size: 15px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.footer-social a {
+  color: #4a5e58;
+  font-size: 18px;
+  transition: color 0.15s;
+}
+
+.footer-social a:hover {
+  color: #263430;
 }
 
 .footer-bottom {

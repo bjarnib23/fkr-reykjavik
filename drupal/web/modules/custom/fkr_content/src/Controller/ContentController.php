@@ -247,7 +247,16 @@ class ContentController extends ControllerBase {
       'msg_slot_taken'     => $node->get('field_msg_slot_taken')->value,
       'msg_hold_expired'   => $node->get('field_msg_hold_expired')->value,
       'msg_submit_error'   => $node->get('field_msg_submit_error')->value,
-      'msg_hold_countdown' => $node->get('field_msg_hold_countdown')->value,
+      'msg_hold_countdown'   => $node->get('field_msg_hold_countdown')->value,
+      'footer_studio_label'  => $node->get('field_footer_studio_label')->value,
+      'footer_contact_label' => $node->get('field_footer_contact_label')->value,
+      'footer_nav_label'     => $node->get('field_footer_nav_label')->value,
+      'social_facebook'      => $node->get('field_social_facebook')->value,
+      'social_instagram'     => $node->get('field_social_instagram')->value,
+      'social_tiktok'        => $node->get('field_social_tiktok')->value,
+      'footer_phone_label'   => $node->get('field_footer_phone_label')->value,
+      'footer_email_label'   => $node->get('field_footer_email_label')->value,
+      'email'                => $node->get('field_site_email')->value,
     ], 200, $this->cors());
   }
 
