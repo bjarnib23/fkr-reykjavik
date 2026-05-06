@@ -1,0 +1,50 @@
+uuid: 3c8bc958-f94c-4e76-a5f6-933430d4cb3c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.basic_page.field_body_text
+    - field.field.node.basic_page.field_cta_text
+    - field.field.node.basic_page.field_nav_is_cta
+    - field.field.node.basic_page.field_nav_label
+    - field.field.node.basic_page.field_nav_path
+    - field.field.node.basic_page.field_nav_weight
+    - field.field.node.basic_page.field_page_image
+    - field.field.node.basic_page.field_page_subtitle
+    - field.field.node.basic_page.field_primary_button
+    - field.field.node.basic_page.field_process_steps
+    - field.field.node.basic_page.field_slug
+    - node.type.basic_page
+  module:
+    - entity_reference_revisions
+    - user
+id: node.basic_page.default
+targetEntityType: node
+bundle: basic_page
+mode: default
+content:
+  field_process_steps:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_body_text: true
+  field_cta_text: true
+  field_nav_is_cta: true
+  field_nav_label: true
+  field_nav_path: true
+  field_nav_weight: true
+  field_page_image: true
+  field_page_subtitle: true
+  field_primary_button: true
+  field_slug: true

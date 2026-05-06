@@ -276,19 +276,29 @@ class ContentController extends ControllerBase {
   }
 
   public function processSteps(): JsonResponse {
-    $nids = $this->entityTypeManager->getStorage('node')->getQuery()
-      ->condition('type', 'fkr_process_step')
-      ->condition('status', 1)
-      ->sort('field_weight_process', 'ASC')
-      ->accessCheck(FALSE)
-      ->execute();
+    $page_nodes = $this->entityTypeManager->getStorage('node')->loadByProperties([
+      'type'       => 'basic_page',
+      'field_slug' => 'process',
+      'status'     => 1,
+    ]);
 
+    if (empty($page_nodes)) {
+      return new JsonResponse([], 200, $this->cors());
+    }
+
+    $page  = reset($page_nodes);
     $items = [];
-    foreach ($this->entityTypeManager->getStorage('node')->loadMultiple($nids) as $node) {
+
+    foreach ($page->get('field_process_steps') as $item) {
+      $paragraph = $item->entity;
+      if (!$paragraph) {
+        continue;
+      }
+
       $items[] = [
-        'id'          => $node->id(),
-        'title'       => $node->getTitle(),
-        'description' => $node->get('field_description_process')->value,
+        'id'          => $paragraph->id(),
+        'title'       => $paragraph->get('field_title')->value,
+        'description' => $paragraph->get('field_step_description')->value,
       ];
     }
 
