@@ -1,3 +1,27 @@
+fkr_giftcard.giftcard_form:
+  path: '/fkr/giftcard'
+  defaults:
+    _form: '\Drupal\fkr_giftcard\Form\GiftCardForm'
+    _title: 'Buy a Gift Card'
+  requirements:
+    _access: 'TRUE'
+
+fkr_giftcard.thankyou:
+  path: '/fkr/giftcard/thank-you'
+  defaults:
+    _controller: '\Drupal\fkr_giftcard\Controller\GiftCardController::thankYou'
+    _title: 'Thank You'
+  requirements:
+    _access: 'TRUE'
+
+fkr_giftcard.cancel:
+  path: '/fkr/giftcard/cancel'
+  defaults:
+    _controller: '\Drupal\fkr_giftcard\Controller\GiftCardController::cancel'
+    _title: 'Payment Cancelled'
+  requirements:
+    _access: 'TRUE'
+
 fkr_giftcard.amounts:
   path: '/api/fkr/giftcard/amounts'
   defaults:
