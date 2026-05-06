@@ -333,6 +333,141 @@ class ContentController extends ControllerBase {
     return new JsonResponse($items, 200, $this->cors());
   }
 
+  public function faqPage(): array {
+    $page_nodes = $this->entityTypeManager->getStorage('node')->loadByProperties([
+      'type'   => 'faq_page',
+      'status' => 1,
+    ]);
+
+    if (empty($page_nodes)) {
+      return ['#markup' => 'No FAQ content found.'];
+    }
+
+    $page = reset($page_nodes);
+    $rows = [];
+
+    foreach ($page->get('field_faq_items') as $item) {
+      $paragraph = $item->entity;
+      if (!$paragraph) {
+        continue;
+      }
+      $rows[] = [
+        $paragraph->get('field_question')->value,
+        ['data' => ['#markup' => $paragraph->get('field_answer')->value]],
+      ];
+    }
+
+    return [
+      'heading' => [
+        '#type'  => 'html_tag',
+        '#tag'   => 'h1',
+        '#value' => $page->getTitle(),
+      ],
+      'table' => [
+        '#type'   => 'table',
+        '#header' => ['Question', 'Answer'],
+        '#rows'   => $rows,
+        '#empty'  => 'No FAQ items.',
+      ],
+    ];
+  }
+
+  public function pricelistPage(): array {
+    $page_nodes = $this->entityTypeManager->getStorage('node')->loadByProperties([
+      'type'   => 'pricelist_page',
+      'status' => 1,
+    ]);
+
+    if (empty($page_nodes)) {
+      return ['#markup' => 'No price list content found.'];
+    }
+
+    $page   = reset($page_nodes);
+    $grades = [];
+    $rows   = [];
+
+    foreach ($page->get('field_price_items') as $item) {
+      $paragraph = $item->entity;
+      if (!$paragraph) {
+        continue;
+      }
+
+      $service = $paragraph->get('field_service')->value;
+      $prices  = [];
+
+      foreach ($paragraph->get('field_price_entries') as $entry_item) {
+        $entry = $entry_item->entity;
+        if (!$entry) {
+          continue;
+        }
+        $grade = $entry->get('field_grade')->value;
+        $price = (int) $entry->get('field_price')->value;
+        if (!in_array($grade, $grades)) {
+          $grades[] = $grade;
+        }
+        $prices[$grade] = $price;
+      }
+
+      $row = [$service];
+      foreach ($grades as $grade) {
+        $row[] = isset($prices[$grade]) ? 'kr. ' . number_format($prices[$grade], 0, ',', '.') : '—';
+      }
+      $rows[] = $row;
+    }
+
+    $header = array_merge(['Service'], $grades);
+
+    return [
+      'heading' => [
+        '#type'  => 'html_tag',
+        '#tag'   => 'h1',
+        '#value' => $page->getTitle(),
+      ],
+      'table' => [
+        '#type'   => 'table',
+        '#header' => $header,
+        '#rows'   => $rows,
+        '#empty'  => 'No price items.',
+      ],
+    ];
+  }
+
+  public function processPage(): array {
+    $page_nodes = $this->entityTypeManager->getStorage('node')->loadByProperties([
+      'type'       => 'basic_page',
+      'field_slug' => 'process',
+      'status'     => 1,
+    ]);
+
+    if (empty($page_nodes)) {
+      return ['#markup' => 'No process content found.'];
+    }
+
+    $page  = reset($page_nodes);
+    $items = [];
+
+    foreach ($page->get('field_process_steps') as $item) {
+      $paragraph = $item->entity;
+      if (!$paragraph) {
+        continue;
+      }
+      $items[] = $paragraph->get('field_title')->value . ': ' . $paragraph->get('field_step_description')->value;
+    }
+
+    return [
+      'heading' => [
+        '#type'  => 'html_tag',
+        '#tag'   => 'h1',
+        '#value' => $page->getTitle(),
+      ],
+      'steps' => [
+        '#theme' => 'item_list',
+        '#items' => $items,
+        '#list_type' => 'ol',
+      ],
+    ];
+  }
+
   private function getImageUrls($node, string $field_name): array {
     $field = $node->get($field_name);
     if ($field->isEmpty()) {
