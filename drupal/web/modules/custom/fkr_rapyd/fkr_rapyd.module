@@ -6,7 +6,7 @@
 function fkr_rapyd_mail($key, &$message, $params) {
   if ($key === 'giftcard_confirmation') {
     $message['from']    = \Drupal::config('system.site')->get('mail');
-    $message['subject'] = t('Gjafabréf frá FKR Reykjavík');
+    $message['subject'] = \Drupal::config('fkr_giftcard.settings')->get('email_subject');
     $message['headers']['Content-Type'] = 'text/html; charset=UTF-8';
 
     $name   = htmlspecialchars($params['name']);
