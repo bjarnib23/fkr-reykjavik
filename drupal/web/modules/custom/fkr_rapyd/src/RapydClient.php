@@ -33,25 +33,14 @@ class RapydClient {
     $this->logger      = $logger_factory->get('fkr_rapyd');
   }
 
-  /**
-   * Creates a Rapyd Hosted Checkout session.
-   *
-   * @param int    $order_id  Commerce order ID
-   * @param int    $amount    Amount in whole ISK (e.g. 10000)
-   * @param string $email     Buyer email
-   *
-   * @return array{redirect_url: string}
-   *
-   * @throws \RuntimeException on API error or missing credentials
-   */
-  public function createCheckout(int $order_id, int $amount, string $email, ?string $complete_url = NULL, ?string $error_url = NULL): array {
+  public function createCheckout(int $order_id, int $amount, string $email, ?string $complete_url = NULL, ?string $error_url = NULL, ?string $customer_id = NULL): array {
     if (empty($this->accessKey) || empty($this->secretKey)) {
       throw new \RuntimeException('Rapyd API credentials are not configured.');
     }
 
-    $base    = $this->sandbox ? 'https://sandboxapi.rapyd.net' : 'https://api.rapyd.net';
-    $path    = '/v1/checkout';
-    $body    = [
+    $base = $this->sandbox ? 'https://sandboxapi.rapyd.net' : 'https://api.rapyd.net';
+    $path = '/v1/checkout';
+    $body = [
       'amount'                => $amount,
       'currency'              => 'ISK',
       'country'               => 'IS',
@@ -61,6 +50,11 @@ class RapydClient {
       'metadata'              => ['order_id' => $order_id],
       'requested_by'          => $email,
     ];
+
+    if ($customer_id) {
+      $body['customer']              = $customer_id;
+      $body['save_payment_method']   = TRUE;
+    }
 
     $body_str = json_encode($body, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     $headers  = $this->buildHeaders('post', $path, $body_str);
@@ -85,17 +79,71 @@ class RapydClient {
     }
   }
 
-  /**
-   * Verifies a Rapyd webhook signature.
-   *
-   * @param string $raw_body   Raw POST body string
-   * @param string $salt       From rapyd-idempotency header
-   * @param string $timestamp  From rapyd-timestamp header
-   * @param string $signature  From rapyd-signature header
-   * @param string $path       Request path used in signature computation
-   *
-   * @return bool
-   */
+  public function createCustomer(string $email, string $name = ''): string {
+    $base     = $this->sandbox ? 'https://sandboxapi.rapyd.net' : 'https://api.rapyd.net';
+    $path     = '/v1/customers';
+    $body_str = json_encode(['email' => $email, 'name' => $name ?: $email], JSON_UNESCAPED_UNICODE);
+    $headers  = $this->buildHeaders('post', $path, $body_str);
+
+    try {
+      $response = $this->http->request('POST', $base . $path, [
+        'headers' => $headers,
+        'body'    => $body_str,
+      ]);
+      $decoded = json_decode((string) $response->getBody(), TRUE);
+      return $decoded['data']['id'] ?? '';
+    }
+    catch (GuzzleException $e) {
+      $this->logger->error('Rapyd createCustomer error: @msg', ['@msg' => $e->getMessage()]);
+      throw new \RuntimeException('Could not create Rapyd customer: ' . $e->getMessage(), 0, $e);
+    }
+  }
+
+  public function getCustomerPaymentMethods(string $customer_id): array {
+    $base    = $this->sandbox ? 'https://sandboxapi.rapyd.net' : 'https://api.rapyd.net';
+    $path    = '/v1/customers/' . $customer_id . '/payment_methods';
+    $headers = $this->buildHeaders('get', $path);
+
+    try {
+      $response = $this->http->request('GET', $base . $path, ['headers' => $headers]);
+      $decoded  = json_decode((string) $response->getBody(), TRUE);
+      return $decoded['data'] ?? [];
+    }
+    catch (GuzzleException $e) {
+      $this->logger->error('Rapyd getCustomerPaymentMethods error: @msg', ['@msg' => $e->getMessage()]);
+      return [];
+    }
+  }
+
+  public function createDirectPayment(int $order_id, int $amount, string $customer_id, string $payment_method_id, string $email): array {
+    $base     = $this->sandbox ? 'https://sandboxapi.rapyd.net' : 'https://api.rapyd.net';
+    $path     = '/v1/payments';
+    $body     = [
+      'amount'                => $amount,
+      'currency'              => 'ISK',
+      'customer'              => $customer_id,
+      'payment_method'        => $payment_method_id,
+      'merchant_reference_id' => 'fkr-order-' . $order_id,
+      'metadata'              => ['order_id' => $order_id],
+      'requested_by'          => $email,
+    ];
+    $body_str = json_encode($body, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    $headers  = $this->buildHeaders('post', $path, $body_str);
+
+    try {
+      $response = $this->http->request('POST', $base . $path, [
+        'headers' => $headers,
+        'body'    => $body_str,
+      ]);
+      $decoded = json_decode((string) $response->getBody(), TRUE);
+      return $decoded['data'] ?? [];
+    }
+    catch (GuzzleException $e) {
+      $this->logger->error('Rapyd createDirectPayment error: @msg', ['@msg' => $e->getMessage()]);
+      throw new \RuntimeException('Direct payment failed: ' . $e->getMessage(), 0, $e);
+    }
+  }
+
   public function verifyWebhook(string $raw_body, string $salt, string $timestamp, string $signature, string $path): bool {
     if (empty($this->secretKey)) {
       return FALSE;
