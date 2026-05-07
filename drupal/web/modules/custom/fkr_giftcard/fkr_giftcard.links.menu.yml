@@ -1,0 +1,5 @@
+fkr_giftcard.settings:
+  title: 'Gift Card Settings'
+  parent: system.admin_config
+  route_name: fkr_giftcard.settings
+  weight: 10

@@ -1,3 +1,11 @@
+fkr_giftcard.settings:
+  path: '/admin/config/fkr/giftcard'
+  defaults:
+    _form: '\Drupal\fkr_giftcard\Form\GiftCardSettingsForm'
+    _title: 'Gift Card Settings'
+  requirements:
+    _permission: 'administer site configuration'
+
 fkr_giftcard.giftcard_form:
   path: '/fkr/giftcard'
   defaults:

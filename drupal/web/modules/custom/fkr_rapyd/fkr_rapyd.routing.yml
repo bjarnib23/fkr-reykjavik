@@ -1,3 +1,11 @@
+fkr_rapyd.settings:
+  path: '/admin/config/fkr/rapyd'
+  defaults:
+    _form: '\Drupal\fkr_rapyd\Form\RapydSettingsForm'
+    _title: 'Rapyd Settings'
+  requirements:
+    _permission: 'administer site configuration'
+
 fkr_rapyd.webhook:
   path: '/api/fkr/rapyd/webhook'
   defaults:
