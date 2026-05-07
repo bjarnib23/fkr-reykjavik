@@ -7,27 +7,52 @@ use Drupal\commerce_order\Entity\OrderItem;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\fkr_rapyd\RapydClient;
+use Drupal\user\UserDataInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class GiftCardController extends ControllerBase {
 
+  protected UserDataInterface $userData;
+
   public function __construct(
     EntityTypeManagerInterface $entity_type_manager,
     private RapydClient $rapydClient,
+    UserDataInterface $user_data,
   ) {
     $this->entityTypeManager = $entity_type_manager;
+    $this->userData          = $user_data;
   }
 
   public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('entity_type.manager'),
       $container->get('fkr_rapyd.client'),
+      $container->get('user.data'),
     );
   }
 
-  public function thankYou(): array {
+  public function thankYou(Request $request): array {
+    $save_card = $request->query->get('save_card');
+    $uid       = (int) $request->query->get('uid');
+
+    if ($save_card && $uid > 0) {
+      $customer_id = $this->userData->get('fkr_giftcard', $uid, 'rapyd_customer_id');
+      if ($customer_id) {
+        $methods = $this->rapydClient->getCustomerPaymentMethods($customer_id);
+        if (!empty($methods)) {
+          $method = end($methods);
+          $this->userData->set('fkr_giftcard', $uid, 'saved_card', [
+            'customer_id'       => $customer_id,
+            'payment_method_id' => $method['id'] ?? '',
+            'last_four'         => $method['last4'] ?? '****',
+            'brand'             => $method['brand'] ?? 'Card',
+          ]);
+        }
+      }
+    }
+
     return [
       '#markup' => '<h1>Thank you!</h1><p>Your payment was successful. You will receive your gift card by email shortly.</p>',
     ];
