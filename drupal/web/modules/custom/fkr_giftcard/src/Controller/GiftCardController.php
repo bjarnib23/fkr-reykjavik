@@ -2,8 +2,6 @@
 
 namespace Drupal\fkr_giftcard\Controller;
 
-use Drupal\commerce_order\Entity\Order;
-use Drupal\commerce_order\Entity\OrderItem;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\fkr_rapyd\RapydClient;
@@ -116,7 +114,7 @@ class GiftCardController extends ControllerBase {
       return new JsonResponse(['error' => 'No Commerce store configured.'], 500, $this->cors());
     }
 
-    $order_item = OrderItem::create([
+    $order_item = $this->entityTypeManager->getStorage('commerce_order_item')->create([
       'type'             => 'default',
       'purchased_entity' => $variation,
       'quantity'         => 1,
@@ -124,19 +122,18 @@ class GiftCardController extends ControllerBase {
     ]);
     $order_item->save();
 
-    $notes = sprintf(
-      'Kaupandi: %s | Sími: %s | Athugasemd: %s',
-      $data['name'],
-      $data['phone'],
-      $data['notes'] ?? ''
-    );
+    $notes = implode(' | ', [
+      'Kaupandi: ' . $data['name'],
+      'Sími: ' . $data['phone'],
+      'Athugasemd: ' . ($data['notes'] ?? ''),
+    ]);
 
-    $order = Order::create([
-      'type'        => 'default',
-      'state'       => 'draft',
-      'mail'        => $data['email'],
-      'uid'         => 0,
-      'store_id'    => $store->id(),
+    $order = $this->entityTypeManager->getStorage('commerce_order')->create([
+      'type'              => 'default',
+      'state'             => 'draft',
+      'mail'              => $data['email'],
+      'uid'               => 0,
+      'store_id'          => $store->id(),
       'order_items'       => [$order_item],
       'customer_comments' => $notes,
     ]);
