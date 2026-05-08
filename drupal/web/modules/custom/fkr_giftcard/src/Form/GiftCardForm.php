@@ -2,8 +2,6 @@
 
 namespace Drupal\fkr_giftcard\Form;
 
-use Drupal\commerce_order\Entity\Order;
-use Drupal\commerce_order\Entity\OrderItem;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -156,7 +154,7 @@ class GiftCardForm extends FormBase {
       return;
     }
 
-    $order_item = OrderItem::create([
+    $order_item = $this->entityTypeManager->getStorage('commerce_order_item')->create([
       'type'             => 'default',
       'purchased_entity' => $variation,
       'quantity'         => 1,
@@ -164,14 +162,18 @@ class GiftCardForm extends FormBase {
     ]);
     $order_item->save();
 
-    $order = Order::create([
+    $order = $this->entityTypeManager->getStorage('commerce_order')->create([
       'type'              => 'default',
       'state'             => 'draft',
       'mail'              => $email,
       'uid'               => $uid ?: 0,
       'store_id'          => $store->id(),
       'order_items'       => [$order_item],
-      'customer_comments' => sprintf('Kaupandi: %s | Sími: %s | Athugasemd: %s', $name, $phone, $notes),
+      'customer_comments' => implode(' | ', [
+        'Kaupandi: ' . $name,
+        'Sími: ' . $phone,
+        'Athugasemd: ' . $notes,
+      ]),
     ]);
     $order->save();
 
