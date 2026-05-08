@@ -56,30 +56,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Divider */}
-      {page.section_label && (
-        <div className="home-divider">
-          <p>{page.section_label}</p>
-        </div>
-      )}
-
-      {/* Nav cards */}
-      {images.length >= 9 && (
-        <section className="home-nav-cards">
-          {[
-            { img: images[5], label: 'Ferlið', to: '/ferlid' },
-            { img: images[6], label: 'Gjafabréf', to: '/gjafabref' },
-            { img: images[7], label: 'Algengar spurningar', to: '/algengar-spurningar' },
-            { img: images[8], label: 'Verðskrá', to: '/verdskra' },
-          ].map(({ img, label, to }) => (
-            <Link key={to} to={to} className="home-nav-card">
-              <img src={img} alt={label} />
-              <span className="home-nav-card-label">{label}</span>
-            </Link>
-          ))}
-        </section>
-      )}
-
       {/* Mobile: slideshow */}
       <section className="home-hero home-hero--mobile">
         {images.map((src, i) => (
@@ -108,6 +84,28 @@ function Home() {
           ))}
         </div>
       </section>
+
+      {/* Divider */}
+      {page.section_label && (
+        <div className="home-divider">
+          <p>{page.section_label}</p>
+        </div>
+      )}
+
+      {/* Nav cards */}
+      {page.nav_cards?.length > 0 && (
+        <section
+          className="home-nav-cards"
+          style={{ gridTemplateColumns: `repeat(${page.nav_cards.length}, 1fr)` }}
+        >
+          {page.nav_cards.map((card) => (
+            <Link key={card.path} to={card.path} className="home-nav-card">
+              {card.image && <img src={card.image} alt={card.label} />}
+              <span className="home-nav-card-label">{card.label}</span>
+            </Link>
+          ))}
+        </section>
+      )}
     </main>
   )
 }

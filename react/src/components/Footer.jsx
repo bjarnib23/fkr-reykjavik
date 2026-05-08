@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { FaFacebookF, FaInstagram, FaTiktok } from 'react-icons/fa'
 import './Footer.css'
 
@@ -23,8 +23,8 @@ function Footer() {
     <footer className="footer">
       <div className="footer-main">
         <div className="footer-col footer-col--brand">
-          {s.logo
-            ? <img src={s.logo} alt="FKR" className="footer-logo" />
+          {s.footer_logo
+            ? <img src={s.footer_logo} alt="FKR" className="footer-logo" />
             : <p className="footer-brand">FKR</p>
           }
         </div>
@@ -32,10 +32,11 @@ function Footer() {
         {nav.length > 0 && (
           <div className="footer-col">
             <p className="footer-col-label">{s.footer_nav_label}</p>
+            <NavLink end to="/" className="footer-nav-link">Heim</NavLink>
             {nav.map(item => (
-              <Link key={item.path} to={item.path} className="footer-nav-link">
+              <NavLink key={item.path} to={item.path} className="footer-nav-link">
                 {item.label}
-              </Link>
+              </NavLink>
             ))}
           </div>
         )}
@@ -54,6 +55,12 @@ function Footer() {
               <p className="footer-contact-value">{s.email}</p>
             </>
           )}
+          {s.company_id && (
+            <>
+              <p className="footer-col-label footer-col-label--mt">{s.footer_company_id_label || 'Kennitala'}</p>
+              <p className="footer-contact-value">{s.company_id}</p>
+            </>
+          )}
           {(s.social_facebook || s.social_instagram || s.social_tiktok) && (
             <div className="footer-social">
               {s.social_facebook  && <a href={s.social_facebook}  target="_blank" rel="noreferrer"><FaFacebookF /></a>}
@@ -65,8 +72,10 @@ function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <span>{s.copyright || ''}</span>
-        <span>{s.company_id || ''}</span>
+        <span>
+          {s.copyright_year}
+          <a href="/" className="footer-company-link">{s.company_name}</a>
+        </span>
       </div>
     </footer>
   )

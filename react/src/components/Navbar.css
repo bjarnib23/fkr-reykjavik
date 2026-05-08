@@ -13,13 +13,13 @@
 
 .navbar-brand {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
   text-decoration: none;
 }
 
 .navbar-logo {
-  height: 32px;
+  height: 180px;
   width: auto;
   display: block;
 }
@@ -78,15 +78,18 @@
 }
 
 .navbar-cta {
-  font-size: 16px;
-  letter-spacing: 0.05em;
-  color: #263430;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: #f4eded;
+  background: #263430;
   text-decoration: none;
   white-space: nowrap;
+  padding: 10px 24px;
+  transition: background 0.2s;
 }
 
 .navbar-cta:hover {
-  opacity: 0.6;
+  background: #1a2826;
 }
 
 .navbar-hamburger {
