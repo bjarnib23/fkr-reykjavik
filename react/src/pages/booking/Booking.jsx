@@ -5,7 +5,7 @@ import Step3Contact from './Step3Contact'
 import Step4Review from './Step4Review'
 import './Booking.css'
 
-const DRUPAL     = 'http://fkr-reykjavik.ddev.site'
+const DRUPAL = import.meta.env.VITE_DRUPAL_URL
 const STEP_SLUGS = ['booking_step1', 'booking_step2', 'booking_step3', 'booking_step4']
 
 function Booking() {

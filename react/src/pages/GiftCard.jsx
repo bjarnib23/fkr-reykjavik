@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './GiftCard.css'
 
-const API = 'http://fkr-reykjavik.ddev.site'
+const API = import.meta.env.VITE_DRUPAL_URL
 
 function GiftCard() {
   const [amounts, setAmounts]   = useState([])
