@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import './Process.css'
 
@@ -9,6 +9,7 @@ function stripHtml(html) {
 function Process() {
   const [page, setPage] = useState({})
   const [steps, setSteps] = useState([])
+  const cardRefs = useRef([])
 
   useEffect(() => {
     fetch('http://fkr-reykjavik.ddev.site/api/fkr/pages', { cache: 'no-store' })
@@ -24,13 +25,29 @@ function Process() {
   }, [])
 
   const images = page.images || []
-  const [slideIndex, setSlideIndex] = useState(0)
 
   useEffect(() => {
-    if (images.length < 2) return
-    const id = setInterval(() => setSlideIndex(i => (i + 1) % images.length), 10000)
-    return () => clearInterval(id)
-  }, [images.length])
+    const cards = cardRefs.current.filter(Boolean)
+    if (cards.length < 2) return
+
+    const handleScroll = () => {
+      cards.forEach((card, i) => {
+        const cardRect = card.getBoundingClientRect()
+        const next = cards[i + 1]
+
+        if (next) {
+          const nextRect = next.getBoundingClientRect()
+          const covered = Math.max(0, cardRect.bottom - nextRect.top)
+          const progress = Math.min(1, covered / cardRect.height)
+          card.style.transform = `scale(${1 - 0.12 * progress})`
+        }
+      })
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [steps.length])
 
   return (
     <main className="process">
@@ -39,42 +56,34 @@ function Process() {
         <h1>{page.title || ''}</h1>
       </div>
 
-      <div className="process-body">
-        <div className="process-image-col">
-          <div className="process-image-sticky">
-            {images.map((src, i) => (
-              <img
-                key={src}
-                src={src}
-                alt=""
-                className={`process-sticky-img${i === slideIndex ? ' process-sticky-img--active' : ''}`}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="process-right">
-          <div className="process-steps">
-            {steps.map((step, i) => (
-              <div key={step.id} className="process-step">
-                <span className="process-step-number">{String(i + 1).padStart(2, '0')}</span>
-                <div className="process-step-body">
-                  <h3>{step.title}</h3>
-                  {step.description && <p>{stripHtml(step.description)}</p>}
-                </div>
+      <div className="process-cards">
+        {steps.map((step, i) => (
+          <div
+            key={step.id}
+            ref={el => { cardRefs.current[i] = el }}
+            className="process-card"
+            style={{ top: `${80 + i * 48}px`, zIndex: i + 1 }}
+          >
+            <div className="process-card-left">
+              <span className="process-card-num">{String(i + 1).padStart(2, '0')}</span>
+              <div className="process-card-text">
+                <h2>{step.title}</h2>
+                {step.description && <p>{stripHtml(step.description)}</p>}
               </div>
-            ))}
-          </div>
-
-          <div className="process-closing">
-            {page.body_text && <p>{stripHtml(page.body_text)}</p>}
-            {page.cta_text && (
-              <Link to="/boka-tima" className="process-cta">{page.cta_text} →</Link>
+            </div>
+            {images[i] && (
+              <div className="process-card-img">
+                <img src={images[i]} alt={step.title} />
+              </div>
             )}
           </div>
-        </div>
+        ))}
       </div>
 
+      <div className="process-closing">
+        {page.body_text && <p>{stripHtml(page.body_text)}</p>}
+        <Link to="/boka-tima" className="process-cta">{page.cta_text || 'Bóka tíma'} →</Link>
+      </div>
     </main>
   )
 }
