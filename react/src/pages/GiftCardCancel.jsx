@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-const API = 'http://fkr-reykjavik.ddev.site'
+const API = import.meta.env.VITE_DRUPAL_URL
 
 function GiftCardCancel() {
   const [labels, setLabels] = useState({})

@@ -11,13 +11,13 @@ function FAQ() {
   const [page, setPage]           = useState({})
 
   useEffect(() => {
-    fetch('http://fkr-reykjavik.ddev.site/api/fkr/faq', { cache: 'no-store' })
+    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/faq`, { cache: 'no-store' })
       .then(r => r.json())
       .then(data => {
         setFaqs(data.items || [])
       })
 
-    fetch('http://fkr-reykjavik.ddev.site/api/fkr/pages', { cache: 'no-store' })
+    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pages`, { cache: 'no-store' })
       .then(r => r.json())
       .then(pages => {
         const p = Object.values(pages).find(p => p.slug === 'faq')

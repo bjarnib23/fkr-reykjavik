@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './Step1Service.css'
 
-const DRUPAL = 'http://fkr-reykjavik.ddev.site'
+const DRUPAL = import.meta.env.VITE_DRUPAL_URL
 
 function Step1Service({ data, update, next, back, buttons }) {
   const [services, setServices] = useState([])
