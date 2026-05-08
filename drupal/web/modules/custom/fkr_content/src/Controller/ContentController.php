@@ -120,6 +120,7 @@ class ContentController extends ControllerBase {
         'err_payment'         => $val('field_err_payment'),
         'images'              => $node->hasField('field_page_image') ? $this->getImageUrls($node, 'field_page_image') : [],
         'slug'                => $val('field_slug'),
+        'section_label'       => $val('field_section_label'),
       ];
     }
 
