@@ -11,14 +11,14 @@ function Process() {
   const [steps, setSteps] = useState([])
 
   useEffect(() => {
-    fetch('http://fkr-reykjavik.ddev.site/api/fkr/pages', { cache: 'no-store' })
+    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pages`, { cache: 'no-store' })
       .then(r => r.json())
       .then(pages => {
         const p = Object.values(pages).find(p => p.slug === 'process')
         if (p) setPage(p)
       })
 
-    fetch('http://fkr-reykjavik.ddev.site/api/fkr/process-steps', { cache: 'no-store' })
+    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/process-steps`, { cache: 'no-store' })
       .then(r => r.json())
       .then(setSteps)
   }, [])

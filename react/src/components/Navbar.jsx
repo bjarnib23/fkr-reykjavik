@@ -11,11 +11,11 @@ function Navbar() {
   useEffect(() => { setMenuOpen(false) }, [location])
 
   useEffect(() => {
-    fetch('http://fkr-reykjavik.ddev.site/api/fkr/nav', { cache: 'no-store' })
+    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/nav`, { cache: 'no-store' })
       .then(r => r.json())
       .then(setLinks)
 
-    fetch('http://fkr-reykjavik.ddev.site/api/fkr/settings', { cache: 'no-store' })
+    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/settings`, { cache: 'no-store' })
       .then(r => r.json())
       .then(data => { if (data.logo) setLogo(data.logo) })
   }, [])

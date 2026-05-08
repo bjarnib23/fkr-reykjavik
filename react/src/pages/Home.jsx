@@ -11,7 +11,7 @@ function Home() {
   const [slideIndex, setSlideIndex] = useState(0)
 
   useEffect(() => {
-    fetch('http://fkr-reykjavik.ddev.site/api/fkr/pages', { cache: 'no-store' })
+    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pages`, { cache: 'no-store' })
       .then(r => r.json())
       .then(pages => {
         const p = Object.values(pages).find(p => p.slug === 'home')

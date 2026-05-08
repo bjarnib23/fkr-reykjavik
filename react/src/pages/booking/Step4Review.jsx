@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Step4Review.css'
 
-const DRUPAL = 'http://fkr-reykjavik.ddev.site'
+const DRUPAL = import.meta.env.VITE_DRUPAL_URL
 
 function Step4Review({ data, update, back, releaseHold, heading, buttons, labels, submitError, onSubmitted }) {
   const [submitted, setSubmitted] = useState(false)

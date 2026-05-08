@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { FaFacebookF, FaInstagram, FaTiktok } from 'react-icons/fa'
 import './Footer.css'
 
-const API = 'http://fkr-reykjavik.ddev.site'
+const API = import.meta.env.VITE_DRUPAL_URL
 
 function Footer() {
   const [s, setS]     = useState({})

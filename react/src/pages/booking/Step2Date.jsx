@@ -7,7 +7,7 @@ function Step2Date({ data, update, next, back, releaseReady, heading, buttons, l
 
   useEffect(() => {
     if (!data.date || !releaseReady) return
-    fetch(`http://fkr-reykjavik.ddev.site/api/fkr/availability?date=${data.date}`, { cache: 'no-store' })
+    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/availability?date=${data.date}`, { cache: 'no-store' })
       .then(res => res.json())
       .then(slots => {
         const now = new Date()
