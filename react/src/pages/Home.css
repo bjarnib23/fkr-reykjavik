@@ -84,18 +84,18 @@
 }
 
 .home-cta {
-  font-size: 15px;
-  letter-spacing: 0.1em;
+  font-size: 14px;
+  letter-spacing: 0.08em;
   color: #f4eded;
-  border: 1px solid rgba(244, 237, 237, 0.4);
-  padding: 14px 32px;
+  background: #263430;
+  padding: 12px 28px;
   margin-top: 8px;
-  transition: background 0.2s, color 0.2s;
+  text-decoration: none;
+  transition: background 0.2s;
 }
 
 .home-cta:hover {
-  background: #f4eded;
-  color: #331b0e;
+  background: #1a2826;
 }
 
 /* ── Nav cards ── */
@@ -118,6 +118,7 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 4px;
   background: #f4eded;
+  margin-bottom: 4px;
 }
 
 .home-nav-card {
@@ -156,6 +157,10 @@
 
 /* ── Mobile ── */
 @media (max-width: 768px) {
+  .home-nav-cards {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
   .home-hero--desktop {
     display: none;
   }

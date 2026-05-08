@@ -121,6 +121,7 @@ class ContentController extends ControllerBase {
         'images'              => $node->hasField('field_page_image') ? $this->getImageUrls($node, 'field_page_image') : [],
         'slug'                => $val('field_slug'),
         'section_label'       => $val('field_section_label'),
+        'nav_cards'           => $this->getNavCards($node),
       ];
     }
 
@@ -220,21 +221,19 @@ class ContentController extends ControllerBase {
     }
 
     $node    = reset($nodes);
-    $logoUrl = '';
 
-    $logoField = $node->get('field_logo');
-    if (!$logoField->isEmpty()) {
-      $media = $logoField->first()->get('entity')->getTarget()?->getValue();
-      if ($media) {
-        $file = $media->get('field_media_image')->first()?->get('entity')->getTarget()?->getValue();
-        if ($file) {
-          $logoUrl = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
-        }
-      }
-    }
+    $getLogoUrl = function(string $fieldName) use ($node): string {
+      $field = $node->get($fieldName);
+      if ($field->isEmpty()) return '';
+      $media = $field->first()->get('entity')->getTarget()?->getValue();
+      if (!$media) return '';
+      $file = $media->get('field_media_image')->first()?->get('entity')->getTarget()?->getValue();
+      return $file ? \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri()) : '';
+    };
 
     return new JsonResponse([
-      'logo'               => $logoUrl,
+      'navbar_logo'        => $getLogoUrl('field_logo'),
+      'footer_logo'        => $getLogoUrl('field_footer_logo'),
       'phone'              => $node->get('field_site_phone')->value,
       'address'            => $node->get('field_site_address')->value,
       'company_id'         => $node->get('field_company_id')->value,
@@ -258,6 +257,9 @@ class ContentController extends ControllerBase {
       'footer_phone_label'   => $node->get('field_footer_phone_label')->value,
       'footer_email_label'   => $node->get('field_footer_email_label')->value,
       'email'                => $node->get('field_site_email')->value,
+      'copyright_year'       => '© ' . date('Y') . ', ',
+      'company_name'         => $node->get('field_company_name')->value,
+      'navbar_cta_label'     => $node->get('field_navbar_cta_label')->value,
     ], 200, $this->cors());
   }
 
@@ -476,6 +478,44 @@ class ContentController extends ControllerBase {
         '#list_type' => 'ol',
       ],
     ];
+  }
+
+  private function getNavCards($node): array {
+    if (!$node->hasField('field_home_nav_cards') || $node->get('field_home_nav_cards')->isEmpty()) {
+      return [];
+    }
+    $cards = [];
+    foreach ($node->get('field_home_nav_cards') as $item) {
+      $paragraph = $item->entity;
+      if (!$paragraph) continue;
+      $imageUrl = '';
+      $imageField = $paragraph->get('field_card_image');
+      if (!$imageField->isEmpty()) {
+        $file = $imageField->first()->get('entity')->getTarget()?->getValue();
+        if ($file) {
+          $imageUrl = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+        }
+      }
+      $path  = $paragraph->get('field_card_path')->value ?? '';
+      $label = '';
+
+      if (!empty($path)) {
+        $system_path = \Drupal::service('path_alias.manager')->getPathByAlias($path);
+        if (preg_match('/\/node\/(\d+)/', $system_path, $matches)) {
+          $linked_node = $this->entityTypeManager->getStorage('node')->load($matches[1]);
+          if ($linked_node) {
+            $label = $linked_node->getTitle();
+          }
+        }
+      }
+
+      $cards[] = [
+        'image' => $imageUrl,
+        'label' => $label,
+        'path'  => $path,
+      ];
+    }
+    return $cards;
   }
 
   private function getImageUrls($node, string $field_name): array {
