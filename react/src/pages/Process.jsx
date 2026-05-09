@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import './Process.css'
 
@@ -9,6 +9,7 @@ function stripHtml(html) {
 function Process() {
   const [page, setPage] = useState({})
   const [steps, setSteps] = useState([])
+  const cardRefs = useRef([])
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pages`, { cache: 'no-store' })
@@ -23,45 +24,65 @@ function Process() {
       .then(setSteps)
   }, [])
 
-  const image = page.images?.[0]
+  const images = page.images || []
+
+  useEffect(() => {
+    const cards = cardRefs.current.filter(Boolean)
+    if (cards.length < 2) return
+
+    const handleScroll = () => {
+      cards.forEach((card, i) => {
+        const cardRect = card.getBoundingClientRect()
+        const next = cards[i + 1]
+
+        if (next) {
+          const nextRect = next.getBoundingClientRect()
+          const covered = Math.max(0, cardRect.bottom - nextRect.top)
+          const progress = Math.min(1, covered / cardRect.height)
+          card.style.transform = `scale(${1 - 0.12 * progress})`
+        }
+      })
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [steps.length])
 
   return (
     <main className="process">
-      <div className="process-hero">
-        <div className="process-hero-left">
-          <h1>{page.title || ''}</h1>
-        </div>
-        <div className="process-hero-right">
-        </div>
+      <div className="process-header">
+        {page.subtitle && <p className="process-header-label">{page.subtitle}</p>}
+        <h1>{page.title || ''}</h1>
       </div>
 
-      <div className="process-body">
-        {image && (
-          <div className="process-image">
-            <img src={image} alt={page.title} />
-          </div>
-        )}
-
-        <div className="process-right">
-          {steps.length > 0 && (
-            <div className="process-steps">
-              {steps.map((step, i) => (
-                <div key={step.id} className="process-step">
-                  <span className="process-step-number">{String(i + 1).padStart(2, '0')}</span>
-                  <div className="process-step-body">
-                    <h3>{step.title}</h3>
-                    {step.description && <p>{stripHtml(step.description)}</p>}
-                  </div>
-                </div>
-              ))}
+      <div className="process-cards">
+        {steps.map((step, i) => (
+          <div
+            key={step.id}
+            ref={el => { cardRefs.current[i] = el }}
+            className="process-card"
+            style={{ top: `${80 + i * 48}px`, zIndex: i + 1 }}
+          >
+            <div className="process-card-left">
+              <span className="process-card-num">{String(i + 1).padStart(2, '0')}</span>
+              <div className="process-card-text">
+                <h2>{step.title}</h2>
+                {step.description && <p>{stripHtml(step.description)}</p>}
+              </div>
             </div>
-          )}
-
-          <div className="process-closing">
-            {page.body_text && <p>{stripHtml(page.body_text)}</p>}
-            <Link to="/boka-tima" className="process-cta">Bóka tíma →</Link>
+            {images[i] && (
+              <div className="process-card-img">
+                <img src={images[i]} alt={step.title} />
+              </div>
+            )}
           </div>
-        </div>
+        ))}
+      </div>
+
+      <div className="process-closing">
+        {page.body_text && <p>{stripHtml(page.body_text)}</p>}
+        <Link to="/boka-tima" className="process-cta">{page.cta_text || 'Bóka tíma'} →</Link>
       </div>
     </main>
   )
