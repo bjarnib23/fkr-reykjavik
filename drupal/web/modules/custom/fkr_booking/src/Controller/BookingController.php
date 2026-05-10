@@ -153,6 +153,7 @@ class BookingController extends ControllerBase {
       'date'           => $data['date'],
       'service'        => $data['service'] ?? '',
       'notes'          => $data['notes'] ?? '',
+      'wishes'         => $data['wishes'] ?? '',
       'booking_status' => 'pending',
     ]);
     $booking->save();
@@ -182,6 +183,7 @@ class BookingController extends ControllerBase {
         'date'             => $data['date'],
         'hvad_viltu_panta' => $data['service'] ?? '',
         'notes'            => $data['notes'] ?? '',
+        'wishes'           => $data['wishes'] ?? '',
       ],
     );
 
@@ -226,11 +228,12 @@ class BookingController extends ControllerBase {
 
   public function bookingDetails(Booking $fkr_booking): array {
     $rows = [
-      ['Name',   $fkr_booking->get('name')->value],
-      ['Email',  $fkr_booking->get('email')->value],
-      ['Date',   $fkr_booking->get('date')->value],
-      ['Item',   $fkr_booking->get('service')->value],
-      ['Notes',  $fkr_booking->get('notes')->value],
+      ['Name',    $fkr_booking->get('name')->value],
+      ['Email',   $fkr_booking->get('email')->value],
+      ['Date',    $fkr_booking->get('date')->value],
+      ['Item',    $fkr_booking->get('service')->value],
+      ['Notes',   $fkr_booking->get('notes')->value],
+      ['Wishes',  $fkr_booking->get('wishes')->value],
     ];
 
     return [

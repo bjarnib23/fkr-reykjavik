@@ -17,7 +17,7 @@ function Booking() {
   const [summaryLabels, setSummary]   = useState({})
   const [messages, setMessages]       = useState({})
   const [data, setData]               = useState({
-    service: '', date: '', time: '', name: '', email: '', phone: '', notes: ''
+    service: '', date: '', time: '', name: '', email: '', phone: '', notes: '', wishes: ''
   })
   const [submitted, setSubmitted]         = useState(false)
   const [holdToken, setHoldToken]         = useState(null)
@@ -91,7 +91,8 @@ function Booking() {
               name: p.label_name || '', phone: p.label_phone || '', email: p.label_email || '',
               service: p.label_service || '', date: p.label_date || '', time: p.label_time || '',
               notes: p.label_notes || '', placeholderNotes: p.placeholder_notes || '',
-              successHeading: p.success_heading || '', successBody: p.success_body || '', successButton: p.success_button || '',
+              labelWishes: p.label_wishes || '', placeholderWishes: p.placeholder_wishes || '', summaryWishes: p.summary_wishes || '',
+              successHeading: p.success_heading || '', successBody: p.success_body || '', successButton: p.success_button || '', successImage: p.success_image || null,
               errName: p.err_name_required || '', errPhone: p.err_phone_required || '', errEmail: p.err_email_required || '', errInvalidEmail: p.err_invalid_email || '',
               slots: p.label_slots || '', noSlots: p.label_no_slots || '',
               placeholderName: p.placeholder_name || '', placeholderPhone: p.placeholder_phone || '', placeholderEmail: p.placeholder_email || '',
@@ -258,16 +259,16 @@ function Booking() {
         </div>
       )}
 
-      <div className="booking-body">
+      <div className={`booking-body${submitted ? ' booking-body--done' : ''}`}>
         <div className="booking-content">
-          {step === 1 && <Step1Service data={data} update={update} next={next} back={back} buttons={stepButtons[1]} />}
+          {step === 1 && <Step1Service data={data} update={update} next={next} back={back} buttons={stepButtons[1]} labels={stepLabels[1]} />}
           {step === 2 && <Step2Date    data={data} update={update} next={nextFromStep2} back={back} releaseReady={releaseReady} heading={stepTitles[2]} buttons={stepButtons[2]} labels={stepLabels[2]} />}
           {step === 3 && <Step3Contact data={data} update={update} next={next} back={back} heading={stepTitles[3]} buttons={stepButtons[3]} labels={stepLabels[3]} />}
-          {step === 4 && <Step4Review  data={data} update={update} back={back} releaseHold={() => releaseHold(holdToken)} heading={stepTitles[4]} buttons={stepButtons[4]} labels={stepLabels[4]} submitError={messages.submitError} onSubmitted={() => setSubmitted(true)} />}
+          {step === 4 && <Step4Review  data={data} update={update} back={back} releaseHold={() => releaseHold(holdToken)} heading={stepTitles[4]} buttons={stepButtons[4]} labels={stepLabels[4]} submitError={messages.submitError} onSubmitted={() => setSubmitted(true)} wishesLabel={stepLabels[1]?.summaryWishes} />}
         </div>
 
         <div className={`booking-summary${step === 4 ? ' hidden' : ''}`}>
-          <p className="booking-summary-label">{summaryLabels.heading}</p>
+<p className="booking-summary-label">{summaryLabels.heading}</p>
           {data.service && (
             <>
               <div className="booking-summary-row">
@@ -297,6 +298,11 @@ function Booking() {
           {data.phone && (
             <div className="booking-summary-row">
               <span>{summaryLabels.phone}</span><span>{data.phone}</span>
+            </div>
+          )}
+          {data.wishes && (
+            <div className="booking-summary-row">
+              <span>{stepLabels[1]?.summaryWishes || 'Séróskir'}</span><span>{data.wishes}</span>
             </div>
           )}
         </div>

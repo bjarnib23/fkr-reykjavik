@@ -26,7 +26,7 @@
 
 /* Card stack */
 .process-cards {
-  padding: 48px 60px 80px;
+  padding: 48px 60px 0;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -105,29 +105,49 @@
 
 /* Closing */
 .process-closing {
-  padding: 80px 60px;
+  padding: 64px 60px;
   border-top: 1px solid #ddd9d2;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+  background: #faf8f5;
+}
+
+.process-closing-text {
+  display: flex;
   flex-direction: column;
-  gap: 28px;
-  max-width: 720px;
+  gap: 16px;
+  max-width: 560px;
+}
+
+.process-closing-heading {
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 700;
+  color: #263430;
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .process-closing p {
   font-size: 16px;
   line-height: 1.85;
   color: #4a5e58;
+  margin: 0;
 }
 
 .process-cta {
   display: inline-block;
-  align-self: flex-start;
+  flex-shrink: 0;
   font-size: 14px;
   letter-spacing: 0.08em;
   color: #f4eded;
   background: #263430;
-  padding: 12px 28px;
+  padding: 14px 32px;
   text-decoration: none;
+  white-space: nowrap;
   transition: background 0.2s;
 }
 
@@ -168,5 +188,7 @@
 
   .process-closing {
     padding: 48px 24px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

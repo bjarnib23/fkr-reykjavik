@@ -1,5 +1,7 @@
 .booking {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Stepper */
@@ -42,12 +44,24 @@
 .booking-body {
   display: grid;
   grid-template-columns: 1fr 360px;
-  min-height: calc(100vh - 57px - 57px);
+  flex: 1;
 }
 
 .booking-content {
   padding: 48px 60px;
   border-right: 1px solid #ddd9d2;
+}
+
+.booking-body--done {
+  display: flex;
+}
+
+.booking-body--done .booking-content {
+  flex: 1;
+  border-right: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .booking-content h2 {
@@ -61,7 +75,7 @@
 /* Summary panel */
 .booking-summary {
   padding: 48px 40px;
-  background: #fafafa;
+  background: #263430;
 }
 
 .booking-summary.hidden {
@@ -69,10 +83,10 @@
 }
 
 .booking-summary-label {
-  font-size: 17px;
+  font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #7a9490;
+  color: rgba(244, 237, 237, 0.45);
   margin-bottom: 24px;
 }
 
@@ -83,17 +97,19 @@
 }
 
 .booking-summary-row span:first-child {
-  font-size: 17px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #7a9490;
-  margin-bottom: 4px;
+  color: rgba(244, 237, 237, 0.45);
+  margin-bottom: 6px;
 }
 
 .booking-summary-row span:last-child {
-  font-size: 16px;
-  font-weight: 500;
-  color: #263430;
+  font-size: 22px;
+  font-weight: 600;
+  color: #f4eded;
+  line-height: 1.2;
+  white-space: pre-wrap;
 }
 
 .booking-summary-continue {
@@ -101,7 +117,6 @@
   color: #f0ece6;
   border: none;
   padding: 14px 28px;
-  font-family: 'Inter', system-ui, sans-serif;
   font-size: 15px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -124,7 +139,6 @@
   background: none;
   border: 1px solid #ddd9d2;
   padding: 12px 24px;
-  font-family: 'Inter', system-ui, sans-serif;
   font-size: 15px;
   letter-spacing: 0.12em;
   text-transform: uppercase;

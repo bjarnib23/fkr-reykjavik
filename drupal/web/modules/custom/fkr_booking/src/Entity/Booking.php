@@ -49,6 +49,9 @@ class Booking extends ContentEntityBase {
     $fields['notes'] = BaseFieldDefinition::create('string_long')
       ->setLabel(t('Notes'));
 
+    $fields['wishes'] = BaseFieldDefinition::create('string_long')
+      ->setLabel(t('Wishes'));
+
     $fields['booking_status'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Booking Status'))
       ->setDefaultValue('pending')
