@@ -4,7 +4,7 @@ import './Step4Review.css'
 
 const DRUPAL = import.meta.env.VITE_DRUPAL_URL
 
-function Step4Review({ data, update, back, releaseHold, heading, buttons, labels, submitError, onSubmitted }) {
+function Step4Review({ data, update, back, releaseHold, heading, buttons, labels, submitError, onSubmitted, wishesLabel }) {
   const [submitted, setSubmitted] = useState(false)
 
   function formatDate(dateStr) {
@@ -37,6 +37,9 @@ function Step4Review({ data, update, back, releaseHold, heading, buttons, labels
       <div className="review-done">
         <h2>{labels?.successHeading}</h2>
         <p>{successBody}</p>
+        {labels?.successImage && (
+          <img src={labels.successImage} alt="" className="review-done-img" />
+        )}
         {labels?.successButton && (
           <Link to="/" className="review-done-btn">{labels.successButton}</Link>
         )}
@@ -55,6 +58,7 @@ function Step4Review({ data, update, back, releaseHold, heading, buttons, labels
         <div className="review-row"><span>{labels?.name}</span><strong>{data.name}</strong></div>
         <div className="review-row"><span>{labels?.email}</span><strong>{data.email}</strong></div>
         <div className="review-row"><span>{labels?.phone}</span><strong>{data.phone}</strong></div>
+        {data.wishes && <div className="review-row"><span>{wishesLabel || 'Séróskir'}</span><strong>{data.wishes}</strong></div>}
       </div>
 
       <div className="review-notes-field">

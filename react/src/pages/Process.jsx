@@ -81,8 +81,11 @@ function Process() {
       </div>
 
       <div className="process-closing">
-        {page.body_text && <p>{stripHtml(page.body_text)}</p>}
-        <Link to="/boka-tima" className="process-cta">{page.cta_text || 'Bóka tíma'} →</Link>
+        <div className="process-closing-text">
+          {page.closing_heading && <h2 className="process-closing-heading">{page.closing_heading}</h2>}
+          {page.body_text && <p>{stripHtml(page.body_text)}</p>}
+        </div>
+        <Link to="/boka-tima" className="process-cta">Bóka tíma →</Link>
       </div>
     </main>
   )

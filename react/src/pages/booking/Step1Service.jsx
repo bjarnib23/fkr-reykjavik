@@ -3,7 +3,11 @@ import './Step1Service.css'
 
 const DRUPAL = import.meta.env.VITE_DRUPAL_URL
 
-function Step1Service({ data, update, next, back, buttons }) {
+function isWishesService(title) {
+  return title?.toLowerCase().includes('sérósk')
+}
+
+function Step1Service({ data, update, next, back, buttons, labels }) {
   const [services, setServices] = useState([])
   const [title, setTitle]       = useState('')
 
@@ -28,7 +32,7 @@ function Step1Service({ data, update, next, back, buttons }) {
           <button
             key={s.id}
             className={`service-card${data.service === s.title ? ' selected' : ''}`}
-            onClick={() => update({ service: s.title })}
+            onClick={() => update({ service: s.title, wishes: isWishesService(s.title) ? data.wishes : '' })}
           >
             <span className="service-card-name">{s.title}</span>
             {s.duration && <span className="service-card-meta">{s.duration}</span>}
@@ -36,6 +40,20 @@ function Step1Service({ data, update, next, back, buttons }) {
           </button>
         ))}
       </div>
+
+      {isWishesService(data.service) && (
+        <div className="service-wishes">
+          {labels?.labelWishes && <label className="service-wishes-label">{labels.labelWishes}</label>}
+          <textarea
+            className="service-wishes-input"
+            value={data.wishes}
+            onChange={e => update({ wishes: e.target.value })}
+            placeholder={labels?.placeholderWishes || ''}
+            rows={4}
+          />
+        </div>
+      )}
+
       <div className="step-buttons">
         <button onClick={back}>{buttons?.secondary}</button>
         <button onClick={next} disabled={!data.service}>{buttons?.primary}</button>

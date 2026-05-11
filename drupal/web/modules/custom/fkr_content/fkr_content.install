@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * Add field_company_name to site_settings content type.
+ */
+function fkr_content_update_8001(): void {
+  // Already applied — field storage and config created.
+}
+
+/**
+ * Add field_company_name to site_settings form display.
+ */
+function fkr_content_update_8002(): void {
+  $field_storage = \Drupal\field\Entity\FieldStorageConfig::loadByName('node', 'field_company_name');
+  if (!$field_storage) {
+    \Drupal\field\Entity\FieldStorageConfig::create([
+      'field_name'  => 'field_company_name',
+      'entity_type' => 'node',
+      'type'        => 'string',
+    ])->save();
+  }
+
+  $field = \Drupal\field\Entity\FieldConfig::loadByName('node', 'site_settings', 'field_company_name');
+  if (!$field) {
+    \Drupal\field\Entity\FieldConfig::create([
+      'field_name'  => 'field_company_name',
+      'entity_type' => 'node',
+      'bundle'      => 'site_settings',
+      'label'       => 'Nafn fyrirtækis',
+    ])->save();
+  }
+
+  $form_display = \Drupal\Core\Entity\Entity\EntityFormDisplay::load('node.site_settings.default');
+  if ($form_display && !$form_display->getComponent('field_company_name')) {
+    $form_display->setComponent('field_company_name', [
+      'type'   => 'string_textfield',
+      'weight' => 10,
+    ])->save();
+  }
+}
