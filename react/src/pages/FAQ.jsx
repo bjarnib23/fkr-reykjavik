@@ -11,16 +11,11 @@ function FAQ() {
   const [page, setPage]           = useState({})
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/faq`, { cache: 'no-store' })
+    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/page-data/faq`, { cache: 'no-store' })
       .then(r => r.json())
-      .then(data => {
-        setFaqs(data.items || [])
-      })
-
-    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pages`, { cache: 'no-store' })
-      .then(r => r.json())
-      .then(pages => {
-        const p = Object.values(pages).find(p => p.slug === 'faq')
+      .then(({ page, faq }) => {
+        setFaqs(faq.items || [])
+        const p = Object.values(page).find(p => p.slug === 'faq')
         if (p) setPage(p)
       })
   }, [])

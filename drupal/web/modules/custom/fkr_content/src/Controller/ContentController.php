@@ -480,6 +480,37 @@ class ContentController extends ControllerBase {
     ];
   }
 
+  public function layout(): JsonResponse {
+    return new JsonResponse([
+      'nav'      => json_decode($this->nav()->getContent(), TRUE),
+      'settings' => json_decode($this->settings()->getContent(), TRUE),
+    ], 200, $this->cors());
+  }
+
+  public function pageDataFaq(): JsonResponse {
+    $pages = json_decode($this->pages()->getContent(), TRUE);
+    $faq   = json_decode($this->faq()->getContent(), TRUE);
+    return new JsonResponse(['page' => $pages, 'faq' => $faq], 200, $this->cors());
+  }
+
+  public function pageDataPricelist(): JsonResponse {
+    $pages     = json_decode($this->pages()->getContent(), TRUE);
+    $pricelist = json_decode($this->pricelist()->getContent(), TRUE);
+    return new JsonResponse(['page' => $pages, 'pricelist' => $pricelist], 200, $this->cors());
+  }
+
+  public function pageDataProcess(): JsonResponse {
+    $pages = json_decode($this->pages()->getContent(), TRUE);
+    $steps = json_decode($this->processSteps()->getContent(), TRUE);
+    return new JsonResponse(['page' => $pages, 'steps' => $steps], 200, $this->cors());
+  }
+
+  public function pageDataBooking(): JsonResponse {
+    $pages    = json_decode($this->pages()->getContent(), TRUE);
+    $services = json_decode($this->services()->getContent(), TRUE);
+    return new JsonResponse(['page' => $pages, 'services' => $services], 200, $this->cors());
+  }
+
   private function getNavCards($node): array {
     if (!$node->hasField('field_home_nav_cards') || $node->get('field_home_nav_cards')->isEmpty()) {
       return [];

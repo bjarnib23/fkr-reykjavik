@@ -19,17 +19,12 @@ function PriceList() {
   const [open, setOpen]       = useState(null)
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pricelist`, { cache: 'no-store' })
+    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/page-data/pricelist`, { cache: 'no-store' })
       .then(r => r.json())
-      .then(data => {
-        setGrades(data.grades || [])
-        setRows(data.rows   || [])
-      })
-
-    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pages`, { cache: 'no-store' })
-      .then(r => r.json())
-      .then(pages => {
-        const p = Object.values(pages).find(p => p.slug === 'pricelist')
+      .then(({ page, pricelist }) => {
+        setGrades(pricelist.grades || [])
+        setRows(pricelist.rows   || [])
+        const p = Object.values(page).find(p => p.slug === 'pricelist')
         if (p) setPage(p)
       })
   }, [])

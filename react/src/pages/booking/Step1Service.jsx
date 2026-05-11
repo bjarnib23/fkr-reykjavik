@@ -8,14 +8,11 @@ function Step1Service({ data, update, next, back, buttons }) {
   const [title, setTitle]       = useState('')
 
   useEffect(() => {
-    fetch(`${DRUPAL}/api/fkr/services`, { cache: 'no-store' })
-      .then(res => res.json())
-      .then(setServices)
-
-    fetch(`${DRUPAL}/api/fkr/pages`, { cache: 'no-store' })
+    fetch(`${DRUPAL}/api/fkr/page-data/booking`, { cache: 'no-store' })
       .then(r => r.json())
-      .then(pages => {
-        const p = Object.values(pages).find(p => p.slug === 'booking_step1')
+      .then(({ page, services }) => {
+        setServices(services)
+        const p = Object.values(page).find(p => p.slug === 'booking_step1')
         if (p) setTitle(p.subtitle || p.title || '')
       })
   }, [])

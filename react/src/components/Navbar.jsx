@@ -12,15 +12,12 @@ function Navbar() {
   useEffect(() => { setMenuOpen(false) }, [location])
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/nav`, { cache: 'no-store' })
+    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/layout`, { cache: 'no-store' })
       .then(r => r.json())
-      .then(setLinks)
-
-    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/settings`, { cache: 'no-store' })
-      .then(r => r.json())
-      .then(data => {
-        if (data.navbar_logo) setLogo(data.navbar_logo)
-        if (data.navbar_cta_label) setCtaLabel(data.navbar_cta_label)
+      .then(({ nav, settings }) => {
+        setLinks(nav)
+        if (settings.navbar_logo) setLogo(settings.navbar_logo)
+        if (settings.navbar_cta_label) setCtaLabel(settings.navbar_cta_label)
       })
   }, [])
 
