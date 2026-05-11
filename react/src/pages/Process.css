@@ -1,3 +1,7 @@
+.process {
+  background: #f4eded;
+}
+
 /* Header */
 .process-header {
   padding: 80px 60px 64px;
@@ -158,28 +162,57 @@
 /* Mobile */
 @media (max-width: 768px) {
   .process-header {
-    padding: 48px 24px 40px;
+    padding: 40px 24px 32px;
+  }
+
+  .process-header h1 {
+    font-size: clamp(40px, 10vw, 64px);
   }
 
   .process-cards {
-    padding: 24px 16px 40px;
+    padding: 0;
+    background: #f4eded;
   }
 
   .process-card {
     position: relative;
+    top: 0 !important;
     grid-template-columns: 1fr;
+    height: auto;
     min-height: auto;
-    margin-bottom: 16px;
+    margin-bottom: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 1px solid #ddd9d2;
     transform: none !important;
   }
 
   .process-card-left {
-    padding: 28px 24px;
-    min-height: 260px;
+    padding: 32px 24px 24px;
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .process-card-num {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .process-card-text h2 {
+    font-size: clamp(24px, 7vw, 36px);
+  }
+
+  .process-card-text p {
+    font-size: 16px;
+    max-width: none;
   }
 
   .process-card-img {
-    height: 260px;
+    height: 340px;
+    position: relative;
+    margin: 0 24px 24px;
   }
 
   .process-card-img img {
@@ -190,5 +223,10 @@
     padding: 48px 24px;
     flex-direction: column;
     align-items: flex-start;
+    gap: 24px;
+  }
+
+  .process-closing-heading {
+    font-size: clamp(24px, 7vw, 36px);
   }
 }
