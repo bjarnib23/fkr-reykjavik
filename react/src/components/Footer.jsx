@@ -10,13 +10,12 @@ function Footer() {
   const [nav, setNav] = useState([])
 
   useEffect(() => {
-    fetch(`${API}/api/fkr/settings`, { cache: 'no-store' })
+    fetch(`${API}/api/fkr/layout`, { cache: 'no-store' })
       .then(r => r.json())
-      .then(setS)
-
-    fetch(`${API}/api/fkr/nav`, { cache: 'no-store' })
-      .then(r => r.json())
-      .then(setNav)
+      .then(({ nav, settings }) => {
+        setS(settings)
+        setNav(nav)
+      })
   }, [])
 
   return (

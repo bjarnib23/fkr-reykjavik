@@ -76,9 +76,9 @@ function Booking() {
   }, [])
 
   useEffect(() => {
-    fetch(`${DRUPAL}/api/fkr/pages`, { cache: 'no-store' })
+    fetch(`${DRUPAL}/api/fkr/page-data/booking`, { cache: 'no-store' })
       .then(r => r.json())
-      .then(pages => {
+      .then(({ page: pages, services: _s }) => {
         const t = {}
         const b = {}
         const l = {}
@@ -103,9 +103,9 @@ function Booking() {
         setButtons(b)
         setLabels(l)
       })
-    fetch(`${DRUPAL}/api/fkr/settings`, { cache: 'no-store' })
+    fetch(`${DRUPAL}/api/fkr/layout`, { cache: 'no-store' })
       .then(r => r.json())
-      .then(s => {
+      .then(({ settings: s }) => {
         setStudio(s.address || '')
         setSummary({
           heading:  s.summary_heading  || '',

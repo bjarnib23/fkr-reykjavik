@@ -12,16 +12,13 @@ function Process() {
   const cardRefs = useRef([])
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pages`, { cache: 'no-store' })
+    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/page-data/process`, { cache: 'no-store' })
       .then(r => r.json())
-      .then(pages => {
-        const p = Object.values(pages).find(p => p.slug === 'process')
+      .then(({ page, steps }) => {
+        const p = Object.values(page).find(p => p.slug === 'process')
         if (p) setPage(p)
+        setSteps(steps)
       })
-
-    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/process-steps`, { cache: 'no-store' })
-      .then(r => r.json())
-      .then(setSteps)
   }, [])
 
   const images = page.images || []
