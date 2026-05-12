@@ -212,7 +212,11 @@ class BookingController extends ControllerBase {
         $booking->get('email')->value,
         $formatted_date,
         $booking->get('service')->value,
-        Link::fromTextAndUrl('View', Url::fromRoute('fkr_booking.booking_details', ['fkr_booking' => $booking->id()]))->toString(),
+        Markup::create(
+          Link::fromTextAndUrl('View', Url::fromRoute('fkr_booking.booking_details', ['fkr_booking' => $booking->id()]))->toString() .
+          ' | ' .
+          Link::fromTextAndUrl('Delete', Url::fromRoute('fkr_booking.booking_delete', ['fkr_booking' => $booking->id()]))->toString()
+        ),
       ];
     }
 
@@ -224,6 +228,22 @@ class BookingController extends ControllerBase {
         '#empty'  => 'No bookings yet.',
       ],
     ];
+  }
+
+  public function bookingDeleteConfirm(Booking $fkr_booking): array {
+    return [
+      '#markup' => Markup::create(
+        '<p>Are you sure you want to delete the booking for <strong>' . htmlspecialchars($fkr_booking->get('name')->value) . '</strong> on ' . htmlspecialchars($fkr_booking->get('date')->value) . '?</p>' .
+        '<a href="/admin/fkr/bookings/' . $fkr_booking->id() . '/delete/confirm" class="button button--danger">Yes, delete</a> ' .
+        '<a href="/admin/fkr/bookings" class="button">Cancel</a>'
+      ),
+    ];
+  }
+
+  public function bookingDelete(Booking $fkr_booking): \Symfony\Component\HttpFoundation\RedirectResponse {
+    $fkr_booking->delete();
+    $this->messenger()->addStatus($this->t('Booking deleted.'));
+    return new \Symfony\Component\HttpFoundation\RedirectResponse('/admin/fkr/bookings');
   }
 
   public function bookingDetails(Booking $fkr_booking): array {

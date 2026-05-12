@@ -33,6 +33,24 @@ fkr_booking.booking_details:
     _permission: 'access administration pages'
     fkr_booking: \d+
 
+fkr_booking.booking_delete:
+  path: '/admin/fkr/bookings/{fkr_booking}/delete'
+  defaults:
+    _controller: '\Drupal\fkr_booking\Controller\BookingController::bookingDeleteConfirm'
+    _title: 'Delete Booking'
+  requirements:
+    _permission: 'access administration pages'
+    fkr_booking: \d+
+
+fkr_booking.booking_delete_confirm:
+  path: '/admin/fkr/bookings/{fkr_booking}/delete/confirm'
+  defaults:
+    _controller: '\Drupal\fkr_booking\Controller\BookingController::bookingDelete'
+    _title: 'Delete Booking'
+  requirements:
+    _permission: 'access administration pages'
+    fkr_booking: \d+
+
 fkr_booking.availability_api:
   path: '/api/fkr/availability'
   defaults:
