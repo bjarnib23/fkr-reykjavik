@@ -141,7 +141,7 @@ function GiftCard() {
                     type="tel"
                     autoComplete="tel"
                     value={form.phone}
-                    onChange={e => update('phone', e.target.value)}
+                    onChange={e => update('phone', e.target.value.replace(/[^\d\s\-+()]/g, ''))}
                     className={errors.phone ? 'has-error' : ''}
                   />
                   {errors.phone && <span className="gc-error">{errors.phone}</span>}
