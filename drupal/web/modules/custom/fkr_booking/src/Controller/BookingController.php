@@ -5,6 +5,7 @@ namespace Drupal\fkr_booking\Controller;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Flood\FloodInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Mail\MailManagerInterface;
@@ -19,17 +20,20 @@ class BookingController extends ControllerBase {
 
   protected MailManagerInterface $mailManager;
   protected LockBackendInterface $lock;
+  protected FloodInterface $flood;
 
   public function __construct(
     MailManagerInterface $mail_manager,
     EntityTypeManagerInterface $entity_type_manager,
     ConfigFactoryInterface $config_factory,
     LockBackendInterface $lock,
+    FloodInterface $flood,
   ) {
     $this->mailManager = $mail_manager;
     $this->entityTypeManager = $entity_type_manager;
     $this->configFactory = $config_factory;
     $this->lock = $lock;
+    $this->flood = $flood;
   }
 
   public static function create(ContainerInterface $container): static {
@@ -38,6 +42,7 @@ class BookingController extends ControllerBase {
       $container->get('entity_type.manager'),
       $container->get('config.factory'),
       $container->get('lock'),
+      $container->get('flood'),
     );
   }
 
@@ -110,6 +115,14 @@ class BookingController extends ControllerBase {
   public function submit(Request $request): JsonResponse {
     if ($request->getMethod() === 'OPTIONS') {
       return new JsonResponse([], 200, $this->corsHeaders());
+    }
+
+    if (!$this->flood->isAllowed('fkr_booking_submit', 10, 3600, $request->getClientIp())) {
+      return new JsonResponse(
+        ['error' => 'Too many booking attempts. Please try again later.'],
+        429,
+        $this->corsHeaders()
+      );
     }
 
     $data = json_decode($request->getContent(), TRUE);
@@ -197,6 +210,8 @@ class BookingController extends ControllerBase {
         'wishes'           => $data['wishes'] ?? '',
       ],
     );
+
+    $this->flood->register('fkr_booking_submit', 3600, $request->getClientIp());
 
     return new JsonResponse(
       ['message' => 'Booking received successfully.'],
