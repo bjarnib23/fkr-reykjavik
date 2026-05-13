@@ -95,7 +95,7 @@ function PriceList() {
       </div>
 
       <div className="pl-cta-band">
-        {page.cta_text && <Link to="/boka-tima" className="pl-cta">{page.cta_text} →</Link>}
+        {page.cta_text && <Link to="/boka-tima" className="pl-cta">{page.cta_text}</Link>}
       </div>
     </main>
   )

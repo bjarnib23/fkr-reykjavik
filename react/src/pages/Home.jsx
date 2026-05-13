@@ -45,7 +45,7 @@ function Home() {
             {page.body_text && <p className="home-hero-body">{stripHtml(page.body_text)}</p>}
             <h1>{page.title || ''}</h1>
             {page.cta_text && (
-              <Link to="/boka-tima" className="home-cta">{page.cta_text} →</Link>
+              <Link to="/boka-tima" className="home-cta">{page.cta_text}</Link>
             )}
           </div>
         </div>
@@ -71,7 +71,7 @@ function Home() {
           <h1>{page.title || ''}</h1>
           {page.body_text && <p className="home-hero-body">{stripHtml(page.body_text)}</p>}
           {page.cta_text && (
-            <Link to="/boka-tima" className="home-cta">{page.cta_text} →</Link>
+            <Link to="/boka-tima" className="home-cta">{page.cta_text}</Link>
           )}
         </div>
         <div className="home-slide-dots">

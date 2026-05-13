@@ -143,7 +143,8 @@
 }
 
 .process-cta {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   flex-shrink: 0;
   font-size: 14px;
   letter-spacing: 0.08em;
@@ -155,8 +156,23 @@
   transition: background 0.2s;
 }
 
-.process-cta:hover {
-  background: #1a2826;
+.process-cta::after {
+  content: '→';
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin-left: 0;
+  white-space: nowrap;
+  transition: max-width 0.25s ease, opacity 0.2s ease, margin-left 0.25s ease;
+}
+
+.process-cta:hover { background: #1a2826; }
+
+.process-cta:hover::after {
+  max-width: 20px;
+  opacity: 1;
+  margin-left: 10px;
 }
 
 /* Mobile */
