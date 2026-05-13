@@ -146,19 +146,30 @@ class BookingController extends ControllerBase {
       );
     }
 
-    $booking = $this->entityTypeManager->getStorage('fkr_booking')->create([
-      'name'           => $data['name'],
-      'email'          => $data['email'],
-      'phone'          => $data['phone'] ?? '',
-      'date'           => $data['date'],
-      'service'        => $data['service'] ?? '',
-      'notes'          => $data['notes'] ?? '',
-      'wishes'         => $data['wishes'] ?? '',
-      'booking_status' => 'pending',
-    ]);
-    $booking->save();
-
-    $this->lock->release($lock_key);
+    try {
+      $booking = $this->entityTypeManager->getStorage('fkr_booking')->create([
+        'name'           => $data['name'],
+        'email'          => $data['email'],
+        'phone'          => $data['phone'] ?? '',
+        'date'           => $data['date'],
+        'service'        => $data['service'] ?? '',
+        'notes'          => $data['notes'] ?? '',
+        'wishes'         => $data['wishes'] ?? '',
+        'booking_status' => 'pending',
+      ]);
+      $booking->save();
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('fkr_booking')->error('Booking save failed: @msg', ['@msg' => $e->getMessage()]);
+      return new JsonResponse(
+        ['error' => 'Could not save your booking. Please try again.'],
+        500,
+        $this->corsHeaders()
+      );
+    }
+    finally {
+      $this->lock->release($lock_key);
+    }
 
     $langcode    = $this->configFactory->get('system.site')->get('langcode');
     $admin_email = $this->configFactory->get('system.site')->get('mail');
