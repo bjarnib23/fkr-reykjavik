@@ -269,7 +269,7 @@ class ContentController extends ControllerBase {
 
   public function nav(): JsonResponse {
     $nids = $this->entityTypeManager->getStorage('node')->getQuery()
-      ->condition('type', ['basic_page', 'booking_page', 'giftcard_page', 'pricelist_page', 'faq_page'], 'IN')
+      ->condition('type', ['basic_page', 'booking_page', 'giftcard_page', 'pricelist_page', 'faq_page', 'lookbook_page'], 'IN')
       ->condition('status', 1)
       ->exists('field_nav_weight')
       ->sort('field_nav_weight', 'ASC')
@@ -319,6 +319,33 @@ class ContentController extends ControllerBase {
     }
 
     return new JsonResponse($items, 200, $this->cors());
+  }
+
+  public function lookbook(): JsonResponse {
+    $nodes = $this->entityTypeManager->getStorage('node')->loadByProperties([
+      'type'   => 'lookbook_page',
+      'status' => 1,
+    ]);
+
+    if (empty($nodes)) {
+      return new JsonResponse([], 200, $this->cors());
+    }
+
+    $node  = reset($nodes);
+    $images = [];
+
+    $style = \Drupal\image\Entity\ImageStyle::load('lookbook');
+    foreach ($node->get('field_lookbook_images') as $item) {
+      $file = $item->get('entity')->getTarget()?->getValue();
+      if ($file) {
+        $uri = $file->getFileUri();
+        $images[] = $style
+          ? $style->buildUrl($uri)
+          : \Drupal::service('file_url_generator')->generateAbsoluteString($uri);
+      }
+    }
+
+    return new JsonResponse($images, 200, $this->cors());
   }
 
   public function services(): JsonResponse {
