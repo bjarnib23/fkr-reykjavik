@@ -167,13 +167,34 @@
 }
 
 .pl-cta {
-  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
   letter-spacing: 0.08em;
-  color: #263430;
+  color: #f4eded;
+  background: #263430;
+  padding: 12px 28px;
+  text-decoration: none;
+  transition: background 0.2s;
 }
 
-.pl-cta:hover {
-  opacity: 0.5;
+.pl-cta::after {
+  content: '→';
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin-left: 0;
+  white-space: nowrap;
+  transition: max-width 0.25s ease, opacity 0.2s ease, margin-left 0.25s ease;
+}
+
+.pl-cta:hover { background: #1a2826; }
+
+.pl-cta:hover::after {
+  max-width: 20px;
+  opacity: 1;
+  margin-left: 10px;
 }
 
 @media (max-width: 768px) {

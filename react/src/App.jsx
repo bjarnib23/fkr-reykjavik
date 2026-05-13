@@ -10,6 +10,7 @@ import GiftCard from './pages/GiftCard'
 import GiftCardThankYou from './pages/GiftCardThankYou'
 import GiftCardCancel from './pages/GiftCardCancel'
 import Process from './pages/Process'
+import Lookbook from './pages/Lookbook'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -27,6 +28,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/boka-tima" element={<Booking />} />
           <Route path="/ferlid" element={<Process />} />
+          <Route path="/myndasafn" element={<Lookbook />} />
           <Route path="/algengar-spurningar" element={<FAQ />} />
           <Route path="/gjafabref" element={<GiftCard />} />
           <Route path="/verdskra" element={<PriceList />} />

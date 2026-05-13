@@ -133,3 +133,11 @@ fkr_content.page_data_booking:
   methods: [GET]
   requirements:
     _access: 'TRUE'
+
+fkr_content.lookbook:
+  path: '/api/fkr/lookbook'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::lookbook'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'

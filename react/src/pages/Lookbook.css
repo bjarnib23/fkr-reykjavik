@@ -1,0 +1,34 @@
+.lookbook {
+  background: #f4eded;
+}
+
+.lookbook-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 4px;
+}
+
+.lookbook-item {
+  overflow: hidden;
+}
+
+.lookbook-item img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .lookbook-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .lookbook-grid {
+    grid-template-columns: 1fr;
+  }
+}
