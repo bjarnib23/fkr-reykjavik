@@ -220,12 +220,22 @@ class BookingController extends ControllerBase {
     );
   }
 
-  public function adminList(): array {
-    $ids = $this->entityTypeManager->getStorage('fkr_booking')->getQuery()
-      ->sort('date', 'ASC')
-      ->accessCheck(FALSE)
-      ->execute();
+  public function adminList(Request $request): array {
+    $search_name  = $request->query->get('name', '');
+    $search_email = $request->query->get('email', '');
 
+    $query = $this->entityTypeManager->getStorage('fkr_booking')->getQuery()
+      ->sort('date', 'ASC')
+      ->accessCheck(FALSE);
+
+    if ($search_name) {
+      $query->condition('name', '%' . $search_name . '%', 'LIKE');
+    }
+    if ($search_email) {
+      $query->condition('email', '%' . $search_email . '%', 'LIKE');
+    }
+
+    $ids      = $query->execute();
     $bookings = $this->entityTypeManager->getStorage('fkr_booking')->loadMultiple($ids);
     $rows     = [];
 
@@ -246,8 +256,18 @@ class BookingController extends ControllerBase {
       ];
     }
 
+    $search_form = Markup::create(
+      '<form method="get" action="/admin/fkr/bookings" style="margin-bottom:1em;display:flex;gap:.5em;align-items:center">' .
+      '<input type="text" name="name" value="' . htmlspecialchars($search_name) . '" placeholder="Search by name" style="padding:.3em"/>' .
+      '<input type="text" name="email" value="' . htmlspecialchars($search_email) . '" placeholder="Search by email" style="padding:.3em"/>' .
+      '<button type="submit" class="button">Search</button>' .
+      (($search_name || $search_email) ? ' <a href="/admin/fkr/bookings" class="button">Clear</a>' : '') .
+      '</form>'
+    );
+
     return [
-      'table' => [
+      'search' => ['#markup' => $search_form],
+      'table'  => [
         '#type'   => 'table',
         '#header' => ['Name', 'Email', 'Date', 'Item', 'View'],
         '#rows'   => $rows,
