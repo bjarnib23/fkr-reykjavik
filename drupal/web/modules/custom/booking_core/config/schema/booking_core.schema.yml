@@ -1,0 +1,59 @@
+booking_core.settings:
+  type: config_object
+  label: 'Booking Core settings'
+  mapping:
+    admin_email:
+      type: email
+      label: 'Admin notification email'
+    services:
+      type: sequence
+      label: 'Services'
+      sequence:
+        type: string
+        label: 'Service'
+    open_days:
+      type: sequence
+      label: 'Open days'
+      sequence:
+        type: integer
+        label: 'Day'
+    open_time:
+      type: string
+      label: 'Opening time'
+    close_time:
+      type: string
+      label: 'Closing time'
+    slot_duration:
+      type: integer
+      label: 'Slot duration in minutes'
+    weeks_ahead:
+      type: integer
+      label: 'Weeks ahead'
+    flood_limit:
+      type: integer
+      label: 'Flood limit (max booking attempts per window)'
+    flood_window:
+      type: integer
+      label: 'Flood window in seconds'
+    blocked_periods:
+      type: sequence
+      label: 'Blocked dates and periods'
+      sequence:
+        type: mapping
+        label: 'Blocked period'
+        mapping:
+          date:
+            type: string
+            label: 'Date (YYYY-MM-DD)'
+          all_day:
+            type: boolean
+            label: 'Block entire day'
+          start_time:
+            type: string
+            label: 'Start time (HH:MM)'
+          end_time:
+            type: string
+            label: 'End time (HH:MM)'
+          reason:
+            type: string
+            label: 'Reason'

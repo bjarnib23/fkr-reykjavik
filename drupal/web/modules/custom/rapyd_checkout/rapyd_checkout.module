@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Rapyd Hosted Checkout payment gateway for Drupal Commerce.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_help().
+ */
+function rapyd_checkout_help(string $route_name, RouteMatchInterface $route_match): string {
+  if ($route_name !== 'help.page.rapyd_checkout') {
+    return '';
+  }
+  $url = Url::fromRoute('entity.commerce_payment_gateway.collection')
+    ->toString();
+  return '<p>' . t('Provides a Rapyd Hosted Checkout payment gateway for Drupal Commerce. API credentials are stored securely via the Key module. <a href=":url">Configure payment gateways.</a>', [':url' => $url]) . '</p>';
+}

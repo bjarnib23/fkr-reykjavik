@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the Rapyd Checkout module.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function rapyd_checkout_requirements(string $phase): array {
+  if ($phase !== 'runtime') {
+    return [];
+  }
+
+  $requirements = [];
+
+  // Warn when a saved Rapyd gateway is missing currency or country.
+  $storage = \Drupal::entityTypeManager()->getStorage('commerce_payment_gateway');
+  foreach ($storage->loadMultiple() as $gateway) {
+    /** @var \Drupal\commerce_payment\Entity\PaymentGateway $gateway */
+    if ($gateway->get('plugin') !== 'rapyd_checkout') {
+      continue;
+    }
+    $config = $gateway->get('configuration') ?? [];
+    if (empty($config['currency']) || empty($config['country'])) {
+      $gw_url = \Drupal\Core\Url::fromRoute(
+        'entity.commerce_payment_gateway.collection'
+      )->toString();
+      $requirements['rapyd_checkout_' . $gateway->id()] = [
+        'title' => t('Rapyd Checkout gateway "@label"', ['@label' => $gateway->label()]),
+        'description' => t('The gateway is missing a currency or country code. Visit the <a href=":url">payment gateways page</a> to fix it.', [':url' => $gw_url]),
+        'severity' => REQUIREMENT_WARNING,
+      ];
+    }
+  }
+
+  return $requirements;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function rapyd_checkout_uninstall(): void {
+  // Commerce owns the commerce_payment_gateway config entities; they are
+  // removed by Commerce when the plugin is unavailable.  Nothing module-owned
+  // needs cleaning up here, but this hook exists as the right place for any
+  // future per-site state (key-value entries, custom tables, etc.).
+}
+
+/**
+ * Ensure currency and country keys exist on all saved Rapyd Checkout gateways.
+ */
+function rapyd_checkout_update_10001(): void {
+  $storage = \Drupal::entityTypeManager()->getStorage('commerce_payment_gateway');
+  foreach ($storage->loadMultiple() as $gateway) {
+    /** @var \Drupal\commerce_payment\Entity\PaymentGateway $gateway */
+    if ($gateway->get('plugin') !== 'rapyd_checkout') {
+      continue;
+    }
+    $config = $gateway->get('configuration') ?? [];
+    $changed = FALSE;
+    foreach (['currency' => '', 'country' => ''] as $key => $default) {
+      if (!array_key_exists($key, $config)) {
+        $config[$key] = $default;
+        $changed = TRUE;
+      }
+    }
+    if ($changed) {
+      $gateway->set('configuration', $config);
+      $gateway->save();
+    }
+  }
+}

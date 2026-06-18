@@ -1,0 +1,23 @@
+entity.gift_card.canonical:
+  route_name: entity.gift_card.canonical
+  base_route: entity.gift_card.canonical
+  title: 'View'
+  weight: 0
+
+entity.gift_card.edit_form:
+  route_name: entity.gift_card.edit_form
+  base_route: entity.gift_card.canonical
+  title: 'Edit'
+  weight: 5
+
+entity.gift_card.delete_form:
+  route_name: entity.gift_card.delete_form
+  base_route: entity.gift_card.canonical
+  title: 'Delete'
+  weight: 10
+
+giftcard_core.admin_list.tab:
+  route_name: entity.gift_card.collection
+  base_route: entity.gift_card.collection
+  title: 'List'
+  weight: 0

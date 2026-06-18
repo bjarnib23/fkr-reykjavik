@@ -1,0 +1,16 @@
+commerce_payment.commerce_payment_gateway.plugin.rapyd_checkout:
+  type: commerce_payment_gateway_configuration
+  label: 'Rapyd Checkout configuration'
+  mapping:
+    access_key_id:
+      type: string
+      label: 'Access key (Key module entity ID)'
+    secret_key_id:
+      type: string
+      label: 'Secret key (Key module entity ID)'
+    currency:
+      type: string
+      label: 'ISO 4217 currency code'
+    country:
+      type: string
+      label: 'ISO 3166-1 alpha-2 country code'

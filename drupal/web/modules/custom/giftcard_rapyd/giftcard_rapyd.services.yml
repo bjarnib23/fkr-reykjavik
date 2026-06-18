@@ -1,0 +1,10 @@
+services:
+  giftcard_core.payment_client:
+    class: Drupal\giftcard_rapyd\RapydClient
+    arguments:
+      - '@http_client'
+      - '@key.repository'
+      - '@config.factory'
+      - '@logger.factory'
+      - '@language_manager'
+      - '@keyvalue.expirable'

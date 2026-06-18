@@ -1,0 +1,6 @@
+giftcard_rapyd.settings:
+  title: 'Rapyd API Settings'
+  description: 'Configure Rapyd payment gateway credentials.'
+  route_name: giftcard_rapyd.settings
+  parent: giftcard_core.settings
+  weight: 10

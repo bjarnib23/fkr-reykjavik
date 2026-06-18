@@ -1,0 +1,9 @@
+administer booking:
+  title: 'Administer booking'
+  description: 'Configure booking settings and fully manage all bookings.'
+  restrict access: true
+
+manage booking:
+  title: 'Manage booking'
+  description: 'View the booking calendar and list, and delete individual bookings.'
+  restrict access: true

@@ -1,0 +1,7 @@
+giftcard_rapyd.settings:
+  path: '/admin/config/giftcard-core/rapyd-settings'
+  defaults:
+    _form: '\Drupal\giftcard_rapyd\Form\GiftCardRapydSettingsForm'
+    _title: 'Rapyd API Settings'
+  requirements:
+    _permission: 'administer gift cards'

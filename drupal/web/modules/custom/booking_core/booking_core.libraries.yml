@@ -1,0 +1,8 @@
+booking_calendar:
+  js:
+    js/fullcalendar.min.js:
+      minified: true
+    js/booking_calendar.js: {}
+  dependencies:
+    - core/drupalSettings
+    - core/once
