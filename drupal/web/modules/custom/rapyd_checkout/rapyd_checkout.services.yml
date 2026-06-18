@@ -1,0 +1,4 @@
+services:
+  logger.channel.rapyd_checkout:
+    parent: logger.channel_base
+    arguments: ['rapyd_checkout']

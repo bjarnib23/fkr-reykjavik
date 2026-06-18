@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a Booking entity.
+ *
+ * Available variables:
+ * - booking: The Booking entity object.
+ * - content: Rendered field items. Print all with {{ content }}, or individual
+ *   fields like {{ content.name }}, {{ content.date }}, {{ content.service }}.
+ * - attributes: HTML attributes for the wrapper element.
+ * - view_mode: Current view mode (e.g. 'full').
+ *
+ * @see template_preprocess_booking()
+ *
+ * @ingroup themeable
+ */
+#}
+<article{{ attributes }}>
+  {{ content }}
+</article>

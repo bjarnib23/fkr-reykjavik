@@ -1,0 +1,12 @@
+services:
+  booking_core.slot_service:
+    class: Drupal\booking_core\BookingSlotService
+    arguments:
+      - '@config.factory'
+      - '@entity_type.manager'
+
+  booking_core.hold_service:
+    class: Drupal\booking_core\BookingHoldService
+    arguments:
+      - '@database'
+      - '@config.factory'

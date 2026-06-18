@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * @file
+ * Hooks and procedural code for the Gift Card Core module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function giftcard_core_help(string $route_name, RouteMatchInterface $route_match): string {
+  if ($route_name === 'help.page.giftcard_core') {
+    return '<p>' . t(
+      'Gift Card Core provides a standalone gift card purchase flow with a
+      configurable payment-gateway interface. Install a gateway sub-module
+      (e.g. <em>giftcard_rapyd</em>) to activate checkout. See the
+      <a href=":readme">README</a> for full setup instructions.',
+      [':readme' => 'https://www.drupal.org/project/giftcard_core']
+    ) . '</p>';
+  }
+  return '';
+}
+
+/**
+ * Implements hook_mail().
+ */
+function giftcard_core_mail(string $key, array &$message, array $params): void {
+  $company  = \Drupal::config('system.site')->get('name');
+
+  /** @var \Drupal\giftcard_core\GiftCardInterface $giftCard */
+  $giftCard = $params['gift_card'];
+
+  switch ($key) {
+    case 'gift_card_sender':
+      $message['subject'] = t('Your gift card purchase is confirmed — @code', [
+        '@code' => $giftCard->getCode(),
+      ]);
+      $message['body'][] = t('Hi @name,', ['@name' => $giftCard->getSenderName()]);
+      $message['body'][] = t('Your gift card has been sent successfully.');
+      $message['body'][] = t('Gift card code: @code', ['@code' => $giftCard->getCode()]);
+      $message['body'][] = t('Recipient: @name (@email)', [
+        '@name'  => $giftCard->getRecipientName(),
+        '@email' => $giftCard->getRecipientEmail(),
+      ]);
+      $message['body'][] = t('Amount: @amount @currency', [
+        '@amount'   => $giftCard->getAmount(),
+        '@currency' => $giftCard->getCurrency(),
+      ]);
+      $message['body'][] = t('Thank you,') . "\n" . $company;
+      break;
+
+    case 'gift_card_recipient':
+      $message['subject'] = t('You received a gift card from @sender!', [
+        '@sender' => $giftCard->getSenderName(),
+      ]);
+      $message['body'][] = t('Hi @name,', ['@name' => $giftCard->getRecipientName()]);
+      $message['body'][] = t('@sender has sent you a gift card!', [
+        '@sender' => $giftCard->getSenderName(),
+      ]);
+      $message['body'][] = t('Gift card code: @code', ['@code' => $giftCard->getCode()]);
+      $message['body'][] = t('Value: @amount @currency', [
+        '@amount'   => $giftCard->getAmount(),
+        '@currency' => $giftCard->getCurrency(),
+      ]);
+      if ($giftCard->getMessage() !== '') {
+        $message['body'][] = t('Message from @sender:', ['@sender' => $giftCard->getSenderName()]);
+        $message['body'][] = $giftCard->getMessage();
+      }
+      $message['body'][] = t('Thank you,') . "\n" . $company;
+      break;
+  }
+}

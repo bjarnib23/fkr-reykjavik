@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {}
+id: booking
+label: 'Booking date'
+locked: false
+pattern: 'l j F Y \a\t H:i'

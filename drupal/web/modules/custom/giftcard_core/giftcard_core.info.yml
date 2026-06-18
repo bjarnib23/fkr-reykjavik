@@ -1,0 +1,8 @@
+name: Gift Card Core
+description: Standalone gift card purchase and management module for Drupal.
+type: module
+core_version_requirement: ^10 || ^11
+package: Gift Cards
+configure: giftcard_core.settings
+dependencies:
+  - drupal:user

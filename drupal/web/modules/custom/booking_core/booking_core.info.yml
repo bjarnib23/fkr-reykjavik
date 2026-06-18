@@ -1,0 +1,8 @@
+name: Booking Core
+type: module
+description: "Appointment booking with a custom entity, admin management, and email notifications."
+package: Custom
+core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:user
+  - drupal:datetime

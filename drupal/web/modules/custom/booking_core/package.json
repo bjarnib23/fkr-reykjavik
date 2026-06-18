@@ -1,0 +1,7 @@
+{
+  "name": "booking_core",
+  "description": "JS dependency manifest for booking_core. Run `npm install` then copy dist files to js/ and css/.",
+  "dependencies": {
+    "fullcalendar": "6.1.11"
+  }
+}

@@ -1,0 +1,70 @@
+booking_core.book:
+  path: '/book-appointment'
+  defaults:
+    _form: '\Drupal\booking_core\Form\BookingForm'
+    _title: 'Book an Appointment'
+  requirements:
+    _access: 'TRUE'
+
+booking_core.thank_you:
+  path: '/book-appointment/thank-you'
+  defaults:
+    _controller: '\Drupal\booking_core\Controller\BookingController::thankYou'
+    _title: 'Booking Confirmed'
+  requirements:
+    _access: 'TRUE'
+
+booking_core.calendar:
+  path: '/admin/bookings/calendar'
+  defaults:
+    _controller: '\Drupal\booking_core\Controller\BookingCalendarController::page'
+    _title: 'Bookings Calendar'
+  requirements:
+    _permission: 'manage booking'
+
+booking_core.calendar_feed:
+  path: '/admin/bookings/calendar/feed'
+  defaults:
+    _controller: '\Drupal\booking_core\Controller\BookingCalendarController::feed'
+  requirements:
+    _permission: 'manage booking'
+
+booking_core.settings:
+  path: '/admin/config/booking-core/settings'
+  defaults:
+    _form: '\Drupal\booking_core\Form\BookingSettingsForm'
+    _title: 'Booking Settings'
+  requirements:
+    _permission: 'administer booking'
+
+booking_core.api_availability:
+  path: '/api/fkr/availability'
+  defaults:
+    _controller: '\Drupal\booking_core\Controller\ApiAvailabilityController::availability'
+  methods: [GET, OPTIONS]
+  requirements:
+    _access: 'TRUE'
+
+booking_core.api_booking_submit:
+  path: '/api/fkr/booking'
+  defaults:
+    _controller: '\Drupal\booking_core\Controller\ApiBookingController::submit'
+  methods: [POST, OPTIONS]
+  requirements:
+    _access: 'TRUE'
+
+booking_core.api_booking_hold:
+  path: '/api/fkr/booking/hold'
+  defaults:
+    _controller: '\Drupal\booking_core\Controller\ApiBookingController::hold'
+  methods: [POST, DELETE, OPTIONS]
+  requirements:
+    _access: 'TRUE'
+
+booking_core.api_booking_hold_release:
+  path: '/api/fkr/booking/hold-release'
+  defaults:
+    _controller: '\Drupal\booking_core\Controller\ApiBookingController::holdRelease'
+  methods: [POST, OPTIONS]
+  requirements:
+    _access: 'TRUE'

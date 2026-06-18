@@ -1,0 +1,15 @@
+admin_email: ''
+services: []
+open_days:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+open_time: '09:00'
+close_time: '17:00'
+slot_duration: 30
+weeks_ahead: 4
+flood_limit: 5
+flood_window: 3600
+blocked_periods: []

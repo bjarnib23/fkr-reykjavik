@@ -1,0 +1,117 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the Booking Core module.
+ */
+
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+
+/**
+ * Implements hook_uninstall().
+ */
+function booking_core_uninstall(): void {
+  \Drupal::configFactory()->getEditable('booking_core.settings')->delete();
+}
+
+/**
+ * Add the 'service' base field to existing booking entities.
+ */
+function booking_core_update_10001(): void {
+  $field_definition = BaseFieldDefinition::create('string')
+    ->setLabel(new TranslatableMarkup('Service'))
+    ->setSetting('max_length', 255)
+    ->setDisplayOptions('view', ['label' => 'above', 'type' => 'string', 'weight' => 4])
+    ->setDisplayOptions('form', ['type' => 'string_textfield', 'weight' => 4])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()->installFieldStorageDefinition(
+    'service',
+    'booking',
+    'booking_core',
+    $field_definition,
+  );
+}
+
+/**
+ * Rename permission 'administer bookings' to 'administer booking' in all roles.
+ *
+ * Also grants 'manage booking' so admins can access the calendar after update.
+ */
+function booking_core_update_10002(): void {
+  $roles = \Drupal::entityTypeManager()->getStorage('user_role')->loadMultiple();
+  foreach ($roles as $role) {
+    /** @var \Drupal\user\RoleInterface $role */
+    if ($role->hasPermission('administer bookings')) {
+      $role->revokePermission('administer bookings');
+      $role->grantPermission('administer booking');
+      $role->grantPermission('manage booking');
+      $role->save();
+    }
+  }
+}
+
+/**
+ * Grant 'manage booking' to any role that already has 'administer booking'.
+ */
+function booking_core_update_10003(): void {
+  $roles = \Drupal::entityTypeManager()->getStorage('user_role')->loadMultiple();
+  foreach ($roles as $role) {
+    /** @var \Drupal\user\RoleInterface $role */
+    if ($role->hasPermission('administer booking') && !$role->hasPermission('manage booking')) {
+      $role->grantPermission('manage booking');
+      $role->save();
+    }
+  }
+}
+
+/**
+ * Create the booking_core_slot_holds table for the React slot-hold API.
+ */
+function booking_core_update_10004(): void {
+  $schema = \Drupal::database()->schema();
+  if (!$schema->tableExists('booking_core_slot_holds')) {
+    $schema->createTable('booking_core_slot_holds', _booking_core_slot_holds_schema());
+  }
+}
+
+/**
+ * Returns the schema definition for booking_core_slot_holds.
+ */
+function _booking_core_slot_holds_schema(): array {
+  return [
+    'description' => 'Temporary slot holds during React booking form completion.',
+    'fields' => [
+      'token' => [
+        'type'     => 'varchar',
+        'length'   => 64,
+        'not null' => TRUE,
+      ],
+      'datetime' => [
+        'description' => 'Slot datetime in site timezone (YYYY-MM-DDTHH:MM:SS).',
+        'type'        => 'varchar',
+        'length'      => 25,
+        'not null'    => TRUE,
+      ],
+      'expires' => [
+        'type'     => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['token'],
+    'indexes'     => [
+      'expires'  => ['expires'],
+      'datetime' => ['datetime'],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_schema().
+ */
+function booking_core_schema(): array {
+  return ['booking_core_slot_holds' => _booking_core_slot_holds_schema()];
+}

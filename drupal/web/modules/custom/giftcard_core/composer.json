@@ -1,0 +1,23 @@
+{
+  "name": "vigfushauksson/giftcard_core",
+  "description": "Standalone gift card module with hosted checkout, webhook confirmation, and configurable payment provider.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": "^8.1",
+    "drupal/core": "^10 || ^11"
+  },
+  "require-dev": {
+    "drupal/core-dev": "^10 || ^11"
+  },
+  "authors": [
+    {
+      "name": "Vigfús Hauksson",
+      "email": "vigfushaukur@gmail.com",
+      "role": "maintainer"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/bjarnib23/drupal-modules"
+  }
+}

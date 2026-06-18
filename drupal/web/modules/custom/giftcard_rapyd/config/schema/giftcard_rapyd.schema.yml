@@ -1,0 +1,16 @@
+giftcard_rapyd.settings:
+  type: config_object
+  label: 'Rapyd API settings'
+  mapping:
+    rapyd_access_key_id:
+      type: string
+      label: 'Rapyd access key (Key module key ID)'
+    rapyd_secret_key_id:
+      type: string
+      label: 'Rapyd secret key (Key module key ID)'
+    rapyd_sandbox:
+      type: boolean
+      label: 'Use Rapyd sandbox environment'
+    rapyd_country:
+      type: string
+      label: 'Country code (ISO 3166-1 alpha-2)'

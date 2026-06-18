@@ -1,0 +1,6 @@
+currency: ''
+min_amount: 1
+flood_threshold: 5
+predefined_amounts: []
+complete_url: ''
+cancel_url: ''

@@ -1,0 +1,13 @@
+giftcard_core.settings:
+  type: config_object
+  label: 'Gift Card settings'
+  mapping:
+    currency:
+      type: string
+      label: 'Currency code (ISO 4217)'
+    min_amount:
+      type: integer
+      label: 'Minimum gift card amount'
+    flood_threshold:
+      type: integer
+      label: 'Max checkout attempts per hour per IP'
