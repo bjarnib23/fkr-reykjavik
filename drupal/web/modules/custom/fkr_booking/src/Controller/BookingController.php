@@ -5,6 +5,7 @@ namespace Drupal\fkr_booking\Controller;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Flood\FloodInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Mail\MailManagerInterface;
@@ -19,17 +20,20 @@ class BookingController extends ControllerBase {
 
   protected MailManagerInterface $mailManager;
   protected LockBackendInterface $lock;
+  protected FloodInterface $flood;
 
   public function __construct(
     MailManagerInterface $mail_manager,
     EntityTypeManagerInterface $entity_type_manager,
     ConfigFactoryInterface $config_factory,
     LockBackendInterface $lock,
+    FloodInterface $flood,
   ) {
     $this->mailManager = $mail_manager;
     $this->entityTypeManager = $entity_type_manager;
     $this->configFactory = $config_factory;
     $this->lock = $lock;
+    $this->flood = $flood;
   }
 
   public static function create(ContainerInterface $container): static {
@@ -38,6 +42,7 @@ class BookingController extends ControllerBase {
       $container->get('entity_type.manager'),
       $container->get('config.factory'),
       $container->get('lock'),
+      $container->get('flood'),
     );
   }
 
@@ -112,6 +117,14 @@ class BookingController extends ControllerBase {
       return new JsonResponse([], 200, $this->corsHeaders());
     }
 
+    if (!$this->flood->isAllowed('fkr_booking_submit', 10, 3600, $request->getClientIp())) {
+      return new JsonResponse(
+        ['error' => 'Too many booking attempts. Please try again later.'],
+        429,
+        $this->corsHeaders()
+      );
+    }
+
     $data = json_decode($request->getContent(), TRUE);
 
     foreach (['name', 'email', 'phone', 'date'] as $field) {
@@ -146,19 +159,30 @@ class BookingController extends ControllerBase {
       );
     }
 
-    $booking = $this->entityTypeManager->getStorage('fkr_booking')->create([
-      'name'           => $data['name'],
-      'email'          => $data['email'],
-      'phone'          => $data['phone'] ?? '',
-      'date'           => $data['date'],
-      'service'        => $data['service'] ?? '',
-      'notes'          => $data['notes'] ?? '',
-      'wishes'         => $data['wishes'] ?? '',
-      'booking_status' => 'pending',
-    ]);
-    $booking->save();
-
-    $this->lock->release($lock_key);
+    try {
+      $booking = $this->entityTypeManager->getStorage('fkr_booking')->create([
+        'name'           => $data['name'],
+        'email'          => $data['email'],
+        'phone'          => $data['phone'] ?? '',
+        'date'           => $data['date'],
+        'service'        => $data['service'] ?? '',
+        'notes'          => $data['notes'] ?? '',
+        'wishes'         => $data['wishes'] ?? '',
+        'booking_status' => 'pending',
+      ]);
+      $booking->save();
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('fkr_booking')->error('Booking save failed: @msg', ['@msg' => $e->getMessage()]);
+      return new JsonResponse(
+        ['error' => 'Could not save your booking. Please try again.'],
+        500,
+        $this->corsHeaders()
+      );
+    }
+    finally {
+      $this->lock->release($lock_key);
+    }
 
     $langcode    = $this->configFactory->get('system.site')->get('langcode');
     $admin_email = $this->configFactory->get('system.site')->get('mail');
@@ -187,6 +211,8 @@ class BookingController extends ControllerBase {
       ],
     );
 
+    $this->flood->register('fkr_booking_submit', 3600, $request->getClientIp());
+
     return new JsonResponse(
       ['message' => 'Booking received successfully.'],
       201,
@@ -194,12 +220,22 @@ class BookingController extends ControllerBase {
     );
   }
 
-  public function adminList(): array {
-    $ids = $this->entityTypeManager->getStorage('fkr_booking')->getQuery()
-      ->sort('date', 'ASC')
-      ->accessCheck(FALSE)
-      ->execute();
+  public function adminList(Request $request): array {
+    $search_name  = $request->query->get('name', '');
+    $search_email = $request->query->get('email', '');
 
+    $query = $this->entityTypeManager->getStorage('fkr_booking')->getQuery()
+      ->sort('date', 'ASC')
+      ->accessCheck(FALSE);
+
+    if ($search_name) {
+      $query->condition('name', '%' . $search_name . '%', 'LIKE');
+    }
+    if ($search_email) {
+      $query->condition('email', '%' . $search_email . '%', 'LIKE');
+    }
+
+    $ids      = $query->execute();
     $bookings = $this->entityTypeManager->getStorage('fkr_booking')->loadMultiple($ids);
     $rows     = [];
 
@@ -212,18 +248,48 @@ class BookingController extends ControllerBase {
         $booking->get('email')->value,
         $formatted_date,
         $booking->get('service')->value,
-        Link::fromTextAndUrl('View', Url::fromRoute('fkr_booking.booking_details', ['fkr_booking' => $booking->id()]))->toString(),
+        Markup::create(
+          Link::fromTextAndUrl('View', Url::fromRoute('fkr_booking.booking_details', ['fkr_booking' => $booking->id()]))->toString() .
+          ' | ' .
+          Link::fromTextAndUrl('Delete', Url::fromRoute('fkr_booking.booking_delete', ['fkr_booking' => $booking->id()]))->toString()
+        ),
       ];
     }
 
+    $search_form = Markup::create(
+      '<form method="get" action="/admin/fkr/bookings" style="margin-bottom:1em;display:flex;gap:.5em;align-items:center">' .
+      '<input type="text" name="name" value="' . htmlspecialchars($search_name) . '" placeholder="Search by name" style="padding:.3em"/>' .
+      '<input type="text" name="email" value="' . htmlspecialchars($search_email) . '" placeholder="Search by email" style="padding:.3em"/>' .
+      '<button type="submit" class="button">Search</button>' .
+      (($search_name || $search_email) ? ' <a href="/admin/fkr/bookings" class="button">Clear</a>' : '') .
+      '</form>'
+    );
+
     return [
-      'table' => [
+      'search' => ['#markup' => $search_form],
+      'table'  => [
         '#type'   => 'table',
         '#header' => ['Name', 'Email', 'Date', 'Item', 'View'],
         '#rows'   => $rows,
         '#empty'  => 'No bookings yet.',
       ],
     ];
+  }
+
+  public function bookingDeleteConfirm(Booking $fkr_booking): array {
+    return [
+      '#markup' => Markup::create(
+        '<p>Are you sure you want to delete the booking for <strong>' . htmlspecialchars($fkr_booking->get('name')->value) . '</strong> on ' . htmlspecialchars($fkr_booking->get('date')->value) . '?</p>' .
+        '<a href="/admin/fkr/bookings/' . $fkr_booking->id() . '/delete/confirm" class="button button--danger">Yes, delete</a> ' .
+        '<a href="/admin/fkr/bookings" class="button">Cancel</a>'
+      ),
+    ];
+  }
+
+  public function bookingDelete(Booking $fkr_booking): \Symfony\Component\HttpFoundation\RedirectResponse {
+    $fkr_booking->delete();
+    $this->messenger()->addStatus($this->t('Booking deleted.'));
+    return new \Symfony\Component\HttpFoundation\RedirectResponse('/admin/fkr/bookings');
   }
 
   public function bookingDetails(Booking $fkr_booking): array {

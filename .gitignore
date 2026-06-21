@@ -17,6 +17,14 @@ drupal/.ddev/mutagen/
 react/node_modules/
 react/dist/
 
+# Database dumps
+*.sql
+*.sql.gz
+*.sq
+fkr-db*
+fkr-files*
+fkr-export-db*
+
 # OS
 .DS_Store
 .history/

@@ -1,0 +1,6 @@
+rapyd_checkout:
+  js:
+    js/rapyd_checkout.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings

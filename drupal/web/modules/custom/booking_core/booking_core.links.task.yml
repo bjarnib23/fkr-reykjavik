@@ -1,0 +1,23 @@
+entity.booking.canonical:
+  route_name: entity.booking.canonical
+  base_route: entity.booking.canonical
+  title: 'View'
+  weight: 0
+
+entity.booking.delete_form:
+  route_name: entity.booking.delete_form
+  base_route: entity.booking.canonical
+  title: 'Delete'
+  weight: 10
+
+booking_core.admin_list.tab:
+  route_name: entity.booking.collection
+  base_route: entity.booking.collection
+  title: 'List'
+  weight: 0
+
+booking_core.calendar.tab:
+  route_name: booking_core.calendar
+  base_route: entity.booking.collection
+  title: 'Calendar'
+  weight: 10

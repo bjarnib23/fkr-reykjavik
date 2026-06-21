@@ -1,0 +1,5 @@
+entity.gift_card.add_form:
+  route_name: entity.gift_card.add_form
+  title: 'Add Gift Card'
+  appears_on:
+    - entity.gift_card.collection

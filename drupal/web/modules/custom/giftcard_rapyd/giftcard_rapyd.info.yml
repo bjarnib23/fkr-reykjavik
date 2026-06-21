@@ -1,0 +1,9 @@
+name: Gift Card Rapyd
+description: Rapyd payment gateway client for the Gift Card Core module.
+type: module
+core_version_requirement: ^10 || ^11
+package: Gift Cards
+configure: giftcard_rapyd.settings
+dependencies:
+  - giftcard_core:giftcard_core
+  - key:key

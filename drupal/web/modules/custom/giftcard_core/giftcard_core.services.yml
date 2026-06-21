@@ -1,0 +1,12 @@
+services:
+  giftcard_core.gift_card_service:
+    class: Drupal\giftcard_core\GiftCardService
+    arguments:
+      - '@entity_type.manager'
+      - '@config.factory'
+      - '@logger.factory'
+      - '@tempstore.private'
+      - '@keyvalue.expirable'
+
+  giftcard_core.payment_client:
+    class: Drupal\giftcard_core\NullPaymentClient

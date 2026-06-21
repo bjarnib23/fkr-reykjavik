@@ -1,0 +1,24 @@
+{
+  "name": "drupal/rapyd_checkout",
+  "description": "Rapyd Hosted Checkout payment gateway for Drupal Commerce.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": "^8.3",
+    "drupal/core": "^10 || ^11",
+    "drupal/commerce": "^2.36",
+    "drupal/key": "^1.17"
+  },
+  "require-dev": {
+    "drupal/core-dev": "^10 || ^11"
+  },
+  "authors": [
+    {
+      "name": "bjarnib23",
+      "role": "maintainer"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/bjarnib23/drupal-modules"
+  }
+}

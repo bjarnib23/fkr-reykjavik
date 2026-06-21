@@ -94,6 +94,46 @@ fkr_content.nav:
   requirements:
     _access: 'TRUE'
 
+fkr_content.layout:
+  path: '/api/fkr/layout'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::layout'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'
+
+fkr_content.page_data_faq:
+  path: '/api/fkr/page-data/faq'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::pageDataFaq'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'
+
+fkr_content.page_data_pricelist:
+  path: '/api/fkr/page-data/pricelist'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::pageDataPricelist'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'
+
+fkr_content.page_data_process:
+  path: '/api/fkr/page-data/process'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::pageDataProcess'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'
+
+fkr_content.page_data_booking:
+  path: '/api/fkr/page-data/booking'
+  defaults:
+    _controller: '\Drupal\fkr_content\Controller\ContentController::pageDataBooking'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'
+
 fkr_content.lookbook:
   path: '/api/fkr/lookbook'
   defaults:

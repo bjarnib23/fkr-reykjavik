@@ -1,0 +1,91 @@
+<?php
+
+/**
+ * @file
+ * Hooks and procedural code for the Booking Core module.
+ */
+
+use Drupal\Core\Render\Element;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_help().
+ */
+function booking_core_help(string $route_name, RouteMatchInterface $route_match): string {
+  if ($route_name === 'help.page.booking_core') {
+    return '<p>' . t('Provides an appointment booking system with a custom Booking entity, an AJAX booking form with time-slot selection, email confirmations, and an admin calendar view. Configure services, business hours, and blocked dates at <a href=":url">Booking settings</a>.', [':url' => Url::fromRoute('booking_core.settings')->toString()]) . '</p>';
+  }
+  return '';
+}
+
+/**
+ * Implements hook_theme().
+ */
+function booking_core_theme(): array {
+  return [
+    'booking' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for booking entity templates.
+ *
+ * Default template: booking.html.twig.
+ */
+function template_preprocess_booking(array &$variables): void {
+  $elements = $variables['elements'];
+
+  $variables['booking']   = $elements['#booking'];
+  $variables['view_mode'] = $elements['#view_mode'] ?? 'full';
+
+  // Collect rendered field elements for the template.
+  $variables['content'] = [];
+  foreach (Element::children($elements) as $key) {
+    $variables['content'][$key] = $elements[$key];
+  }
+
+  $view_mode_class = strtr($variables['view_mode'], ['_' => '-', '.' => '-']);
+  $variables['attributes']['class'][] = 'booking';
+  $variables['attributes']['class'][] = 'booking--' . $view_mode_class;
+}
+
+/**
+ * Implements hook_mail().
+ */
+function booking_core_mail(string $key, array &$message, array $params): void {
+  $company  = \Drupal::config('system.site')->get('name') ?: 'Us';
+  $ts       = (new \DateTime($params['date'], new \DateTimeZone('UTC')))->getTimestamp();
+  $date_fmt = \Drupal::service('date.formatter')->format($ts, 'booking');
+
+  switch ($key) {
+    case 'confirmation':
+      $message['subject'] = t('Booking confirmed — @date', ['@date' => $date_fmt]);
+      $message['body'][]  = t('Hi @name,', ['@name' => $params['name']]);
+      $message['body'][]  = t('Your booking is confirmed:');
+      $message['body'][]  = t('Service: @service', ['@service' => $params['service']]);
+      $message['body'][]  = t('Date & time: @date', ['@date' => $date_fmt]);
+      if (!empty($params['notes'])) {
+        $message['body'][] = t('Notes: @notes', ['@notes' => $params['notes']]);
+      }
+      $message['body'][] = t('If you need to make any changes, please contact us directly.');
+      $message['body'][] = t('Thank you,') . "\n" . $company;
+      break;
+
+    case 'notification':
+      $message['subject'] = t('New booking — @name (@service)', [
+        '@name'    => $params['name'],
+        '@service' => $params['service'],
+      ]);
+      $message['body'][] = t('A new booking has been submitted:');
+      $message['body'][] = t('Name: @v', ['@v' => $params['name']]);
+      $message['body'][] = t('Email: @v', ['@v' => $params['email']]);
+      $message['body'][] = t('Phone: @v', ['@v' => $params['phone'] ?: '—']);
+      $message['body'][] = t('Service: @v', ['@v' => $params['service']]);
+      $message['body'][] = t('Date: @v', ['@v' => $date_fmt]);
+      $message['body'][] = t('Notes: @v', ['@v' => $params['notes'] ?: '—']);
+      break;
+  }
+}

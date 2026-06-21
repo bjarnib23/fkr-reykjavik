@@ -1,0 +1,57 @@
+giftcard_core.checkout:
+  path: '/gift-card/buy'
+  defaults:
+    _form: '\Drupal\giftcard_core\Form\GiftCardCheckoutForm'
+    _title: 'Buy a Gift Card'
+  requirements:
+    _access: 'TRUE'
+
+giftcard_core.thank_you:
+  path: '/gift-card/buy/thank-you'
+  defaults:
+    _controller: '\Drupal\giftcard_core\Controller\GiftCardController::thankYou'
+    _title: 'Purchase Complete'
+  requirements:
+    _access: 'TRUE'
+
+giftcard_core.cancel:
+  path: '/gift-card/buy/cancel'
+  defaults:
+    _controller: '\Drupal\giftcard_core\Controller\GiftCardController::cancel'
+    _title: 'Purchase Cancelled'
+  requirements:
+    _access: 'TRUE'
+
+giftcard_core.webhook:
+  path: '/gift-card/webhook'
+  defaults:
+    _controller: '\Drupal\giftcard_core\Controller\GiftCardWebhookController::receive'
+  requirements:
+    _access: 'TRUE'
+  methods: [POST]
+  options:
+    no_cache: TRUE
+
+giftcard_core.settings:
+  path: '/admin/config/giftcard-core/settings'
+  defaults:
+    _form: '\Drupal\giftcard_core\Form\GiftCardSettingsForm'
+    _title: 'Gift Card Settings'
+  requirements:
+    _permission: 'administer gift cards'
+
+giftcard_core.api_amounts:
+  path: '/api/fkr/giftcard/amounts'
+  defaults:
+    _controller: '\Drupal\giftcard_core\Controller\ApiGiftCardController::amounts'
+  methods: [GET, OPTIONS]
+  requirements:
+    _access: 'TRUE'
+
+giftcard_core.api_checkout:
+  path: '/api/fkr/giftcard/checkout'
+  defaults:
+    _controller: '\Drupal\giftcard_core\Controller\ApiGiftCardController::checkout'
+  methods: [POST, OPTIONS]
+  requirements:
+    _access: 'TRUE'

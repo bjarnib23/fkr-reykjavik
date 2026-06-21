@@ -1,0 +1,13 @@
+entity.gift_card.collection:
+  title: 'Gift Cards'
+  description: 'Manage gift cards.'
+  route_name: entity.gift_card.collection
+  parent: system.admin
+  weight: 20
+
+giftcard_core.settings:
+  title: 'Gift Card Settings'
+  description: 'Configure the gift card module.'
+  route_name: giftcard_core.settings
+  parent: system.admin_config
+  weight: 20

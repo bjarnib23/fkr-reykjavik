@@ -1,0 +1,4 @@
+administer gift cards:
+  title: 'Administer gift cards'
+  description: 'Create, edit, and delete gift card entities and configure module settings.'
+  restrict access: true
