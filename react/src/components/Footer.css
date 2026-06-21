@@ -116,9 +116,13 @@
   }
 
   .footer-main {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     padding: 40px 24px 32px;
     gap: 24px;
+  }
+
+  .footer-col--brand {
+    grid-column: 1 / -1;
   }
 
   .footer-bottom {

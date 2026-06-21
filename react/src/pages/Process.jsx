@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { useLoading } from '../context/LoadingContext'
+import { preloadImages } from '../context/preloadImages'
 import './Process.css'
 
 function stripHtml(html) {
@@ -10,18 +12,26 @@ function Process() {
   const [page, setPage] = useState({})
   const [steps, setSteps] = useState([])
   const cardRefs = useRef([])
+  const { setLoading } = useLoading()
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pages`, { cache: 'no-store' })
+    const p1 = fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pages`, { cache: 'no-store' })
       .then(r => r.json())
       .then(pages => {
         const p = Object.values(pages).find(p => p.slug === 'process')
         if (p) setPage(p)
       })
 
-    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/process-steps`, { cache: 'no-store' })
+    const p2 = fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/process-steps`, { cache: 'no-store' })
       .then(r => r.json())
       .then(setSteps)
+
+    Promise.allSettled([p1, p2]).then(async ([r1, r2]) => {
+      const stepImgs = (r2.value || []).map(s => s.image).filter(Boolean)
+      const pageImgs = (r1.value ? Object.values(r1.value).find(p => p.slug === 'process')?.images || [] : [])
+      await preloadImages([...pageImgs, ...stepImgs])
+      setLoading(false)
+    })
   }, [])
 
   const images = page.images || []
@@ -49,7 +59,7 @@ function Process() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [steps.length])
 
-  return (
+return (
     <main className="process">
       <div className="process-header">
         {page.subtitle && <p className="process-header-label">{page.subtitle}</p>}
@@ -81,12 +91,14 @@ function Process() {
       </div>
 
       <div className="process-closing">
+        <img src="/fkr-logo-light.png" className="process-closing-bg" alt="" aria-hidden="true" />
         <div className="process-closing-text">
           {page.closing_heading && <h2 className="process-closing-heading">{page.closing_heading}</h2>}
           {page.body_text && <p>{stripHtml(page.body_text)}</p>}
         </div>
         <Link to="/boka-tima" className="process-cta">Bóka tíma</Link>
       </div>
+
     </main>
   )
 }

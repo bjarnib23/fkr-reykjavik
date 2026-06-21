@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useLoading } from '../context/LoadingContext'
 import './GiftCard.css'
 
 const API = import.meta.env.VITE_DRUPAL_URL
@@ -11,19 +12,22 @@ function GiftCard() {
   const [apiError, setApiError] = useState('')
   const [loading, setLoading]   = useState(false)
   const [labels, setLabels]     = useState({})
+  const { setLoading: setPageLoading } = useLoading()
 
   useEffect(() => {
-    fetch(`${API}/api/fkr/pages`, { cache: 'no-store' })
+    const p1 = fetch(`${API}/api/fkr/pages`, { cache: 'no-store' })
       .then(r => r.json())
       .then(pages => {
         const p = Object.values(pages).find(p => p.slug === 'giftcard')
         if (p) setLabels(p)
       })
 
-    fetch(`${API}/api/fkr/giftcard/amounts`)
+    const p2 = fetch(`${API}/api/fkr/giftcard/amounts`)
       .then(r => r.json())
       .then(setAmounts)
       .catch(() => setApiError(labels.err_load_amounts || ''))
+
+    Promise.allSettled([p1, p2]).then(() => setPageLoading(false))
   }, [])
 
   function update(field, value) {

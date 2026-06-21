@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useLoading } from '../context/LoadingContext'
 import './FAQ.css'
 
 function stripHtml(html) {
@@ -9,20 +10,21 @@ function FAQ() {
   const [faqs, setFaqs]           = useState([])
   const [open, setOpen]           = useState(null)
   const [page, setPage]           = useState({})
+  const { setLoading } = useLoading()
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/faq`, { cache: 'no-store' })
+    const p1 = fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/faq`, { cache: 'no-store' })
       .then(r => r.json())
-      .then(data => {
-        setFaqs(data.items || [])
-      })
+      .then(data => setFaqs(data.items || []))
 
-    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pages`, { cache: 'no-store' })
+    const p2 = fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pages`, { cache: 'no-store' })
       .then(r => r.json())
       .then(pages => {
         const p = Object.values(pages).find(p => p.slug === 'faq')
         if (p) setPage(p)
       })
+
+    Promise.allSettled([p1, p2]).then(() => setLoading(false))
   }, [])
 
   function toggle(i) {

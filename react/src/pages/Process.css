@@ -39,8 +39,7 @@
 
 .process-card {
   position: sticky;
-  height: 58vh;
-  min-height: 380px;
+  min-height: max(58vh, 380px);
   display: grid;
   grid-template-columns: 1.4fr 0.8fr;
   background: #faf8f5;
@@ -54,12 +53,7 @@
 
 .process-card-left {
   padding: 48px;
-  overflow-y: auto;
-  scrollbar-width: none;
-}
-
-.process-card-left::-webkit-scrollbar {
-  display: none;
+  overflow: visible;
 }
 
 .process-card-num {
@@ -110,20 +104,38 @@
 /* Closing */
 .process-closing {
   padding: 64px 60px;
-  border-top: 1px solid #ddd9d2;
+  background: #f4eded;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   gap: 48px;
-  background: #faf8f5;
+  position: relative;
+  overflow: hidden;
+}
+
+.process-closing-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 50%;
+  opacity: 0.15;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.process-closing > *:not(.process-closing-bg) {
+  position: relative;
+  z-index: 1;
 }
 
 .process-closing-text {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  max-width: 560px;
+  gap: 20px;
+  max-width: 680px;
 }
 
 .process-closing-heading {
@@ -156,24 +168,7 @@
   transition: background 0.2s;
 }
 
-.process-cta::after {
-  content: '→';
-  display: inline-block;
-  max-width: 0;
-  overflow: hidden;
-  opacity: 0;
-  margin-left: 0;
-  white-space: nowrap;
-  transition: max-width 0.25s ease, opacity 0.2s ease, margin-left 0.25s ease;
-}
-
 .process-cta:hover { background: #1a2826; }
-
-.process-cta:hover::after {
-  max-width: 20px;
-  opacity: 1;
-  margin-left: 10px;
-}
 
 /* Mobile */
 @media (max-width: 768px) {

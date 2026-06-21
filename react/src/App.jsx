@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import LoadingScreen from './components/LoadingScreen'
+import { LoadingProvider } from './context/LoadingContext'
 import Home from './pages/Home'
 import Booking from './pages/booking/Booking'
 import FAQ from './pages/FAQ'
@@ -20,24 +22,27 @@ function ScrollToTop() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <Navbar />
-      <main style={{ flex: 1 }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/boka-tima" element={<Booking />} />
-          <Route path="/ferlid" element={<Process />} />
-          <Route path="/myndasafn" element={<Lookbook />} />
-          <Route path="/algengar-spurningar" element={<FAQ />} />
-          <Route path="/gjafabref" element={<GiftCard />} />
-          <Route path="/verdskra" element={<PriceList />} />
-          <Route path="/giftcard/thank-you" element={<GiftCardThankYou />} />
-          <Route path="/giftcard/cancel" element={<GiftCardCancel />} />
-        </Routes>
-      </main>
-      <Footer />
-    </BrowserRouter>
+    <LoadingProvider>
+      <BrowserRouter>
+        <LoadingScreen />
+        <ScrollToTop />
+        <Navbar />
+        <main style={{ flex: 1 }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/boka-tima" element={<Booking />} />
+            <Route path="/ferlid" element={<Process />} />
+            <Route path="/myndasafn" element={<Lookbook />} />
+            <Route path="/algengar-spurningar" element={<FAQ />} />
+            <Route path="/gjafabref" element={<GiftCard />} />
+            <Route path="/verdskra" element={<PriceList />} />
+            <Route path="/giftcard/thank-you" element={<GiftCardThankYou />} />
+            <Route path="/giftcard/cancel" element={<GiftCardCancel />} />
+          </Routes>
+        </main>
+        <Footer />
+      </BrowserRouter>
+    </LoadingProvider>
   )
 }
 

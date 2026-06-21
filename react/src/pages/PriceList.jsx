@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useLoading } from '../context/LoadingContext'
+import { preloadImages } from '../context/preloadImages'
 import './PriceList.css'
 
 function stripHtml(html) {
@@ -17,21 +19,28 @@ function PriceList() {
   const [page, setPage]       = useState({})
   const [imgIdx, setImgIdx]   = useState(0)
   const [open, setOpen]       = useState(null)
+  const { setLoading } = useLoading()
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pricelist`, { cache: 'no-store' })
+    const p1 = fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pricelist`, { cache: 'no-store' })
       .then(r => r.json())
       .then(data => {
         setGrades(data.grades || [])
         setRows(data.rows   || [])
       })
 
-    fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pages`, { cache: 'no-store' })
+    const p2 = fetch(`${import.meta.env.VITE_DRUPAL_URL}/api/fkr/pages`, { cache: 'no-store' })
       .then(r => r.json())
       .then(pages => {
         const p = Object.values(pages).find(p => p.slug === 'pricelist')
         if (p) setPage(p)
       })
+
+    Promise.allSettled([p1, p2]).then(async ([, r2]) => {
+      const imgs = r2.value ? (Object.values(r2.value).find(p => p.slug === 'pricelist')?.images || []) : []
+      await preloadImages(imgs)
+      setLoading(false)
+    })
   }, [])
 
   const images = page.images || []
